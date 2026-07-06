@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "monozen-architecture": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-architecture/SKILL.md",
+      "computedHash": ""
+    },
+    "monozen-themes": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-themes/SKILL.md",
+      "computedHash": ""
+    },
+    "monozen-webgl": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-webgl/SKILL.md",
+      "computedHash": ""
+    },
+    "monozen-nav": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-nav/SKILL.md",
+      "computedHash": ""
+    }
+  }
+}
