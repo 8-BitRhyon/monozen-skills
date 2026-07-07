@@ -1,6 +1,5 @@
 export PATH=~/.npm-global/bin:/opt/homebrew/bin:/opt/homebrew/opt/fzf/bin:$PATH
 export EDITOR=nvim
-export VISUAL=nvim
 
 # Load secrets (chmod 600, never commit)
 [[ -f ~/.secrets.zsh ]] && source ~/.secrets.zsh
@@ -16,6 +15,8 @@ alias ll="eza -la --icons=auto"
 alias lt="eza -la --tree --level=2 --icons=auto"
 alias cat="bat -pp"
 alias preview="bat"
+alias rg="rg --hidden -g '!.git'"
+alias fd="fd --hidden -E .git"
 
 # --- Toolchain: Navigation ---
 eval "$(zoxide init zsh)"
@@ -27,5 +28,5 @@ eval "$(zoxide init zsh)"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# --- Toolchain: LazyGit ---
-export GIT_EDITOR=nvim
+# --- Herdr session label ---
+export HERDR_SESSION_NAME="$USER"

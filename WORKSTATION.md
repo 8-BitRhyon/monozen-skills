@@ -47,8 +47,8 @@ flowchart LR
         PF[Portfolio]
     end
 
-    G -->|auto-attach| T
-    T -->|runs inside| H
+    G -->|runs| T
+    T -->|contains| H
     H -->|manages| KC
     KC -->|uses| Toolchain
     KC -->|git via| LG
@@ -140,7 +140,7 @@ sits at the **bottom**. This gives:
 | **Herdr Plus** | Project templates, quick actions launcher |
 | **Spreader** | tmuxinator-style YAML layout apply |
 | **reviewr** | Native terminal code-review sidebar |
-| **llmtrim** | LLM token usage proxy with savings dashboard |
+| **llmtrim** | ⚠️ LLM token proxy — transparent MITM that intercepts all API calls from agent panes. See gotcha #9. |
 | **GitHub Start** | Open a herdr tab from a GitHub issue/PR |
 | **File Viewer** | Git-aware read-only file tree in a split pane |
 | **Vim Navigation** | Seamless Ctrl+h/j/k/l across herdr panes + nvim |
@@ -155,12 +155,17 @@ a blacked-out tab bar background. omerxx's fork (which he uses himself) renders
 correctly. The fork also avoids the `current_file` format variable bug on tmux
 3.7b entirely — no manual patching needed.
 
-### 2. tmux status bar at bottom (herdr panel at top)
+### 2. Tmux plugins need explicit `run` lines (TPM auto-loader is unreliable on 3.7b)
+catppuccin, sensible, yank, resurrect, continuum, and sessionx are all loaded
+via explicit `run` lines, not just TPM `@plugin` declarations. If you re-clone
+plugins and forget the `run` lines, they silently won't load.
+
+### 4. tmux status bar at bottom (herdr panel at top)
 Herdr's agent panel occupies the top line. With `status-position top`, the
 Catppuccin pills collide with herdr's UI. Setting `status-position bottom`
 separates them cleanly.
 
-### 3. Ghostty `command` is wrapped through a login shell
+### 5. Ghostty `command` is wrapped through a login shell
 `/usr/bin/login … bash -c "exec -l …"` mangles shell operators (`||`) into a
 malformed single command → "failed to launch the requested command." Do **not**
 launch tmux via Ghostty `command`. Auto-start from `~/.zshrc`:
@@ -171,7 +176,7 @@ fi
 ```
 (Absolute path — GUI-launched Ghostty has no Homebrew in `PATH`)
 
-### 4. Fullscreen transparency
+### 6. Fullscreen transparency
 `background-blur = "macos-glass-regular"` (Apple vibrancy) renders **opaque**
 in fullscreen. Use:
 - `background-blur-radius = 20`
@@ -182,10 +187,10 @@ in fullscreen. Use:
 Boot with `fullscreen = "non-native"` (**NOT** `"true"` = native, kills
 transparency). omerxx achieves the same via **AeroSpace** fullscreen.
 
-### 5. fzf is required by `tmux-sessionx`
+### 7. fzf is required by `tmux-sessionx`
 Install: `brew install fzf`. Session picker at `Ctrl-A o`.
 
-### 6. AeroSpace fullscreen replaces Ghostty fullscreen
+### 8. AeroSpace fullscreen replaces Ghostty fullscreen
 omerxx uses AeroSpace for fullscreen (keeps transparency alive via tiling, not
 native macOS fullscreen). Install:
 ```sh
@@ -193,10 +198,34 @@ brew install --cask nikitabobko/aerospace/aerospace
 ```
 Config: `~/.config/aerospace/aerospace.toml`. Key: `alt-ctrl-shift-f`.
 
-### 7. API keys
+### 9. API keys
 Keep out of `~/.zshrc`. Store in `~/.secrets.zsh` (`chmod 600`), sourced by
 `.zshrc`. Rotate any key that was ever in plaintext. Global `.gitignore` also
 excludes `.secrets.zsh` as belt-and-suspenders.
+
+### 10. ⚠️ llmtrim is a local MITM proxy
+The `llmtrim` herdr plugin sits between LLM agent panes and their API providers,
+intercepting every API call to compress tokens. It runs locally and never phones
+home, but understand what it does before enabling: it sees every API key and
+prompt sent through any agent pane. Only install if you trust the plugin source
+and want the token compression.
+
+### 11. GPG commit signing (recommended)
+Set up GPG-signed commits for verifiable authorship:
+```sh
+brew install gnupg
+gpg --quick-generate-key "Your Name <email>" rsa3072 sign 0
+gpg --list-secret-keys --keyid-format=long   # copy the key ID
+git config user.signingkey <key-id>
+git config commit.gpgsign true
+git config tag.gpgsign true
+```
+Then register the public key on GitHub: Settings → SSH and GPG keys → New GPG key.
+```sh
+gpg --armor --export <key-id> | pbcopy
+```
+
+---
 
 ---
 
@@ -217,7 +246,7 @@ git clone https://github.com/tmux-plugins/tmux-sensible ~/.tmux/plugins/tmux-sen
 git clone https://github.com/tmux-plugins/tmux-yank ~/.tmux/plugins/tmux-yank
 
 # CLI toolchain
-brew install neovim lazygit zoxide bat eza fd ripgrep delta fzf zsh-autosuggestions zsh-syntax-highlighting
+brew install neovim lazygit zoxide bat eza fd ripgrep delta fzf gnupg zsh-autosuggestions zsh-syntax-highlighting
 $(brew --prefix)/opt/fzf/install
 
 # Tiling WM

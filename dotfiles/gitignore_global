@@ -6,6 +6,8 @@ Icon
 ._*
 .Spotlight-V100
 .Trashes
+
+# Windows
 Thumbs.db
 
 # Editor/IDE
@@ -21,6 +23,8 @@ node_modules/
 dist/
 build/
 *.log
+
+# Secrets
 .env
 .env.local
 .secrets.zsh

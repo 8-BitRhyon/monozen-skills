@@ -4,8 +4,9 @@
 	required = true
 	clean = git-lfs clean -- %f
 [user]
-	name = Rhyon
-	email = 220287803+8-BitRhyon@users.noreply.github.com
+	name = $NAME                 # TODO: set your name
+	email = $GITHUB_NOREPLY_EMAIL # TODO: set your GitHub noreply email
+	signingkey = $GPG_KEY_ID      # TODO: set your GPG key ID (`gpg --list-secret-keys --keyid-format=long`)
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
@@ -27,3 +28,7 @@
 	prune = true
 [push]
 	autoSetupRemote = true
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
