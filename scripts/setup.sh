@@ -48,6 +48,15 @@ herdr plugin install cloudmanic/herdr-plus --yes || true
 echo ":: Installing github-start (launch agent from issue/PR)..."
 herdr plugin install ogulcancelik/herdr-plugin-github-start --yes || true
 
+echo ":: Installing vim-herdr-navigation (unified Ctrl+h/j/k/l across editor/panes)..."
+herdr plugin install paulbkim-dev/vim-herdr-navigation --yes || true
+
+echo ":: Installing herdr-tab-rename (auto-sync tab name to cwd/branch)..."
+herdr plugin install lmilojevicc/herdr-tab-rename --yes || true
+
+echo ":: Installing llmtrim-herdr (token usage optimization)..."
+herdr plugin install fkiene/llmtrim-herdr --yes || true
+
 # ── 4. Prompt for optional tools ───────────────────────────────
 echo ""
 echo "==> Optional tools (install manually if needed):"
