@@ -1,0 +1,12 @@
+gui:
+  theme:
+    lightTheme: false
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark
+    useConfig: true
+os:
+  edit: "nvim"
+  editAtLine: "nvim +{line} {filename}"
+  editInTerminal: true

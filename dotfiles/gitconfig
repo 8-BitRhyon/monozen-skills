@@ -1,0 +1,29 @@
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = Rhyon
+	email = 220287803+8-BitRhyon@users.noreply.github.com
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore_global
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	side-by-side = true
+	line-numbers = true
+	features = decorations
+[delta "decorations"]
+	commit-decoration-style = blue ol
+	file-style = bold yellow
+	file-decoration-style = none
+	hunk-header-decoration-style = cyan
+[merge]
+	conflictstyle = zdiff3
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true

@@ -1,0 +1,31 @@
+export PATH=~/.npm-global/bin:/opt/homebrew/bin:/opt/homebrew/opt/fzf/bin:$PATH
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Load secrets (chmod 600, never commit)
+[[ -f ~/.secrets.zsh ]] && source ~/.secrets.zsh
+
+# --- Auto-start Tmux ---
+if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
+  /opt/homebrew/bin/tmux attach -t main || /opt/homebrew/bin/tmux new -s main
+fi
+
+# --- Toolchain: Enhanced CLI ---
+alias ls="eza --icons=auto"
+alias ll="eza -la --icons=auto"
+alias lt="eza -la --tree --level=2 --icons=auto"
+alias cat="bat -pp"
+alias preview="bat"
+
+# --- Toolchain: Navigation ---
+eval "$(zoxide init zsh)"
+
+# --- Toolchain: FZF ---
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# --- Toolchain: Zsh plugins ---
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# --- Toolchain: LazyGit ---
+export GIT_EDITOR=nvim
