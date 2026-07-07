@@ -10,30 +10,36 @@ Ghostty's native tab bar.
 ## Components
 - **Ghostty** — terminal emulator (transparent, blurred, non-native fullscreen)
 - **tmux 3.7b** — multiplexer
-- **catppuccin-tmux** — status bar / pill theme (mocha flavor)
-- **TPM** — plugin manager (kept for manual `prefix + I`)
+- **omerxx/catppuccin-tmux** — status bar / pill theme (fork, fixes black background)
+- **omerxx/tmux-sessionx** — session picker (fzf-based, fork)
+- **TPM** — plugin manager
 - **herdr** — agent multiplexer (separate concern; see FEDERATION.md)
 
 ## Files
 | File | Purpose |
 |------|---------|
 | `~/.config/ghostty/config` | Ghostty: blur, fullscreen, no `command` |
-| `~/.tmux.conf` | tmux: catppuccin, prefix `^A`, tab/pane binds |
+| `~/.tmux.conf` | tmux: catppuccin pills, prefix `^A`, vim-style pane nav |
 | `~/.tmux/plugins/{tpm,catppuccin-tmux,tmux-{resurrect,continuum,sensible,yank,sessionx}}` | plugins |
 | `~/.zshrc` | auto-starts tmux (`attach main || new main`) |
 | `~/.secrets.zsh` | API keys, `chmod 600`, sourced by `.zshrc` |
 | `~/.config/aerospace/aerospace.toml` | AeroSpace tiling WM config (omerxx-style fullscreen) |
+| `dotfiles/tmux.conf` (in this repo) | reference copy of current `~/.tmux.conf` |
 
 ## Key gotchas (the hard-won part)
 
-1. **tmux 3.7b removed the `current_file` format variable.** catppuccin-tmux
-   can't locate its theme/status files → `@thm_*` colors empty →
-   `invalid style: bg=` errors. Fix: patch the plugin's
+1. **Use `omerxx/catppuccin-tmux` fork, not the upstream.** The upstream
+   `catppuccin/tmux` has different fill/color handling that results in a
+   blacked-out tab bar background. omerxx's fork (which he uses himself)
+   renders correctly. The fork also avoids the `current_file` format
+   variable bug on tmux 3.7b entirely — no manual patching needed.
+
+2. **tmux 3.7b removed the `current_file` format variable.** (Applies to
+   upstream `catppuccin/tmux` only — omerxx's fork doesn't use it.)
+   catppuccin-tmux can't locate its theme/status files → `@thm_*` colors
+   empty → `invalid style: bg=` errors. Fix: patch the plugin's
    `source -F "#{d:current_file}/..."` paths to absolute in
    `~/.tmux/plugins/catppuccin-tmux/*.conf`. (Lost if you `prefix + U` re-clone.)
-
-2. **TPM's auto-loader is unreliable on 3.7b.** Load catppuccin explicitly via
-   `run "/abs/path/catppuccin.tmux"` in `~/.tmux.conf` (after the `@plugin` lines).
 
 3. **Ghostty `command` is wrapped through a login shell**
    (`/usr/bin/login … bash -c "exec -l …"`) that mangles shell operators (`||`)
@@ -56,16 +62,21 @@ Ghostty's native tab bar.
 
 5. **Tabs = tmux windows** (Catppuccin pills), not Ghostty native tabs.
    Ghostty native tabs require `window-decoration = true` and are off by design.
-   Prefix `Ctrl-A`: `Ctrl-A c` new tab · `Ctrl-A n`/`p` switch ·
-   `Ctrl-A |`/`-` split · `Ctrl-A z` zoom (adds `` glyph to the pill).
+   Prefix `Ctrl-A`: `Ctrl-A c` new tab · `Ctrl-A H`/`L` switch · vim splits.
+   Zoom with `Ctrl-A z` (adds `` glyph to the pill).
 
-6. **API keys:** keep out of `~/.zshrc`; store in `~/.secrets.zsh`
+6. **Tmux status bar at bottom, herdr panel at top.** herdr's agent panel and
+   tab bar occupy the top line. With `status-position top`, the Catppuccin pills
+   collide with herdr's UI. Setting `status-position bottom` separates them
+   cleanly — herdr above, tmux pills below, no overlap.
+
+7. **API keys:** keep out of `~/.zshrc`; store in `~/.secrets.zsh`
    (`chmod 600`), sourced by `.zshrc`. Rotate any key that was ever in plaintext.
 
-7. **fzf is required by `tmux-sessionx`.** Install via `brew install fzf` before
-   using the session picker (`Ctrl-A s`).
+8. **fzf is required by `tmux-sessionx`.** Install via `brew install fzf` before
+   using the session picker (`Ctrl-A o`).
 
-8. **Aerospace fullscreen replaces Ghostty fullscreen.** omerxx uses Aerospace
+9. **Aerospace fullscreen replaces Ghostty fullscreen.** omerxx uses Aerospace
    for fullscreen (which keeps transparency alive via tiling, not native
    macOS fullscreen). Install: `brew install --cask nikitabobko/aerospace/aerospace`.
    Config: `~/.config/aerospace/aerospace.toml`. Bind: `alt-ctrl-shift-f`.
@@ -73,9 +84,12 @@ Ghostty's native tab bar.
 ## Prefix / tab cheat sheet
 | Key | Action |
 |-----|--------|
-| `Ctrl-A c` | new tab (pill) |
-| `Ctrl-A n` / `Ctrl-A p` | next / previous tab |
+| `Ctrl-A c` | new tab |
+| `Ctrl-A H` / `Ctrl-A L` | previous / next tab (capital H/L) |
+| `Ctrl-A o` | session picker (fzf) |
 | click a pill | switch tab |
-| `Ctrl-A \|` / `Ctrl-A -` | split horizontal / vertical |
+| `Ctrl-A s` / `Ctrl-A v` | split horizontal / vertical (vim-style) |
 | `Ctrl-A z` | zoom pane (pill shows ``) |
+| `Ctrl-A h/j/k/l` | navigate panes (vim-style) |
 | `Ctrl-A r` | reload `~/.tmux.conf` |
+| `Ctrl-A P` | toggle pane borders |
