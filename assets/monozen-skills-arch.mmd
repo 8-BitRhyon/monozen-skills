@@ -1,0 +1,86 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1a1a2e', 'primaryTextColor': '#e6e6e6', 'primaryBorderColor': '#e63946', 'lineColor': '#e63946', 'secondaryColor': '#16213e', 'tertiaryColor': '#0f3460'}}}%%
+
+flowchart TB
+    subgraph Layer0["LAYER 0 — Shell Substrate"]
+        HR["herdr v0.7.1<br/>terminal workspace manager"]
+        HRCFG["~/.config/herdr/<br/>config.toml + session.json<br/>→ gruvbox theme, 4-pane<br/>  CommandCode tab layout"]
+    end
+
+    subgraph Layer1["LAYER 1 — Directory Shortcut"]
+        ZS["~/.zshrc<br/>workon() function"]
+        WU["workon portfolio<br/>workon antigravity<br/>→ resolves under<br/>Projects/{name}"]
+    end
+
+    subgraph Layer2["LAYER 2 — Config & Permission Gate"]
+        KC["~/.config/kilo/kilo.jsonc"]
+        PERM["permission.bash = allow"]
+        SKP["skills.paths → 6 directory refs"]
+        AGD["agent role delegation:<br/>orchestrator, code, debug,<br/>ask, plan, code-reviewer<br/>→ specific provider/model"]
+        IDX["indexing pipeline:<br/>OpenRouter + free embedding"]
+    end
+
+    subgraph Layer3["LAYER 3 — Skills Federation"]
+        FS1[".agents/skills/<br/>28 skills"]
+        FS2[".commandcode/skills/<br/>4 skills (monozen-core)"]
+        FS3["gemini/config/skills/<br/>11 skills"]
+        FS4["gemini/plugins/<br/>modern-web-guidance/skills/<br/>2 skills"]
+        FS5["gemini/plugins/<br/>ui-ux-pro-max/.claude/skills/<br/>7 skills"]
+        FS6["command-code/skills/<br/>2 skills (agent-browser, design)"]
+    end
+
+    subgraph Layer4["LAYER 4 — Distribution"]
+        MS["github.com/8-BitRhyon/monozen-skills"]
+        NPX["npx skills add<br/>monozen-skills"]
+        AG["AGENTS.md<br/>(cross-CLI agent instructions)"]
+    end
+
+    subgraph Layer5["LAYER 5 — CLI Consumers"]
+        CC["Claude Code"]
+        CU["Cursor"]
+        CB["CodeBuff"]
+        CR["Crush (kilo)"]
+        GK["Google Gemini"]
+    end
+
+    HR -->|manages panes/sessions| ZS
+    ZS --> WU
+    WU -->|reads project root| AG
+    AG -->|references monozen-skills| MS
+    KC -->|skills.paths loads| FS1
+    KC -->|skills.paths loads| FS2
+    KC -->|skills.paths loads| FS3
+    KC -->|skills.paths loads| FS5
+    KC -.->|additional refs| FS4
+    KC -.->|built-in| FS6
+    NPX -->|installs from| MS
+    MS -->|published distribution| NPX
+    FS1 --- MS
+    FS2 --- MS
+    FS3 --- MS
+    FS4 --- MS
+    FS5 --- MS
+    FS6 --- MS
+    CC -->|reads AGENTS.md| AG
+    CU -->|reads AGENTS.md| AG
+    CB -->|reads AGENTS.md| AG
+    CR -->|reads AGENTS.md + kilo.jsonc| AG
+    GK -->|reads AGENTS.md| AG
+
+    style HR fill:#0d1b2a,stroke:#e63946,color:#e6e6e6,stroke-width:2px
+    style HRCFG fill:#0d1b2a,stroke:#5a5a8a,color:#e6e6e6
+    style ZS fill:#1a1a2e,stroke:#e63946,color:#e6e6e6
+    style KC fill:#1a1a2e,stroke:#e63946,color:#e6e6e6
+    style MS fill:#16213e,stroke:#e63946,color:#e6e6e6,stroke-width:3px
+    style AG fill:#0f3460,stroke:#e63946,color:#e6e6e6
+    style NPX fill:#16213e,stroke:#e63946,color:#e6e6e6
+    style FS1 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style FS2 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style FS3 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style FS4 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style FS5 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style FS6 fill:#1a1a2e,stroke:#5a5a8a,color:#e6e6e6
+    style WU fill:#1a1a2e,stroke:#e63946,color:#e6e6e6
+    style PERM fill:#16213e,stroke:#e63946,color:#e6e6e6
+    style SKP fill:#16213e,stroke:#e63946,color:#e6e6e6
+    style AGD fill:#16213e,stroke:#e63946,color:#e6e6e6
+    style IDX fill:#16213e,stroke:#e63946,color:#e6e6e6

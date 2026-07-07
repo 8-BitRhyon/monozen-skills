@@ -1,0 +1,26 @@
+{
+  "name": "monozen-skills",
+  "version": "1.0.0",
+  "description": "Centralized agent skill definitions for the Monozen system — federated across Claude Code, Cursor, CodeBuff, Crush/kilo, and Gemini CLIs.",
+  "private": true,
+  "scripts": {
+    "manifest": "bash scripts/manifest.sh",
+    "validate": "bash scripts/validate.sh"
+  },
+  "keywords": [
+    "monozen",
+    "agent-skills",
+    "federation",
+    "cli",
+    "claude-code",
+    "cursor",
+    "herdr",
+    "crush",
+    "kilo",
+    "gemini"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8-BitRhyon/monozen-skills.git"
+  }
+}
