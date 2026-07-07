@@ -15,16 +15,19 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` — 28 skills
+### `~/.agents/skills/` — 32 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Claude Code, Cursor, CodeBuff, and Crush/kilo.
 
 ```
 asta-skill              # Semantic Scholar corpus queries
 bangumi-frames          # Anime frame extraction from Bilibili
+chrome-devtools-axi     # AXI-wrapped browser automation (chrome-devtools-mcp)
 creating-mermaid-diagrams  # Mermaid diagram generation + Kroki export
 drawio-skill            # draw.io diagram XML + export
 excalidraw              # Excalidraw diagram generation + export
+find-skills             # Agent skill discovery & suggestions
+gh-axi                  # AXI-wrapped GitHub CLI (gh)
 gsap-core               # GSAP .to(), .from(), easing, matchMedia
 gsap-frameworks         # GSAP in Vue, Svelte
 gsap-performance        # GSAP optimization, will-change, batching
@@ -33,6 +36,7 @@ gsap-react              # GSAP in React, useGSAP hook
 gsap-scrolltrigger      # GSAP ScrollTrigger plugin
 gsap-timeline           # GSAP timeline sequencing
 gsap-utils              # GSAP utils: clamp, mapRange, random
+herdr                   # herdr terminal multiplexer control skill
 improve                 # Read-only codebase audit + improvement plans
 journal-abbrev          # Journal name abbreviation lookup
 monozen-architecture    # Monozen 5-panel SPA architecture
@@ -50,15 +54,18 @@ tldraw-skill            # tldraw diagram JSON + export
 video-podcast-maker     # Automated narrated video production
 ```
 
-### `~/.commandcode/skills/` — 4 skills
+### `~/.commandcode/skills/` — 8 skills
 
-Command Code's skill directory. A subset of monozen skills that are core to the portfolio project.
+Command Code's skill directory. A subset of monozen skills plus AXI tools that are core to workflow.
 
 ```
-monozen-architecture
-monozen-nav
-monozen-themes
-monozen-webgl
+chrome-devtools-axi     # AXI-wrapped browser automation
+gh-axi                  # AXI-wrapped GitHub CLI
+herdr                   # herdr terminal multiplexer control
+monozen-architecture    # Monozen 5-panel SPA architecture
+monozen-nav             # Monozen nav bar, corner brackets, brand
+monozen-themes          # Monozen Sun/Moon dual-theme identity
+monozen-webgl           # Monozen WebGL2 shader pipeline
 ```
 
 ### `~/.gemini/config/skills/` — 11 skills
@@ -120,7 +127,8 @@ design          # Design partner for frontend interfaces
 | **Claude Code** | `~/.agents/skills/` + `AGENTS.md` at project root | herdr (panes, sessions) | Project-level AGENTS.md lists monozen-skills |
 | **Cursor** | `~/.agents/skills/` + `AGENTS.md` + `.cursorrules` | herdr | AGENTS.md at project root |
 | **CodeBuff** | `~/.agents/skills/` + `AGENTS.md` | herdr | Project-level AGENTS.md |
-| **Crush (kilo)** | `kilo.jsonc skills.paths[*]` — 5 of 6 directories + `AGENTS.md` | herdr | Reads federation paths directly from config |
+| **Crush (kilo)** | `kilo.jsonc skills.paths[*]` — 6 directories + `AGENTS.md` | herdr | Reads federation paths directly from config |
+| **Command Code** | `~/.commandcode/skills/` + `AGENTS.md` at project root | herdr | Project-level AGENTS.md references tools |
 | **Gemini** | `~/.gemini/config/skills/` + plugin skill dirs | herdr | Gemini UI config / plugin settings |
 
 ---
@@ -133,8 +141,8 @@ Crush/kilo loads skills in the order defined by `kilo.jsonc > skills.paths`. Whe
 // The order in ~/.config/kilo/kilo.jsonc determines priority
 "skills": {
   "paths": [
-    "~/.agents/skills",              // 1st priority (28 skills)
-    "~/.commandcode/skills",         // 2nd priority (4 skills)
+    "~/.agents/skills",              // 1st priority (32 skills)
+    "~/.commandcode/skills",         // 2nd priority (8 skills)
     "~/.gemini/config/skills",       // 3rd priority (11 skills)
     "~/.gemini/config/plugins/modern-web-guidance-plugin/skills",   // 4th
     "~/.gemini/config/plugins/ui-ux-pro-max-skill/.claude/skills"   // 5th

@@ -14,7 +14,7 @@ github.com/8-BitRhyon/monozen-skills
 
 | Concern | What it provides |
 |---|---|
-| **Skill definitions** | ~42 canonical `.md` skill files organized by domain |
+| **Skill definitions** | ~36 canonical `.md` skill files organized by domain |
 | **Sandbox template** | The shell + config + federation pattern you need for any new project |
 | **Installation protocol** | `npx skills add` compatible — point any CLI at this repo |
 | **Cross-CLI portability** | One `AGENTS.md` fragment that works across 5+ agent CLIs |
@@ -88,14 +88,14 @@ workon() {
 
 ### Layer 3 — Skills Federation
 
-Skills are **federated** — they live across the filesystem in CLI-specific directories but share a common namespace. The federation encompasses **42 unique skills across 6 directories**:
+Skills are **federated** — they live across the filesystem in CLI-specific directories but share a common namespace. The federation encompasses **46 unique skills across 6 directories**:
 
 ![Federation map](assets/monozen-skills-federation.svg)
 
 | Directory | Skills | Source |
 |---|---|---|
-| `.agents/skills/` | 28 | Community + custom skills |
-| `.commandcode/skills/` | 4 | Monozen core (architecture, nav, themes, webgl) |
+| `.agents/skills/` | 32 | Community + custom skills |
+| `.commandcode/skills/` | 8 | Monozen core + AXI tools |
 | `.gemini/config/skills/` | 11 | Gemini-native design skills |
 | `.gemini/config/plugins/modern-web-guidance/skills/` | 2 | Modern web plugin |
 | `.gemini/config/plugins/ui-ux-pro-max/.claude/skills/` | 7 | UI/UX pro max plugin |
@@ -230,7 +230,10 @@ cp monozen-skills/templates/kilo.jsonc ~/.config/kilo/kilo.jsonc
 # 3. Install skills
 npx skills add github.com/8-BitRhyon/monozen-skills
 
-# 4. Your CLI picks up AGENTS.md → reads federation → skills are live
+# 4. Bootstrap external tools and herdr plugins
+bash monozen-skills/scripts/setup.sh
+
+# 5. Your CLI picks up AGENTS.md → reads federation → skills are live
 ```
 
 ### For an existing project
@@ -241,6 +244,9 @@ cat monozen-skills/templates/AGENTS.md >> AGENTS.md
 
 # 2. Refresh skills
 npx skills add github.com/8-BitRhyon/monozen-skills
+
+# 3. Bootstrap external tools and plugins
+bash monozen-skills/scripts/setup.sh
 ```
 
 ---
@@ -305,7 +311,8 @@ When you add a new project at `Projects/CoolThing`:
 2. `cp templates/AGENTS.md .` — project gets its own agent instructions
 3. `cp templates/kilo.jsonc ~/.config/kilo/kilo.jsonc` — or merge into existing config
 4. `npx skills add` — skills are installed (or already present from previous install)
-5. Start coding — your CLI reads AGENTS.md → skills are available
+5. Run `bash scripts/setup.sh` to install external tools and herdr plugins
+6. Start coding — your CLI reads AGENTS.md → skills are available
 
 The repo's `templates/` directory is designed to be the one-stop scaffold for this exact workflow.
 
@@ -345,6 +352,8 @@ git push --tags
 | **Portfolio repo** (Monozen SPA) | `github.com/8-BitRhyon/portfolio` |
 | **herdr workspace manager** | `~/.config/herdr/` — [herdr.app](https://herdr.app) |
 | **AGENTS.md** (cross-CLI instructions) | Included in portfolio repo |
+| **gh-axi** (GitHub CLI wrapper) | `npx -y gh-axi` — [github.com/kunchenguid/gh-axi](https://github.com/kunchenguid/gh-axi) |
+| **chrome-devtools-axi** (browser automation) | `npx -y chrome-devtools-axi` — [github.com/kunchenguid/chrome-devtools-axi](https://github.com/kunchenguid/chrome-devtools-axi) |
 | **design.md** (canonical design doc) | `design.md` in portfolio root |
 | **kilo.jsonc** (sandbox config) | `~/.config/kilo/kilo.jsonc` |
 | **workon()** (shell shortcut) | `~/.zshrc` |
