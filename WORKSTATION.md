@@ -19,9 +19,10 @@ Ghostty's native tab bar.
 |------|---------|
 | `~/.config/ghostty/config` | Ghostty: blur, fullscreen, no `command` |
 | `~/.tmux.conf` | tmux: catppuccin, prefix `^A`, tab/pane binds |
-| `~/.tmux/plugins/{tpm,catppuccin-tmux}` | plugins |
+| `~/.tmux/plugins/{tpm,catppuccin-tmux,tmux-{resurrect,continuum,sensible,yank,sessionx}}` | plugins |
 | `~/.zshrc` | auto-starts tmux (`attach main || new main`) |
 | `~/.secrets.zsh` | API keys, `chmod 600`, sourced by `.zshrc` |
+| `~/.config/aerospace/aerospace.toml` | AeroSpace tiling WM config (omerxx-style fullscreen) |
 
 ## Key gotchas (the hard-won part)
 
@@ -60,6 +61,14 @@ Ghostty's native tab bar.
 
 6. **API keys:** keep out of `~/.zshrc`; store in `~/.secrets.zsh`
    (`chmod 600`), sourced by `.zshrc`. Rotate any key that was ever in plaintext.
+
+7. **fzf is required by `tmux-sessionx`.** Install via `brew install fzf` before
+   using the session picker (`Ctrl-A s`).
+
+8. **Aerospace fullscreen replaces Ghostty fullscreen.** omerxx uses Aerospace
+   for fullscreen (which keeps transparency alive via tiling, not native
+   macOS fullscreen). Install: `brew install --cask nikitabobko/aerospace/aerospace`.
+   Config: `~/.config/aerospace/aerospace.toml`. Bind: `alt-ctrl-shift-f`.
 
 ## Prefix / tab cheat sheet
 | Key | Action |
