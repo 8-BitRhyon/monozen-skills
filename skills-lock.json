@@ -30,6 +30,12 @@
       "sourceType": "github",
       "skillPath": "skills/monozen-workflow/SKILL.md",
       "computedHash": ""
+    },
+    "skill-authoring": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-authoring/SKILL.md",
+      "computedHash": ""
     }
   }
 }
