@@ -11,7 +11,7 @@ echo "=== [validate] Starting Skill Validation Suite ==="
 
 ERRORS=0
 
-# 1. Validate frontmatter and formatting
+# 1. Validate skills frontmatter, formatting, and path portability
 for skill_dir in "${SKILLS_DIR}"/*/; do
   if [ -d "${skill_dir}" ]; then
     skill_name="$(basename "${skill_dir}")"
@@ -34,9 +34,9 @@ for skill_dir in "${SKILLS_DIR}"/*/; do
       ERRORS=$((ERRORS + 1))
     fi
 
-    # Check em dash prohibition rule
-    if grep -q "—" "${skill_md}"; then
-      echo "[FAIL] ${skill_name}/SKILL.md: Contains em dash ('—'). Replace with '-', ':', or ' - '"
+    # Check for hardcoded local user paths (/Users/)
+    if grep -q "/Users/" "${skill_md}"; then
+      echo "[FAIL] ${skill_name}/SKILL.md: Contains hardcoded local path '/Users/'. Use relative paths."
       ERRORS=$((ERRORS + 1))
     fi
 
@@ -44,15 +44,34 @@ for skill_dir in "${SKILLS_DIR}"/*/; do
   fi
 done
 
-# 2. Validate skills-lock.json presence
+# 2. Check global em dash prohibition across all Markdown files & package.json
+while IFS= read -r md_file; do
+  if grep -q "—" "${md_file}"; then
+    echo "[FAIL] ${md_file}: Contains em dash ('—'). Replace with '-', ':', or ' - '"
+    ERRORS=$((ERRORS + 1))
+  fi
+done < <(find "${REPO_DIR}" -type f \( -name "*.md" -o -name "package.json" \) -not -path "*/.git/*")
+
+# 3. Validate skills-lock.json presence and completeness
 if [ ! -f "${LOCK_FILE}" ]; then
   echo "[FAIL] skills-lock.json does not exist"
   ERRORS=$((ERRORS + 1))
+else
+  # Ensure all skill folders are registered in lock file
+  for skill_dir in "${SKILLS_DIR}"/*/; do
+    if [ -d "${skill_dir}" ]; then
+      skill_name="$(basename "${skill_dir}")"
+      if ! grep -q "\"${skill_name}\":" "${LOCK_FILE}"; then
+        echo "[FAIL] skills-lock.json: Skill '${skill_name}' is missing from manifest"
+        ERRORS=$((ERRORS + 1))
+      fi
+    fi
+  done
 fi
 
 echo "=================================================="
 if [ ${ERRORS} -eq 0 ]; then
-  echo "✅ All skills validated successfully. Zero errors."
+  echo "✅ All skills & repo contracts validated successfully. Zero errors."
   exit 0
 else
   echo "❌ Validation failed with ${ERRORS} error(s)."

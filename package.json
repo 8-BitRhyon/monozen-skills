@@ -1,7 +1,7 @@
 {
   "name": "monozen-skills",
   "version": "1.1.0",
-  "description": "Centralized agent skill definitions for the Monozen system — federated across Claude Code, Cursor, CodeBuff, Crush/kilo, and Gemini CLIs.",
+  "description": "Centralized agent skill definitions for the Monozen system - federated across Claude Code, Cursor, CodeBuff, Crush/kilo, and Gemini CLIs.",
   "private": true,
   "scripts": {
     "manifest": "bash scripts/manifest.sh",

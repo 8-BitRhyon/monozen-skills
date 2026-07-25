@@ -7,15 +7,15 @@
 
 ## Overview
 
-The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path — no symlinks, no shared state.
+The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path - no symlinks, no shared state.
 
-![Federation mindmap](monozen-skills-federation.svg)
+![Federation mindmap](assets/monozen-skills-federation.svg)
 
 ---
 
 ## Directory Map
 
-### `~/.agents/skills/` — 32 skills
+### `~/.agents/skills/` - 32 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Claude Code, Cursor, CodeBuff, and Crush/kilo.
 
@@ -54,7 +54,7 @@ tldraw-skill            # tldraw diagram JSON + export
 video-podcast-maker     # Automated narrated video production
 ```
 
-### `~/.commandcode/skills/` — 8 skills
+### `~/.commandcode/skills/`  -  8 skills
 
 Command Code's skill directory. A subset of monozen skills plus AXI tools that are core to workflow.
 
@@ -68,7 +68,7 @@ monozen-themes          # Monozen Sun/Moon dual-theme identity
 monozen-webgl           # Monozen WebGL2 shader pipeline
 ```
 
-### `~/.gemini/config/skills/` — 11 skills
+### `~/.gemini/config/skills/`  -  11 skills
 
 Gemini's native skill directory. Primarily design and brand skills.
 
@@ -86,18 +86,18 @@ ui-styling                  # UI style guidance
 ui-ux-pro-max               # Comprehensive UI/UX skill
 ```
 
-### Gemini Plugin Directories — 2 locations
+### Gemini Plugin Directories  -  2 locations
 
 Installed via Gemini's plugin system. These skills are loaded through plugin-specific paths.
 
-**`~/.gemini/config/plugins/modern-web-guidance-plugin/skills/`** — 2 skills
+**`~/.gemini/config/plugins/modern-web-guidance-plugin/skills/`**  -  2 skills
 
 ```
 chrome-extensions       # Chrome extension development
 modern-web-guidance     # Modern web development patterns
 ```
 
-**`~/.gemini/config/plugins/ui-ux-pro-max-skill/.claude/skills/`** — 7 skills
+**`~/.gemini/config/plugins/ui-ux-pro-max-skill/.claude/skills/`**  -  7 skills
 
 ```
 banner-design
@@ -109,7 +109,7 @@ ui-styling
 ui-ux-pro-max
 ```
 
-### Command Code Built-in Skills — 2 skills
+### Command Code Built-in Skills  -  2 skills
 
 Shipped with the `command-code` npm package at `~/.npm-global/lib/node_modules/command-code/skills/`.
 
@@ -127,7 +127,7 @@ design          # Design partner for frontend interfaces
 | **Claude Code** | `~/.agents/skills/` + `AGENTS.md` at project root | herdr (panes, sessions) | Project-level AGENTS.md lists monozen-skills |
 | **Cursor** | `~/.agents/skills/` + `AGENTS.md` + `.cursorrules` | herdr | AGENTS.md at project root |
 | **CodeBuff** | `~/.agents/skills/` + `AGENTS.md` | herdr | Project-level AGENTS.md |
-| **Crush (kilo)** | `kilo.jsonc skills.paths[*]` — 6 directories + `AGENTS.md` | herdr | Reads federation paths directly from config |
+| **Crush (kilo)** | `kilo.jsonc skills.paths[*]`  -  6 directories + `AGENTS.md` | herdr | Reads federation paths directly from config |
 | **Command Code** | `~/.commandcode/skills/` + `AGENTS.md` at project root | herdr | Project-level AGENTS.md references tools |
 | **Gemini** | `~/.gemini/config/skills/` + plugin skill dirs | herdr | Gemini UI config / plugin settings |
 

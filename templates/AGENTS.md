@@ -7,7 +7,7 @@
 
 - **Code Readability First**: Write clean, self-explanatory code. Avoid overly complicated abstractions or bloated boilerplate.
 - **Concise Comments Only**: Do not write overly verbose, decorative, or state-the-obvious comments. Explain non-obvious rationale only when necessary.
-- **No Em Dashes**: Never use em dashes (`—`) anywhere in skill files (`SKILL.md`), documentation, or code comments. Use standard hyphens (`-`), colons (`:`), or spaced hyphens (` - `) instead.
+- **No Em Dashes**: Never use em dashes (` - `) anywhere in skill files (`SKILL.md`), documentation, or code comments. Use standard hyphens (`-`), colons (`:`), or spaced hyphens (` - `) instead.
 
 ## Tool Usage
 

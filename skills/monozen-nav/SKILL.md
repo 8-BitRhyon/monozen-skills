@@ -1,50 +1,77 @@
 ---
 name: monozen-nav
-description: Monozen nav bar system  -  capsule layout, corner brackets (GSAP Flip), brand crossfade on scroll, Moon/Sun gating, responsive breakpoints. Use when modifying the nav bar, corner bracket animation, brand mark transitions, or nav CSS for the Monozen portfolio.
+description: Monozen nav bar system architecture - glassmorphism capsule layout, corner brackets (GSAP Flip), brand crossfade on scroll, Sun/Moon theme gating, responsive breakpoints, and design rationale. Use when working on navigation UI, brand mark transitions, or nav layout.
 ---
 
-# Monozen Nav Bar
+# Monozen Navigation System
 
-## HTML Structure
-- `<nav class="nav">`  -  fixed top-center glassmorphism capsule
-- `.nav-inner`  -  flex container with `position: relative` (anchor for corner brackets)
-- `.nav-brand`  -  link wrapping `.nav-brand-text` (text) + `.nav-brand-mark` (picture element)
-- `.nav-links`  -  internal flex, has `position: relative`
-- `.nav-toggles`  -  theme toggle button + Sun stamp palette
+## Overview & Rationale
 
-## Brand Crossfade (scroll listener in panel-system.js)
-- Default-safe: `.nav-brand-text` (text) fully visible, `.nav-brand-mark` hidden with `pointer-events: none`
-- On scroll >32px: `.nav.is-scrolled` toggled
-- `.is-scrolled .nav-brand-text` → `opacity: 0`
-- `.is-scrolled .nav-brand-mark` → `opacity: 1; transform: scale(1)`
-- `prefers-reduced-motion: reduce` disables transition but allows instant snap
-- Brand mark assets at `brand/nav-mark-{64,128}.{webp,png}` + `brand/nav-mark-192.png`
+The navigation bar in Monozen is not a generic header; it is a **floating glass capsule** acting as an anchor between the two dual-persona themes.
 
-## Corner Brackets (`#navCornerGroup`, Moon-only)
-- Four SVG L-shapes positioned via CSS transforms (scaleX/scaleY for orientation)
-- `[data-theme="sun"] .nav-corner-group { display: none; }`
-- `updateNavCorners(id, opts)` in panel-system.js:
-  - Reads `offsetLeft`/`offsetTop`/`offsetWidth`/`offsetHeight` of active `.mz-nav-item`
-  - Uses `Flip.getState(group)` → `Flip.from(state, { duration: 0.4, ease: 'power3.out' })`
-  - Falls back to instant snap if: GSAP/Flip unavailable, reduced motion, or `opts.snap === true`
-- Reposition on `theme-changed` and `resize` events (snapped, no Flip)
+- **Moon Mode (Systemizer)**: The nav acts as a targeting reticle frame. Four active SVG corner brackets (`#navCornerGroup`) dynamically lock onto the active panel item using GSAP `Flip`, simulating a tactical HUD targeting computer.
+- **Sun Mode (Shaper)**: The nav transforms into a technical drafting toolbar. The HUD corner brackets retreat (`display: none`), stroke weights flatten to 1px, and the interactive stamp tool palette renders inside `.nav-toggles`.
 
-## Nav Slider (`#navSlider`)
-- 2px accent underline tracking active item
-- `updateNavSlider(id)` sets `width` + `translateX` via CSS transition
-- Initial position suppressed by `.no-transition` class on load
+---
 
-## Responsive Breakpoints
-- ≤1024px: sidebar nav hidden, mobile tab bar visible
-- ≤768px: nav labels hidden (icons only), brand padding reduced
-- ≤480px: nav index numbers hidden
+## Architecture & Layout
 
-## Moon-Specific Nav
-- Corner brackets active (animated via Flip)
-- `.mz-glow` filter on active icons
-- Snap rings on snap-btn hover
+```
+ ┌─────────────────────────────────────────────────────────────────┐
+ ┌─────────┬───────────────────────────────┬──────────────────────┐ │
+ │ [MARK]  │ [01 FOCUS] [02 WORK] [03 PROJ]│ [STAMPS]  [THEME 🌓] │ │
+ └─────────┴───────────────────────────────┴──────────────────────┘ │
+ └───────────────────────────────[NAV CAPSULE]──────────────────────┘
+```
 
-## Sun-Specific Nav
-- Stamp palette in nav-toggles (`.stamp-palette`)
-- Corner brackets hidden
-- MZ glyphs at stroke-width: 1 (vs Moon's 1.25)
+- `<nav class="nav">`: Fixed top-center glassmorphism container (`backdrop-filter: blur(12px)`).
+- `.nav-inner`: Flex container (`position: relative`) anchor point for corner brackets.
+- `.nav-brand`: Dual-state brand component containing both text label (`.nav-brand-text`) and WebP logo (`.nav-brand-mark`).
+- `.nav-links`: Panel links container featuring a 2px CSS sliding underline indicator (`#navSlider`).
+- `.nav-toggles`: Right-aligned controls housing the theme toggle button and Sun stamp tool palette.
+
+---
+
+## Core Behavior Protocols
+
+### 1. Brand Crossfade on Scroll
+- **Rationale**: Preserves precious vertical screen space during long scroll reads while keeping identity visible.
+- **Trigger**: Window scroll offset > 32px toggles `.nav.is-scrolled`.
+- **States**:
+  - `scrollTop <= 32px`: `.nav-brand-text` opacity = 1; `.nav-brand-mark` opacity = 0 (`pointer-events: none`).
+  - `scrollTop > 32px`: `.nav-brand-text` opacity = 0; `.nav-brand-mark` opacity = 1 (`scale(1)`).
+- **Reduced Motion**: Disables opacity transition; snaps instantly to state.
+
+### 2. Corner Bracket GSAP Flip (Moon Theme Only)
+- **Rationale**: Implements tactical reticle framing without layout thrashing.
+- **Implementation**:
+  ```javascript
+  // panel-system.js: updateNavCorners(activeId, opts)
+  const state = Flip.getState('#navCornerGroup');
+  // Reposition corners around active target bounds
+  Flip.from(state, { duration: 0.4, ease: 'power3.out' });
+  ```
+- **Fallback**: Snaps instantly if GSAP/Flip plugin is uninitialized, reduced motion is active, or during window resize.
+
+### 3. CSS Nav Slider (`#navSlider`)
+- **Behavior**: A 2px accent bar that tracks the active navigation item using CSS `transform: translateX(...)` and `width`.
+- **Initialization**: Suppressed on initial boot via temporary `.no-transition` CSS class to avoid slide-in flashes from (0,0).
+
+---
+
+## Responsive Breakpoints & Hierarchy
+
+| Viewport Width | Navigation Adaptation |
+|---|---|
+| **> 1024px** | Full horizontal capsule nav + active sidebar navigation. |
+| **<= 1024px** | Sidebar navigation collapses into mobile bottom tab bar. |
+| **<= 768px** | Text labels hide; icons and active indicators remain visible. |
+| **<= 480px** | Index numbers (01, 02...) hide to prevent capsule overflow. |
+
+---
+
+## Verification & Quality Checklist
+
+- [ ] Nav corner brackets hide completely in Sun theme (`[data-theme="sun"] .nav-corner-group { display: none; }`).
+- [ ] Nav brand mark assets exist at `brand/nav-mark-{64,128,192}.webp`.
+- [ ] Rapid panel switching does not cause GSAP Flip bracket misalignment.

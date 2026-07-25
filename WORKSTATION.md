@@ -1,10 +1,10 @@
-# WORKSTATION — Diagnostic
+# WORKSTATION  -  Diagnostic
 
 Terminal multiplexer stack: **Ghostty → tmux → herdr**.
 Adapted from [omerxx/dotfiles](https://github.com/omerxx/dotfiles) for **tmux 3.7b**,
 **Ghostty 1.3.1**, **herdr**.
 
-Tabs are **tmux windows** rendered as Catppuccin pills — not Ghostty native tabs.
+Tabs are **tmux windows** rendered as Catppuccin pills  -  not Ghostty native tabs.
 
 ---
 
@@ -56,11 +56,11 @@ flowchart LR
 ### Layout
 
 ```
-herdr agent tab bar — top
+herdr agent tab bar  -  top
 ──────────────────────────────
-[agent panes — Kilo, Claude Code]
+[agent panes  -  Kilo, Claude Code]
 ──────────────────────────────
-tmux Catppuccin pills — bottom
+tmux Catppuccin pills  -  bottom
    #W █ #N     session     ~/dir 
 ```
 
@@ -73,7 +73,7 @@ tmux Catppuccin pills — bottom
 | Terminal | Ghostty | GPU-accelerated terminal, transparent, non-native fullscreen |
 | Multiplexer | tmux | Window/pane manager, Catppuccin pill status bar |
 | Multiplexer | herdr | AI agent workspace multiplexer |
-| Editor | nvim | Code editor — Lazy.nvim, Catppuccin, Telescope, LSP |
+| Editor | nvim | Code editor  -  Lazy.nvim, Catppuccin, Telescope, LSP |
 | Git UI | lazygit | Terminal git interface |
 | Directory jump | zoxide | Frequency-ranked path resolution |
 | Fuzzy finder | fzf | File, history, process, git matching |
@@ -93,14 +93,14 @@ tmux Catppuccin pills — bottom
 
 | Path | Role |
 |------|------|
-| `~/.config/ghostty/config` | Ghostty — blur radius, opacity, non-native fullscreen, no `command` |
-| `~/.tmux.conf` | tmux — omerxx catppuccin fork, prefix `^A`, vim-style pane nav |
-| `~/.zshrc` | Shell init — toolchain aliases, fzf, zoxide, tmux auto-start |
-| `~/.gitconfig` | Git — delta pager, nvim editor, zdiff3 merge, gpgsign |
-| `~/.gitignore_global` | Global gitignore — macOS, editor, build artifacts, secrets |
-| `~/.config/lazygit/config.yml` | LazyGit — dark theme, delta pager, nvim |
-| `~/.config/nvim/init.lua` | Neovim — Lazy.nvim, Catppuccin, Telescope, LSP |
-| `~/.config/aerospace/aerospace.toml` | AeroSpace — tiling binds, fullscreen shortcut |
+| `~/.config/ghostty/config` | Ghostty  -  blur radius, opacity, non-native fullscreen, no `command` |
+| `~/.tmux.conf` | tmux  -  omerxx catppuccin fork, prefix `^A`, vim-style pane nav |
+| `~/.zshrc` | Shell init  -  toolchain aliases, fzf, zoxide, tmux auto-start |
+| `~/.gitconfig` | Git  -  delta pager, nvim editor, zdiff3 merge, gpgsign |
+| `~/.gitignore_global` | Global gitignore  -  macOS, editor, build artifacts, secrets |
+| `~/.config/lazygit/config.yml` | LazyGit  -  dark theme, delta pager, nvim |
+| `~/.config/nvim/init.lua` | Neovim  -  Lazy.nvim, Catppuccin, Telescope, LSP |
+| `~/.config/aerospace/aerospace.toml` | AeroSpace  -  tiling binds, fullscreen shortcut |
 | `~/.secrets.zsh` | API keys, `chmod 600`, sourced by `.zshrc` |
 | `dotfiles/` (this repo) | Reference configs |
 
@@ -125,7 +125,7 @@ tmux Catppuccin pills — bottom
 | Herdr Plus | Project templates, quick action launcher |
 | Spreader | YAML layout application |
 | reviewr | Terminal code-review sidebar |
-| llmtrim | ⚠️ LLM token proxy — intercepts agent API calls. See gotcha #10. |
+| llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #10. |
 | GitHub Start | Tab origin from GitHub issue/PR |
 | File Viewer | Git-aware read-only file tree |
 | Vim Navigation | Ctrl+h/j/k/l bridging herdr panes ↔ nvim |
@@ -137,7 +137,7 @@ tmux Catppuccin pills — bottom
 ### 1. Use `omerxx/catppuccin-tmux` fork, not upstream `catppuccin/tmux`
 Upstream fill/color handling produces a blacked-out tab bar background. omerxx's
 fork renders correctly. The fork also avoids the `current_file` format variable
-bug on tmux 3.7b — no manual patching required.
+bug on tmux 3.7b  -  no manual patching required.
 
 ### 2. Tmux plugins require explicit `run` lines on 3.7b
 catppuccin, sensible, yank, resurrect, continuum, and sessionx are loaded via
@@ -145,7 +145,7 @@ catppuccin, sensible, yank, resurrect, continuum, and sessionx are loaded via
 on 3.7b. Re-cloning plugins without the `run` lines produces silent load
 failure.
 
-### 3. tmux status bar at bottom — herdr panel at top
+### 3. tmux status bar at bottom  -  herdr panel at top
 herdr's agent panel occupies the top line. `status-position top` causes
 Catppuccin pills to collide with herdr's UI. `status-position bottom`
 separates them.
@@ -159,7 +159,7 @@ if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
   /opt/homebrew/bin/tmux attach -t main || /opt/homebrew/bin/tmux new -s main
 fi
 ```
-(Absolute path required — GUI-launched Ghostty does not resolve Homebrew PATH.)
+(Absolute path required  -  GUI-launched Ghostty does not resolve Homebrew PATH.)
 
 ### 5. Fullscreen transparency
 `background-blur = "macos-glass-regular"` renders opaque in fullscreen.
@@ -203,7 +203,7 @@ Register public key on GitHub → Settings → SSH and GPG keys → New GPG key.
 gpg --armor --export <key-id> | pbcopy
 ```
 
-### 10. ⚠️ llmtrim — local MITM proxy
+### 10. ⚠️ llmtrim  -  local MITM proxy
 The llmtrim plugin intercepts all LLM API calls from agent panes to compress
 token usage. It runs locally, never phones home, but it sees every API key and
 prompt passing through herdr agent panes. Understand the interception surface
