@@ -7,6 +7,18 @@
       "skillPath": "skills/monozen-architecture/SKILL.md",
       "computedHash": ""
     },
+    "monozen-audit": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-audit/SKILL.md",
+      "computedHash": ""
+    },
+    "production-web-audit": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/production-web-audit/SKILL.md",
+      "computedHash": ""
+    },
     "monozen-themes": {
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
