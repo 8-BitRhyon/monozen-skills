@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "agentic-loop": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/agentic-loop/SKILL.md",
+      "computedHash": ""
+    },
+    "context-engineering": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/context-engineering/SKILL.md",
+      "computedHash": ""
+    },
     "monozen-architecture": {
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
@@ -13,10 +25,10 @@
       "skillPath": "skills/monozen-audit/SKILL.md",
       "computedHash": ""
     },
-    "production-web-audit": {
+    "monozen-nav": {
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
-      "skillPath": "skills/production-web-audit/SKILL.md",
+      "skillPath": "skills/monozen-nav/SKILL.md",
       "computedHash": ""
     },
     "monozen-themes": {
@@ -31,16 +43,22 @@
       "skillPath": "skills/monozen-webgl/SKILL.md",
       "computedHash": ""
     },
-    "monozen-nav": {
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/monozen-nav/SKILL.md",
-      "computedHash": ""
-    },
     "monozen-workflow": {
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-workflow/SKILL.md",
+      "computedHash": ""
+    },
+    "production-web-audit": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/production-web-audit/SKILL.md",
+      "computedHash": ""
+    },
+    "prompt-engineering-loop": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/prompt-engineering-loop/SKILL.md",
       "computedHash": ""
     },
     "skill-authoring": {
@@ -49,28 +67,10 @@
       "skillPath": "skills/skill-authoring/SKILL.md",
       "computedHash": ""
     },
-    "agentic-loop": {
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": ""
-    },
     "task-decomposition": {
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": ""
-    },
-    "context-engineering": {
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": ""
-    },
-    "prompt-engineering-loop": {
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/prompt-engineering-loop/SKILL.md",
       "computedHash": ""
     }
   }

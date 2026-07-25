@@ -1,0 +1,69 @@
+---
+name: production-web-audit
+description: Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.
+---
+
+# Production Web Audit Skill
+
+## Overview
+
+A universal, multi-axis audit protocol for web applications before shipping to production. Works across any framework or stack (React, Next.js, Vue, Svelte, Vite, Vanilla JS, Node).
+
+---
+
+## Audit Axes & Checklist
+
+### 1. Security & Header Hygiene
+- [ ] **Content Security Policy (CSP)**: `script-src`, `style-src`, `connect-src`, `img-src`, and `frame-src` allow only necessary and trusted origins.
+- [ ] **CSP Synchronization**: If both HTTP response headers (`_headers`, Nginx, Cloudflare, server middleware) and `<meta http-equiv="Content-Security-Policy">` exist, their directives MUST be synchronized.
+- [ ] **Security Headers**: Confirm presence of `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` (or `SAMEORIGIN`), `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy`.
+- [ ] **Secrets & Credential Audit**: Confirm zero API keys, private tokens, or environment credentials are exposed in client-side code bundles or committed configuration files.
+
+### 2. Resource & Memory Safety
+- [ ] **Event Listener Cleanup**: All `addEventListener` calls attached to global targets (`window`, `document`) or dynamic DOM nodes must have corresponding `removeEventListener` cleanup on component unmount or state teardown.
+- [ ] **Render Loop & Timer Cleanup**: All `requestAnimationFrame`, `setInterval`, and `setTimeout` loops must be explicitly cancelled when their target container is detached, hidden, or destroyed.
+- [ ] **Tab Visibility Handling**: Event handlers on `visibilitychange` must pause animation/render loops when `document.hidden` is true and avoid restarting loops when target DOM elements are missing.
+- [ ] **Service Worker Cache Invalidation**: Whenever HTML or static assets change, bump the Service Worker `CACHE_NAME` version string to purge stale caches on client activation.
+
+### 3. Accessibility & Motion Compliance
+- [ ] **Reduced Motion**: All JavaScript-driven animations (GSAP, CSS transitions, WebGL canvas renders) must observe `(prefers-reduced-motion: reduce)` media query preferences and bypass non-essential movement.
+- [ ] **Keyboard Navigation**: All interactive elements must be keyboard-navigable (`tabindex`, `role`, ARIA attributes) with proper state guards to prevent double-invocation on rapid keypresses.
+
+### 4. Code Hygiene & Deprecation Cleanup
+- [ ] **Dead Code Removal**: Remove all obsolete API endpoints, unused third-party scripts, orphaned flags, and vestigial fallback branches.
+- [ ] **Clean Console**: Zero uncaught exceptions, unhandled promise rejections, or stray debug loggers in production builds.
+
+---
+
+## Universal Verification Protocol
+
+Execute the audit in 3 sequential steps:
+
+### Step 1: Automated Test Gate
+```bash
+npm test
+```
+*Requirement: All unit and integration test suites pass without failure.*
+
+### Step 2: Production Build Verification
+```bash
+npm run build
+```
+*Requirement: CSS compilation, bundler output, and revision metadata complete with zero errors.*
+
+### Step 3: Runtime Audit via Chrome DevTools (`chrome-devtools-axi`)
+```bash
+# 1. Start local preview server
+python3 -m http.server 8788 --directory . &
+
+# 2. Open page in DevTools & check console
+npx -y chrome-devtools-axi open http://localhost:8788
+npx -y chrome-devtools-axi console
+
+# 3. Verify page interaction & evaluate DOM/state
+npx -y chrome-devtools-axi eval "() => document.title"
+
+# 4. Close browser session
+npx -y chrome-devtools-axi stop
+```
+*Requirement: Zero console errors, clean network traces, and verified DOM state.*

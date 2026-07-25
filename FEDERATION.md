@@ -1,6 +1,6 @@
-# monozen-skills — Federation Map
+# monozen-skills: Federation Map
 
-> How 42 skills are federated across 6 filesystem directories,
+> How canonical skills are federated across filesystem directories,
 > and how CLI consumers resolve them.
 
 ---
