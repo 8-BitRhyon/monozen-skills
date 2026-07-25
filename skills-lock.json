@@ -36,6 +36,30 @@
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
       "computedHash": ""
+    },
+    "agentic-loop": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/agentic-loop/SKILL.md",
+      "computedHash": ""
+    },
+    "task-decomposition": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/task-decomposition/SKILL.md",
+      "computedHash": ""
+    },
+    "context-engineering": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/context-engineering/SKILL.md",
+      "computedHash": ""
+    },
+    "prompt-engineering-loop": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/prompt-engineering-loop/SKILL.md",
+      "computedHash": ""
     }
   }
 }
