@@ -24,6 +24,12 @@
       "sourceType": "github",
       "skillPath": "skills/monozen-nav/SKILL.md",
       "computedHash": ""
+    },
+    "monozen-workflow": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/monozen-workflow/SKILL.md",
+      "computedHash": ""
     }
   }
 }
