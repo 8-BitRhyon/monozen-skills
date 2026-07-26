@@ -200,6 +200,28 @@
     <div class="audit-row"><span class="label">resurrect / workspace-manager / zoxide / triage / attention</span> Installed; no malicious indicators in source; all open-source with active commits</div>
   </section>
 
+  <section aria-label="Cross-layer connections" style="padding:2rem 0;">
+    <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.01em">Why This Is Seamless</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;">
+      <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--primary);">Isolation → Launch</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">worktrunk creates a separate git branch per agent pane. Aider edits `src/auth.js` on branch `feature/auth`; Crush edits the same file on `feature/login` without collision. workspace-manager applies `.env` and `mise` setup automatically.</p>
+      </div>
+      <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--accent);">Lifecycle → Awareness</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">freebuff and commandcode plugins report blocked/working/done to herdr's socket API. focus-notify fires a native macOS toast when any agent finishes or needs approval. You click the toast and the terminal jumps to the exact pane.</p>
+      </div>
+      <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--yellow);">Persistence → Continuity</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">resurrect saves workspace, tab, pane, cwd, and running agent state. Restart herdr or the machine: the multi-agent layout (freebuff pane + reviewr sidebar + file-viewer) restores exactly. No manual re-setup.</p>
+      </div>
+      <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--green);">Context → Speed</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">Every agent pane has native access to fd (fast file find), rg (content grep), yazi (file manager with preview), bat (syntax highlight), and zoxide (directory jump). No context-switching out of the terminal.</p>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 <footer class="footer">
