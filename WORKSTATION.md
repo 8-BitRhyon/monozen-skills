@@ -131,8 +131,6 @@ tmux Catppuccin pills  -  bottom
 | Worktrunk | Git worktree management inside herdr (per-agent isolation) |
 | Worktree Setup | Per-project setup (.env, mise) when worktrees created |
 | Herdr Resurrect | Snapshot/restore workspace, tab, pane, agent layout |
-| tinysend-herdr | Email agent blocked/done; reply-to-unblock | Installed (complements focus-notify) |
-| agentbox-herdr | Sandbox VMs for parallel agents | Installed |
 | herdr-triage | Attention ranking (blocked first) | Installed |
 | herdr-attention | Jump to agent needing input | Installed |
 | llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #9. |
