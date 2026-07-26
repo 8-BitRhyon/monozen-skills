@@ -293,4 +293,4 @@ Every agent (Kilo, Aider, Crush, Freebuff, Antigravity CLI) must actually use th
 | Context access | Agent can invoke fzf/fd/rg/yazi/bat | Test from agent pane: `rg "test"`, `yy`, `fd .` |
 | Workspace isolation | Worktree per agent pane | `herdr plugin pane open --plugin worktrunk ...` |
 | Session persistence | Layout survives restart | `herdr-resurrect` saves; restart tmux/herdr and restore |
-| Plugin audit | Installed safely | Security audit on `freebuff` (`scripts/launch.sh`, `watcher-lib.sh`) and `commandcode` (`cmd-hooks/install-hooks.mjs`, `.commandcode/taste/`) — no malicious network/filesystem access, taste files are behavior instructions not hidden prompts |
+| Plugin audit | Installed safely | Security audit on `freebuff` (`scripts/launch.sh`, `watcher-lib.sh`) and `commandcode` (`cmd-hooks/install-hooks.mjs`, `.commandcode/taste/`) - no malicious network/filesystem access, taste files are behavior instructions not hidden prompts |
