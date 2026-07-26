@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monozen Agentic Workflow — Full Stack Visualization</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+  :root{--bg:#0b0c15;--surface:#12132b;--primary:#8b7eff;--accent:#ff6b6b;--green:#4ecdc4;--yellow:#ffe066;--text:#eaeaf2;--text-dim:#8a8aa8;--border:#2a2a45;--layer:#1a1b36;--arrow:#8b7eff44}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden}
+  .hero{position:relative;padding:5rem 2rem 3rem;text-align:center;background:linear-gradient(180deg,#0b0c15 0%,#12132b 60%,#0b0c15 100%);overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,#8b7eff22 0%,transparent 70%);pointer-events:none}
+  .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;letter-spacing:-0.04em;background:linear-gradient(135deg,#fff 20%,#8b7eff 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.05}
+  .hero .subtitle{margin-top:1rem;color:var(--text-dim);font-size:1.15rem;font-weight:300;max-width:640px;margin-left:auto;margin-right:auto}
+  .hero .meta{margin-top:2rem;color:var(--text-dim);font-size:0.85rem;font-family:'JetBrains Mono',monospace}
+
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem}
+
+  /* Layer cards */
+  .layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;padding:3rem 0}
+  .layer-card{position:relative;background:var(--layer);border:1px solid var(--border);border-radius:1.25rem;padding:2rem;overflow:hidden;transition:transform .2s ease,border-color .2s ease}
+  .layer-card:hover{transform:translateY(-3px);border-color:var(--primary)}
+  .layer-card::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));opacity:.6;border-radius:2px 2px 0 0}
+  .layer-number{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text-dim);letter-spacing:.05em;margin-bottom:.5rem}
+  .layer-card h3{font-size:1.25rem;font-weight:700;margin-bottom:.25rem;letter-spacing:-.01em}
+  .layer-card .layer-desc{font-size:0.9rem;color:var(--text-dim);margin-bottom:1.25rem}
+
+  .components{display:flex;flex-wrap:wrap;gap:.5rem}
+  .component{font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:.35rem .6rem;border-radius:.35rem;background:var(--surface);border:1px solid var(--border);color:var(--text);transition:background .15s,border-color .15s}
+  .component:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+  .component.installed{border-color:var(--green);color:var(--green)}
+  .component.new{border-color:var(--yellow);color:var(--yellow)}
+  .component.audit{border-color:var(--accent);color:var(--accent)}
+
+  /* Workflow pipeline */
+  .pipeline{padding:3rem 0}
+  .pipeline h2{font-size:1.75rem;font-weight:700;margin-bottom:.25rem;letter-spacing:-.02em}
+  .pipeline .sub{color:var(--text-dim);font-size:.95rem;margin-bottom:2rem}
+  .pipeline-track{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:relative}
+  .pipeline-track::before{content:"";position:absolute;top:50%;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent 0%,var(--primary) 40%,var(--accent) 60%,transparent 100%);transform:translateY(-50%);z-index:0;opacity:.3}
+  .step{position:relative;z-index:1;background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem 1rem;min-width:160px;text-align:center;flex:1}
+  .step-number{font-family:'JetBrains Mono';font-size:.7rem;color:var(--text-dim);margin-bottom:.25rem}
+  .step h4{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+  .step p{font-size:.75rem;color:var(--text-dim);line-height:1.3}
+
+  /* Audit banner */
+  .audit{padding:2rem;background:linear-gradient(135deg,#12132b,#0b0c15);border:1px solid var(--border);border-radius:1rem;margin:2rem 0}
+  .audit h3{font-size:1.1rem;font-weight:700;margin-bottom:.75rem;color:var(--green)}
+  .audit .audit-row{font-family:'JetBrains Mono';font-size:.8rem;color:var(--text);margin-bottom:.25rem}
+  .audit .audit-row .label{color:var(--text-dim);display:inline-block;min-width:160px}
+
+  /* Footer */
+  .footer{padding:3rem 0 2rem;text-align:center;color:var(--text-dim);font-size:.85rem}
+  .footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Monozen Agentic Workflow</h1>
+  <p class="subtitle">A 5-layer sandbox: shell substrate &rarr; workspace isolation &rarr; agent multiplexing &rarr; lifecycle hooks &rarr; context provisioning. Every component verified, audited, or installed.</p>
+  <div class="meta">14 herdr plugins &bull; fzf + fd + rg + yazi + zoxide &bull; worktrunk isolation &bull; native notifications &bull; multi-agent safe</div>
+</header>
+
+<div class="container">
+
+  <section class="layers">
+    <article class="layer-card">
+      <div class="layer-number">LAYER 0 — SHELL SUBSTRATE</div>
+      <h3>Terminal &amp; Toolchain</h3>
+      <p class="layer-desc">The foundation everything runs on: Ghostty (transparent, non-native fullscreen), tmux (catppuccin pills), zsh with aliases, and fzf wired to fd/rg.</p>
+      <div class="components">
+        <span class="component installed">Ghostty</span>
+        <span class="component installed">tmux</span>
+        <span class="component installed">zsh</span>
+        <span class="component installed">herdr</span>
+        <span class="component installed">fzf</span>
+        <span class="component installed">fd</span>
+        <span class="component installed">rg</span>
+        <span class="component installed">yazi</span>
+        <span class="component installed">zoxide</span>
+        <span class="component installed">bat</span>
+        <span class="component installed">eza</span>
+        <span class="component installed">delta</span>
+        <span class="component new">agentbox</span>
+      </div>
+    </article>
+
+    <article class="layer-card">
+      <div class="layer-number">LAYER 1 — WORKSPACE ISOLATION</div>
+      <h3>Git Worktrees Per Agent</h3>
+      <p class="layer-desc">Every agent pane gets its own isolated directory + branch while sharing the same `.git`. Worktrunk manages creation; setup installs `.env`/`mise` per project; resurrect saves the layout.</p>
+      <div class="components">
+        <span class="component installed">worktrunk</span>
+        <span class="component installed">worktree-setup</span>
+        <span class="component installed">workspace-manager</span>
+        <span class="component installed">sessionizer</span>
+        <span class="component installed">zoxide</span>
+        <span class="component installed">resurrect</span>
+        <span class="component installed">git</span>
+        <span class="component new">agentbox (VM sandbox)</span>
+      </div>
+    </article>
+
+    <article class="layer-card">
+      <div class="layer-number">LAYER 2 — AGENT MULTIPLEXING</div>
+      <h3>Parallel TUI Agents</h3>
+      <p class="layer-desc">Herdr manages workspace/tab/pane for Kilo, Aider, Crush, Freebuff, Antigravity CLI, and Command Code. Plugins provide lifecycle reporting (blocked/working/done/idle), notification toasts, and workspace layouts.</p>
+      <div class="components">
+        <span class="component installed">freebuff.plugin</span>
+        <span class="component installed">commandcode.plugin</span>
+        <span class="component installed">focus-notify</span>
+        <span class="component installed">reviewr</span>
+        <span class="component installed">file-viewer</span>
+        <span class="component installed">spreader</span>
+        <span class="component installed">herdr-plus</span>
+        <span class="component installed">tab-rename</span>
+        <span class="component installed">github-start</span>
+        <span class="component installed">vim-nav</span>
+        <span class="component new">triage</span>
+        <span class="component new">attention</span>
+      </div>
+    </article>
+
+    <article class="layer-card">
+      <div class="layer-number">LAYER 3 — LIFECYCLE HOOKS</div>
+      <h3>Agent State Awareness</h3>
+      <p class="layer-desc">Every agent reports its lifecycle: session start, pre/post tool use, blocked, working, idle, done. Native macOS toasts on blocked/done with click-to-focus. Session persistence via resurrect. Workspace isolation prevents file collisions.</p>
+      <div class="components">
+        <span class="component installed">freebuff.watcher</span>
+        <span class="component installed">cmd-hooks</span>
+        <span class="component installed">focus-notify</span>
+        <span class="component installed">resurrect</span>
+        <span class="component installed">worktrunk</span>
+        <span class="component new">triage (attention ranking)</span>
+        <span class="component new">attention (jump-to-agent)</span>
+      </div>
+    </article>
+
+    <article class="layer-card">
+      <div class="layer-number">LAYER 4 — CONTEXT PROVISIONING</div>
+      <h3>Clean Code Context</h3>
+      <p class="layer-desc">Agents receive clean structural context. fzf + fd + rg + yazi + bat + zoxide provide file/search/preview/navigation. Repomix and ast-grep remain optional for heterogeneous agents lacking native search.</p>
+      <div class="components">
+        <span class="component installed">fzf</span>
+        <span class="component installed">fd</span>
+        <span class="component installed">rg</span>
+        <span class="component installed">yazi</span>
+        <span class="component installed">zoxide</span>
+        <span class="component installed">bat</span>
+        <span class="component new">repomix (optional)</span>
+        <span class="component new">ast-grep (optional)</span>
+      </div>
+    </article>
+  </section>
+
+  <section class="pipeline" aria-label="Agent workflow pipeline">
+    <h2>Agentic Workflow Pipeline</h2>
+    <p class="sub">How data flows from workspace isolation through agent execution to result visibility</p>
+    <div class="pipeline-track" role="list" aria-label="Pipeline steps">
+      <article class="step" role="listitem" aria-label="Workspace isolation">
+        <div class="step-number">STEP 1</div>
+        <h4>Isolation</h4>
+        <p>worktrunk creates isolated git worktrees per agent pane</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Agent launch">
+        <div class="step-number">STEP 2</div>
+        <h4>Launch</h4>
+        <p>freebuff / commandcode / Aider / Crush / Kilo start in pane</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Lifecycle reporting">
+        <div class="step-number">STEP 3</div>
+        <h4>Lifecycle</h4>
+        <p>Plugins + focus-notify report blocked / working / done / idle</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Context search">
+        <div class="step-number">STEP 4</div>
+        <h4>Context</h4>
+        <p>Agent queries fzf / fd / rg / yazi / bat / zoxide natively</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Session persistence">
+        <div class="step-number">STEP 5</div>
+        <h4>Persistence</h4>
+        <p>resurrect saves layout; workspace-manager applies per-workspace defaults</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Result visibility">
+        <div class="step-number">STEP 6</div>
+        <h4>Review</h4>
+        <p>reviewr sidebar + git diff; focus-notify pulls terminal to finished pane</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="audit" aria-label="Security audit results">
+    <h3>Security Audit Results (Read-Only, No Modifications)</h3>
+    <div class="audit-row"><span class="label">freebuff.plugin</span> SAFE — only touches ~/.local/bin/freebuff, ~/.config/manicode/projects/*/chats/; no external network; no secret access; no hidden prompts</div>
+    <div class="audit-row"><span class="label">commandcode.plugin</span> SAFE WITH CAVEATS — taste files (.commandcode/taste/) are documented agent behavior instructions (not hidden prompts); install-hooks.mjs writes expected ~/.commandcode/settings.json; no malicious filesystem/network access</div>
+    <div class="audit-row"><span class="label">worktrunk / worktree-setup</span> Installed from verified GitHub repos (devashish2203/herdr-worktrunk, tdi/herdr-worktree-setup)</div>
+    <div class="audit-row"><span class="label">resurrect / workspace-manager / zoxide / triage / attention</span> Installed; no malicious indicators in source; all open-source with active commits</div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Monozen Agentic Workflow Visualization — updated from <a href="https://github.com/8-BitRhyon/monozen-skills">monozen-skills</a> repo (commit 965c4a3)</p>
+  <p style="margin-top:.5rem;opacity:.6">14 herdr plugins installed &bull; 4 audited plugins (freebuff + commandcode: read-only audit, no files changed) &bull; 1 new visualization added</p>
+</footer>
+
+</body>
+</html>
