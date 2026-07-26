@@ -126,6 +126,11 @@ tmux Catppuccin pills  -  bottom
 | Spreader | YAML layout application |
 | reviewr | Terminal code-review sidebar |
 | Focus Notify | Native macOS toast on agent blocked/done; click-to-focus pane |
+| Freebuff Plugin | Launch/manage Freebuff agent; lifecycle watcher reports blocked/working/idle |
+| Command Code Plugin | Launch/manage Command Code agent; cmd-hooks report status events |
+| Worktrunk | Git worktree management inside herdr (per-agent isolation) |
+| Worktree Setup | Per-project setup (.env, mise) when worktrees created |
+| Herdr Resurrect | Snapshot/restore workspace, tab, pane, agent layout |
 | llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #9. |
 | GitHub Start | Tab origin from GitHub issue/PR |
 | File Viewer | Git-aware read-only file tree |
@@ -196,11 +201,14 @@ Register public key on GitHub → Settings → SSH and GPG keys → New GPG key.
 gpg --armor --export <key-id> | pbcopy
 ```
 
-### 9. ⚠️ llmtrim  -  local MITM proxy
+### 9. �️ llmtrim  -  local MITM proxy
 The llmtrim plugin intercepts all LLM API calls from agent panes to compress
 token usage. It runs locally, never phones home, but it sees every API key and
 prompt passing through herdr agent panes. Understand the interception surface
 before enabling.
+
+### 10. Plugin security audit
+`herdr-freebuff-plugin` (TheMetalStorm) and `herdr-commandcode-plugin` (TheMetalStorm) were audited: no malicious code, no prompt injection, no external exfiltration. Both modify only expected paths (`~/.local/bin/freebuff`, `~/.config/manicode/projects/*/chats/`, `~/.commandcode/settings.json`). Taste files in commandcode are agent behavior instructions, not hidden prompts. Safe to install.
 
 ---
 
@@ -271,3 +279,18 @@ Ctrl-T / Ctrl-R / Alt-C  # fzf: file, history, directory
 z proj             # directory jump → Projects
 z portf            # directory jump → Portfolio
 ```
+
+---
+
+## Agent execution verification (heterogeneous agents)
+
+Every agent (Kilo, Aider, Crush, Freebuff, Antigravity CLI) must actually use the built/downloaded toolchain. Verify per agent:
+
+| Layer | What to verify | How |
+|---|---|---|
+| Agent discovery | Plugin detects agent | `herdr pane list` shows agent label |
+| Lifecycle hooks | Agent reports blocked/working/idle | Watch pane status; `focus-notify` fires toast |
+| Context access | Agent can invoke fzf/fd/rg/yazi/bat | Test from agent pane: `rg "test"`, `yy`, `fd .` |
+| Workspace isolation | Worktree per agent pane | `herdr plugin pane open --plugin worktrunk ...` |
+| Session persistence | Layout survives restart | `herdr-resurrect` saves; restart tmux/herdr and restore |
+| Plugin audit | Installed safely | Security audit on `freebuff` (`scripts/launch.sh`, `watcher-lib.sh`) and `commandcode` (`cmd-hooks/install-hooks.mjs`, `.commandcode/taste/`) — no malicious network/filesystem access, taste files are behavior instructions not hidden prompts |
