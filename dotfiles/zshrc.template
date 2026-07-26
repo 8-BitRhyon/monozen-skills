@@ -24,6 +24,25 @@ eval "$(zoxide init zsh)"
 # --- Toolchain: FZF ---
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# FZF + fd/rg: fast file/dir search and content grep with live preview
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border --info=inline \
+  --preview "bat --color=always --style=numbers {} 2>/dev/null || eza --tree --level=1 --color=always --icons=auto {}" \
+  --preview-window=right:50%:wrap'
+export FZF_CTRL_R_OPTS='--preview "echo {}" --preview-window=down:3:hidden:wrap'
+
+# --- Toolchain: Yazi (cd into dir on quit) ---
+function yy() {
+  local tmp="$(mktemp -t yazi-cwd.XXXXXX)" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
 # --- Toolchain: Zsh plugins ---
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

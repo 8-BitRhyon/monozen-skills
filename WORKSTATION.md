@@ -35,6 +35,7 @@ flowchart LR
         RG[ripgrep]
         FD[fd]
         DL[delta]
+        YZ[yazi]
         ZA[zsh-autosuggestions]
         ZH[zsh-syntax-highlighting]
     end
@@ -81,10 +82,10 @@ tmux Catppuccin pills  -  bottom
 | File find | fd | Filesystem traversal |
 | File list | eza | Directory listing with icons, tree, permissions |
 | File preview | bat | Syntax highlighting, git change markers |
+| File manager | yazi | TUI file manager, async I/O, inline previews, fzf integration |
 | Diff viewer | delta | Git diff pager, side-by-side, line numbers |
 | History autosuggest | zsh-autosuggestions | History-driven inline completion |
 | Syntax validation | zsh-syntax-highlighting | Token-color mapping on input |
-| Tiling WM | AeroSpace | macOS tiling window manager, fullscreen binding |
 | Package | Homebrew | macOS package resolution |
 
 ---
@@ -100,7 +101,6 @@ tmux Catppuccin pills  -  bottom
 | `~/.gitignore_global` | Global gitignore  -  macOS, editor, build artifacts, secrets |
 | `~/.config/lazygit/config.yml` | LazyGit  -  dark theme, delta pager, nvim |
 | `~/.config/nvim/init.lua` | Neovim  -  Lazy.nvim, Catppuccin, Telescope, LSP |
-| `~/.config/aerospace/aerospace.toml` | AeroSpace  -  tiling binds, fullscreen shortcut |
 | `~/.secrets.zsh` | API keys, `chmod 600`, sourced by `.zshrc` |
 | `dotfiles/` (this repo) | Reference configs |
 
@@ -175,20 +175,12 @@ fullscreen, which kills transparency.
 ### 6. fzf required by `tmux-sessionx`
 Install: `brew install fzf`. Session picker: `Ctrl-A o`.
 
-### 7. AeroSpace fullscreen replaces Ghostty fullscreen
-AeroSpace fullscreen preserves terminal transparency (tiling-based, not native
-macOS fullscreen). Install:
-```sh
-brew install --cask nikitabobko/aerospace/aerospace
-```
-Config: `~/.config/aerospace/aerospace.toml`. Trigger: `alt-ctrl-shift-f`.
-
-### 8. API keys
+### 7. API keys
 Keys stored in `~/.secrets.zsh` (`chmod 600`), sourced by `.zshrc`. Never
 written to `.zshrc`. Global `.gitignore` excludes `.secrets.zsh` as
 belt-and-suspenders. Rotate any key that was ever in plaintext.
 
-### 9. GPG commit signing
+### 8. GPG commit signing
 Signed commits verify authorship. Procedure:
 ```sh
 brew install gnupg
@@ -203,7 +195,7 @@ Register public key on GitHub → Settings → SSH and GPG keys → New GPG key.
 gpg --armor --export <key-id> | pbcopy
 ```
 
-### 10. ⚠️ llmtrim  -  local MITM proxy
+### 9. ⚠️ llmtrim  -  local MITM proxy
 The llmtrim plugin intercepts all LLM API calls from agent panes to compress
 token usage. It runs locally, never phones home, but it sees every API key and
 prompt passing through herdr agent panes. Understand the interception surface
@@ -228,11 +220,8 @@ git clone https://github.com/tmux-plugins/tmux-sensible ~/.tmux/plugins/tmux-sen
 git clone https://github.com/tmux-plugins/tmux-yank ~/.tmux/plugins/tmux-yank
 
 # CLI toolchain
-brew install neovim lazygit zoxide bat eza fd ripgrep delta fzf gnupg zsh-autosuggestions zsh-syntax-highlighting
+brew install neovim lazygit zoxide bat eza fd ripgrep delta fzf yazi gnupg zsh-autosuggestions zsh-syntax-highlighting
 $(brew --prefix)/opt/fzf/install
-
-# Tiling WM
-brew install --cask nikitabobko/aerospace/aerospace
 
 # Deploy configs from this repo's dotfiles/
 cp dotfiles/tmux.conf ~/.tmux.conf
@@ -242,8 +231,6 @@ cp dotfiles/gitignore_global ~/.gitignore_global
 mkdir -p ~/.config/lazygit ~/.config/nvim
 cp dotfiles/lazygit/config.yml ~/.config/lazygit/config.yml
 cp dotfiles/nvim/init.lua ~/.config/nvim/init.lua
-mkdir -p ~/.config/aerospace
-cp dotfiles/aerospace.toml ~/.config/aerospace/aerospace.toml
 
 # Initialize tmux, install plugins via TPM
 tmux new -s main
@@ -278,6 +265,7 @@ git log --oneline  # delta decorations
 lazygit            # interactive staging, commit, push
 rg "pattern"       # code search
 fd "filename"      # file search
+yy                 # yazi file manager (cd into dir on quit)
 Ctrl-T / Ctrl-R / Alt-C  # fzf: file, history, directory
 z proj             # directory jump → Projects
 z portf            # directory jump → Portfolio
