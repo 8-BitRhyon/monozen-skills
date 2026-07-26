@@ -125,7 +125,8 @@ tmux Catppuccin pills  -  bottom
 | Herdr Plus | Project templates, quick action launcher |
 | Spreader | YAML layout application |
 | reviewr | Terminal code-review sidebar |
-| llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #10. |
+| Focus Notify | Native macOS toast on agent blocked/done; click-to-focus pane |
+| llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #9. |
 | GitHub Start | Tab origin from GitHub issue/PR |
 | File Viewer | Git-aware read-only file tree |
 | Vim Navigation | Ctrl+h/j/k/l bridging herdr panes ↔ nvim |
