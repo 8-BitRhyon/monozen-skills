@@ -147,7 +147,7 @@ npx wrangler pages deploy . --project-name monozen
 ```
 
 **CI/CD:** `.github/workflows/deploy.yml`  -  push to `main` triggers vitest → wrangler deploy.
-- Secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
+- Secrets: [REDACTED - read from .dev.vars / GitHub secrets]
 - CSP hashes in `_headers` AND `<meta>`  -  both must sync (base64, not hex)
 
 **Verification:**
