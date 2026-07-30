@@ -21,3 +21,13 @@ yarn-error.log*
 .idea/
 *.swp
 *.swo
+
+# Security exclusions added by universal audit
+test/
+e2e/
+.dev.vars
+archive/
+mockups/
+plans/
+review/
+.crush.json
