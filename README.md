@@ -32,61 +32,74 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 
 ---
 
-## Canonical Skills Showcase (12 Active Skills)
+## Skill Taxonomy (14 Canonical Skills)
 
-| Domain | Skill | Invocation | Description |
-|---|---|---|---|
-| **Workflow** | `agentic-loop` | `/agentic-loop` | Universal observe -> plan -> act -> verify autonomous execution cycle |
-| **Workflow** | `monozen-workflow` | `/monozen-workflow` | Portfolio TDD prove-it + DevTools verification protocol |
-| **Workflow** | `task-decomposition` | `/task-decomposition` | Breaks complex engineering requests into atomic, testable units |
-| **Workflow** | `context-engineering` | `/context-engineering` | Optimizes context window setup, token budget, and memory across sessions |
-| **Workflow** | `prompt-engineering-loop` | `/prompt-engineering-loop` | 6-step iterative prompt refinement & adversarial pressure testing |
-| **Workflow** | `skill-authoring` | `/skill-authoring` | Meta-skill for authoring clean, runnable agent skill modules |
-| **Audit** | `monozen-audit` | `/monozen-audit` | Monozen portfolio multi-axis QA & WebGL memory audit |
-| **Audit** | `production-web-audit` | `/production-web-audit` | Universal pre-deployment security, performance, & CSP audit |
-| **Architecture** | `monozen-architecture` | `/monozen-architecture` | 5-panel SPA architecture & theme decoupling contracts |
-| **Architecture** | `monozen-themes` | `/monozen-themes` | Sun/Moon design tokens, typography, and visual identity |
-| **Architecture** | `monozen-webgl` | `/monozen-webgl` | WebGL2 50% downsample pipeline & shader context management |
-| **Architecture** | `monozen-nav` | `/monozen-nav` | Nav capsule, corner bracket GSAP Flip, and brand crossfade |
+<img src="assets/skill-taxonomy.svg" alt="Monozen Skill Taxonomy" width="100%"/>
+
+### Workflow — 6 skills
+| Skill | Invocation | Description |
+|---|---|---|
+| `agentic-loop` | `/agentic-loop` | Universal observe → plan → act → verify autonomous execution cycle |
+| `monozen-workflow` | `/monozen-workflow` | Portfolio TDD prove-it + DevTools verification protocol |
+| `task-decomposition` | `/task-decomposition` | Breaks complex engineering requests into atomic, testable units |
+| `context-engineering` | `/context-engineering` | Optimizes context window setup, token budget, and memory across sessions |
+| `prompt-engineering-loop` | `/prompt-engineering-loop` | 6-step iterative prompt refinement & adversarial pressure testing |
+| `skill-authoring` | `/skill-authoring` | Meta-skill for authoring clean, runnable agent skill modules |
+
+### Audit — 3 skills
+| Skill | Invocation | Description |
+|---|---|---|
+| `monozen-audit` | `/monozen-audit` | Multi-axis QA: WebGL memory safety, CSP sync, reduced-motion, history purge |
+| `production-web-audit` | `/production-web-audit` | Universal pre-deployment security, performance, & CSP audit |
+| `test-driven-dev` | `/test-driven-dev` | TDD pattern: failing test first, verify via DevTools |
+
+### Architecture — 4 skills
+| Skill | Invocation | Description |
+|---|---|---|
+| `monozen-architecture` | `/monozen-architecture` | 5-panel SPA architecture & theme decoupling contracts |
+| `monozen-themes` | `/monozen-themes` | Sun/Moon design tokens, typography, and visual identity |
+| `monozen-webgl` | `/monozen-webgl` | WebGL2 50% downsample pipeline & shader context management |
+| `monozen-nav` | `/monozen-nav` | Nav capsule, corner bracket GSAP Flip, and brand crossfade |
+
+### Tooling — 1 skill
+| Skill | Invocation | Description |
+|---|---|---|
+| `git-workflow` | `/git-workflow` | Commit signing (SSH), history purge, pre-commit universal guard |
 
 ---
 
 ## System Architecture & Federation
 
-```
-Layer 0 - Shell Substrate (Ghostty -> tmux -> herdr)
-  └── Managed terminal panes, tabs, and session state
+<img src="assets/monozen-skills-arch.svg" alt="Monozen System Architecture" width="100%"/>
 
-Layer 1 - Directory Shortcut (workon)
-  └── Resolution of project workspaces under Projects/
+Skills flow from canonical authoring in this repo through validation and signing, then are distributed to each CLI's native skill directory via `npx skills add`. No symlinks, no shared state — each consumer reads from its own path.
 
-Layer 2 - Configuration Gate (kilo.jsonc)
-  └── Sandbox config: permissions, skill paths, model delegation
-
-Layer 3 - Skills Federation (skills-lock.json)
-  └── 12 canonical skills + 34 federated plugins across 6 directories
-
-Layer 4 - Distribution (npx skills add)
-  └── Distributes canonical skills to CLI-native directories
-```
-
-- 📖 **[FEDERATION.md](FEDERATION.md)**: 6-directory federation breakdown and resolution hierarchy.
-- 📖 **[WORKSTATION.md](WORKSTATION.md)**: Terminal multiplexer stack (`Ghostty` -> `tmux` -> `herdr`).
+- 📖 **[FEDERATION.md](FEDERATION.md)**: 6-directory federation breakdown, resolution hierarchy, and consumer-to-path mapping.
+- 📖 **[WORKSTATION.md](WORKSTATION.md)**: Terminal multiplexer stack (`Ghostty` → `tmux` → `herdr`).
 
 ---
 
-## Tooling & Validation
+## Validation Pipeline
+
+<img src="assets/validation-pipeline.svg" alt="Monozen Validation Pipeline" width="100%"/>
+
+Every skill in this repo passes through a multi-stage gate before distribution:
 
 ```bash
-# Validate frontmatter, zero em dashes, and path portability across all skills
+# Validate frontmatter, zero em-dashes, and path portability across all skills
 npm run validate
 
 # Regenerate skills-lock.json manifest
 npm run manifest
 ```
 
+The pre-commit hook enforces:
+- No sensitive IDs (zone/account IDs, SSH fingerprints, API tokens)
+- No unsigned commits (SSH signing required)
+- No tracked AGENTS.md or legacy artifacts
+
 ---
 
 ## License
 
-MIT - Authored by [8-BitRhyon](https://github.com/8-BitRhyon).
+MIT — Authored by [8-BitRhyon](https://github.com/8-BitRhyon).

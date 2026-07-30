@@ -72,6 +72,18 @@
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
       "computedHash": ""
+    },
+    "git-workflow": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/git-workflow/SKILL.md",
+      "computedHash": ""
+    },
+    "test-driven-dev": {
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-driven-dev/SKILL.md",
+      "computedHash": ""
     }
   }
 }

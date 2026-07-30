@@ -1,0 +1,61 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#12132b', 'primaryTextColor': '#eaeaf2', 'primaryBorderColor': '#4ecdc4', 'lineColor': '#8b7eff', 'secondaryColor': '#1a1b36', 'tertiaryColor': '#0b0c15', 'fontFamily': 'Inter, system-ui, sans-serif'}}}%%
+
+flowchart LR
+    subgraph Author["Author"]
+        A1["skill/SKILL.md"]
+    end
+
+    subgraph Validate["Validate"]
+        V1["npm run validate"]
+        V2["frontmatter check"]
+        V3["zero em-dashes"]
+        V4["path portability"]
+    end
+
+    subgraph Sign["Security Gate"]
+        S1["pre-commit hook"]
+        S2["block: IDs, secrets"]
+        S3["SSH signing"]
+    end
+
+    subgraph Manifest["Manifest"]
+        M1["npm run manifest"]
+        M2["skills-lock.json"]
+    end
+
+    subgraph Distribute["Distribution"]
+        D1["npx skills add"]
+        D2["~/.agents/skills/"]
+        D3["~/.commandcode/skills/"]
+        D4["CLI consumers"]
+    end
+
+    A1 --> V1
+    V1 --> V2
+    V2 --> V3
+    V3 --> V4
+    V4 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> M1
+    M1 --> M2
+    M2 --> D1
+    D1 --> D2
+    D1 --> D3
+    D2 --> D4
+    D3 --> D4
+
+    style A1 fill:#1a1a2e,stroke:#8b7eff,color:#e6e6e6,stroke-width:2px
+    style V1 fill:#16213e,stroke:#4ecdc4,color:#e6e6e6
+    style V2 fill:#16213e,stroke:#4ecdc4,color:#e6e6e6
+    style V3 fill:#16213e,stroke:#4ecdc4,color:#e6e6e6
+    style V4 fill:#16213e,stroke:#4ecdc4,color:#e6e6e6
+    style S1 fill:#0f3460,stroke:#ff6b6b,color:#e6e6e6
+    style S2 fill:#0f3460,stroke:#ff6b6b,color:#e6e6e6
+    style S3 fill:#0f3460,stroke:#ff6b6b,color:#e6e6e6
+    style M1 fill:#1a1a2e,stroke:#ffe066,color:#e6e6e6
+    style M2 fill:#1a1a2e,stroke:#ffe066,color:#e6e6e6
+    style D1 fill:#16213e,stroke:#8b7eff,color:#e6e6e6,stroke-width:2px
+    style D2 fill:#0d1b2a,stroke:#5a5a8a,color:#e6e6e6
+    style D3 fill:#0d1b2a,stroke:#5a5a8a,color:#e6e6e6
+    style D4 fill:#0d1b2a,stroke:#8b7eff,color:#e6e6e6
