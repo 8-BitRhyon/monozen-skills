@@ -1,8 +1,3 @@
----
-name: agentic-loop
-description: Universal pattern for autonomous agent workflow: the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.
----
-
 # Agentic Loop Skill
 
 > **Scope:** Universal pattern for any autonomous agent workflow  -  the core observe→plan→act→verify cycle that prevents hallucination, drift, and incomplete work.
@@ -52,7 +47,12 @@ description: Universal pattern for autonomous agent workflow: the core observe -
 
 ---
 
-## Universal Anti-Patterns
+## Monozen-Specific Rules (Agentic Loop Extension)
+- Theme lifecycle: observe `data-theme` before editing; verify `__moonInit`/`__sunInit` called after `finishBoot()`.
+- WebGL: never assume `preserveDrawingBuffer` is true; verify via `chrome-devtools-axi`.
+- CSS: observe load order (`tailwind → main → moon → sun`) before adding selectors.
+- Security guard (`.git/hooks/pre-commit`) runs before every commit: blocks IDs, audit docs, legacy filenames, unsigned commits.
+- Universal audit (`.agents/skills/monozen-audit/security-guard-universal.sh`) runs before deploy.
 
 | Anti-Pattern | Symptom | Fix |
 |--------------|---------|-----|
@@ -64,21 +64,3 @@ description: Universal pattern for autonomous agent workflow: the core observe -
 | **Skip docs** | Next agent repeats mistakes | Update AGENTS.md every time |
 
 ---
-
-## Invocation
-
-**Load this skill at session start**  -  it's the meta-skill that makes all other skills effective.
-
-```bash
-npx skills add 8-BitRhyon/monozen-skills --skill agentic-loop
-```
-
----
-
-## Evolution
-
-| Version | Change |
-|---------|--------|
-| v1.0 | Core loop + anti-patterns |
-| v1.1 | Added VERIFY: chrome-devtools-axi mandatory |
-| v1.2 | Added DOCUMENT: AGENTS.md update requirement |

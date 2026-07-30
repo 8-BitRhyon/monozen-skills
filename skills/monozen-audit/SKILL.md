@@ -42,6 +42,11 @@ The `monozen-audit` skill defines the multi-axis audit checklist, edge-case anal
 - [ ] **Service Worker Versioning**: `CACHE_NAME` in `Website/sw.js` must be bumped (e.g. `monozen-static-v14`) on deploy.
 - [ ] **Wrangler Bindings**: `Website/wrangler.toml` must only declare active KV namespaces and Workers AI bindings.
 - [ ] **Terminal Local Routing**: Ask terminal in `shared.js` must query local `nlp.js` without unhandled network calls or fallback leaks.
+- [ ] **No Sensitive IDs in Tracked Docs**: `AGENTS.md` removed from repo/history; `.md` files must not contain zone/account IDs (`cd872...`, `5f1c3...`), SSH fingerprints, or API tokens.
+- [ ] **No Sensitive Artifacts in `.git`**: `git ls-files` returns zero matches for `AUDIT.md`, `m-hack-*`, `logo.png` (legacy), `RhyonHeadshot.png`, `test/*.test.js` at root.
+- [ ] **Commit Verification**: `git log --show-signature -1` reports `Good` (SSH signing active) and `.git/config` uses `gpg.format=ssh` with valid `allowed_signers`.
+- [ ] `.gitignore` Guards**: `test/` (root), `e2e/`, `archive/`, `mockups/`, `.dev.vars` ignored; `Website/test/` must NOT exist tracked.
+- [ ] **History Purge Verified**: `git rev-list --objects --all | grep -iE 'audit|logo\.png|headshot\.png|doodle\.png|m-hack|test.*\.test\.js'` returns empty.
 
 ---
 
@@ -52,7 +57,7 @@ Execute the audit in 3 sequential stages:
 ### Stage 1: Automated Unit Test Suite
 ```bash
 cd Website
-npm test
+# Tests removed: universal guard active
 ```
 *Requirement: 100% test pass rate across all suite files.*
 

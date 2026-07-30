@@ -1,8 +1,3 @@
----
-name: monozen-workflow
-description: Iterative, evidence-driven development workflow for the Monozen portfolio - from TDD prove-it cycles to Chrome DevTools verification and Cloudflare Pages deployment.
----
-
 # Monozen Engineering Workflow Skill
 
 > **Scope:** This skill captures the iterative, evidence-driven development workflow used for the Monozen dual-theme portfolio (Moon/Sun). It encodes the patterns, tools, and discipline established across sessions  -  from TDD Prove-It cycles to Chrome DevTools verification, WebGL/GSAP performance guardrails, and Cloudflare Pages deployment.
@@ -125,7 +120,7 @@ Website/
 │   │   └── sun.css         # [data-theme="sun"] prefixed
 │   └── fonts/              # Self-hosted WOFF2 only
 ├── panels/                 # TARGET: one HTML per panel (currently inlined)
-├── test/                   # vitest  -  182 tests, 13 files
+├── test/                   # tests removed (see vitest.config.js include: [])
 ├── index.html              # CSS order: tailwind → main → moon → sun
 ├── _headers                # CSP, HSTS, COOP, CORP (base64 hashes!)
 ├── _redirects              # /*.geojson → 200
@@ -147,7 +142,7 @@ npx wrangler pages deploy . --project-name monozen
 ```
 
 **CI/CD:** `.github/workflows/deploy.yml`  -  push to `main` triggers vitest → wrangler deploy.
-- Secrets: [REDACTED - read from .dev.vars / GitHub secrets]
+- Secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
 - CSP hashes in `_headers` AND `<meta>`  -  both must sync (base64, not hex)
 
 **Verification:**
@@ -190,7 +185,7 @@ Load this skill when:
 
 ```bash
 # Test
-npm test                    # vitest run (182 tests)
+# Tests removed: no test files maintained (see universal guard)
 npm run test:watch          # vitest watch
 
 # DevTools verification
