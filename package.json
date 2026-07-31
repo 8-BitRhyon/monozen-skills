@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "manifest": "bash scripts/manifest.sh",
-    "validate": "bash scripts/validate.sh"
+    "validate": "bash scripts/validate.sh",
+    "test": "bash scripts/test.sh",
+    "check": "bash scripts/validate.sh && bash scripts/test.sh"
   },
   "keywords": [
     "monozen",

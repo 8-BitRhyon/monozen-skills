@@ -1,6 +1,6 @@
 ---
 name: production-web-audit
-description: Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.
+description: "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production."
 ---
 
 # Production Web Audit Skill

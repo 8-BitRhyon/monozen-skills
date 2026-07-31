@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# monozen-skills — Workstation Bootstrap
+# monozen-skills - Workstation Bootstrap
 # Installs all external skills, herdr plugins, and tools for a fresh machine.
 # Run after cloning the repo: bash scripts/setup.sh
 

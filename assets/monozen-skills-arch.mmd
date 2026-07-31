@@ -1,17 +1,17 @@
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1a1a2e', 'primaryTextColor': '#e6e6e6', 'primaryBorderColor': '#e63946', 'lineColor': '#e63946', 'secondaryColor': '#16213e', 'tertiaryColor': '#0f3460'}}}%%
 
 flowchart TB
-    subgraph Layer0["LAYER 0 — Shell Substrate"]
+    subgraph Layer0["LAYER 0 - Shell Substrate"]
         HR["herdr v0.7.1<br/>terminal workspace manager"]
         HRCFG["~/.config/herdr/<br/>config.toml + session.json<br/>→ gruvbox theme, 4-pane<br/>  CommandCode tab layout"]
     end
 
-    subgraph Layer1["LAYER 1 — Directory Shortcut"]
+    subgraph Layer1["LAYER 1 - Directory Shortcut"]
         ZS["~/.zshrc<br/>workon() function"]
         WU["workon portfolio<br/>workon antigravity<br/>→ resolves under<br/>Projects/{name}"]
     end
 
-    subgraph Layer2["LAYER 2 — Config & Permission Gate"]
+    subgraph Layer2["LAYER 2 - Config & Permission Gate"]
         KC["~/.config/kilo/kilo.jsonc"]
         PERM["permission.bash = allow"]
         SKP["skills.paths → 6 directory refs"]
@@ -19,7 +19,7 @@ flowchart TB
         IDX["indexing pipeline:<br/>OpenRouter + free embedding"]
     end
 
-    subgraph Layer3["LAYER 3 — Skills Federation"]
+    subgraph Layer3["LAYER 3 - Skills Federation"]
         FS1[".agents/skills/<br/>28 skills"]
         FS2[".commandcode/skills/<br/>4 skills (monozen-core)"]
         FS3["gemini/config/skills/<br/>11 skills"]
@@ -28,13 +28,13 @@ flowchart TB
         FS6["command-code/skills/<br/>2 skills (agent-browser, design)"]
     end
 
-    subgraph Layer4["LAYER 4 — Distribution"]
+    subgraph Layer4["LAYER 4 - Distribution"]
         MS["github.com/8-BitRhyon/monozen-skills"]
         NPX["npx skills add<br/>monozen-skills"]
         AG["AGENTS.md<br/>(cross-CLI agent instructions)"]
     end
 
-    subgraph Layer5["LAYER 5 — CLI Consumers"]
+    subgraph Layer5["LAYER 5 - CLI Consumers"]
         CC["Claude Code"]
         CU["Cursor"]
         CB["CodeBuff"]

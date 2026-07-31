@@ -1,6 +1,6 @@
 ---
 name: monozen-audit
-description: Comprehensive audit protocol for the Monozen portfolio: covers edge-case & state transition verification, WebGL context/memory safety, CSP/security header sync, reduced-motion compliance, and runtime DevTools validation.
+description: "Comprehensive audit protocol for the Monozen portfolio: covers edge-case & state transition verification, WebGL context/memory safety, CSP/security header sync, reduced-motion compliance, and runtime DevTools validation."
 ---
 
 # Monozen Audit Skill

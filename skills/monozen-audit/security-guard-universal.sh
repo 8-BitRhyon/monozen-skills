@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Universal Security Guard — blocks commits/pushes with any ID, secret, fingerprint, token, or audit doc.
+# Universal Security Guard - blocks commits/pushes with any ID, secret, fingerprint, token, or audit doc.
 # Works on ANY repo. No hardcoded project IDs.
 set -e
 FAIL=0
@@ -51,7 +51,7 @@ if [ "$LAST_SIG" != "G" ]; then
 fi
 
 if [ "$FAIL" -eq 1 ]; then
-  echo "GUARD FAILED — fix above before committing."
+  echo "GUARD FAILED - fix above before committing."
   exit 1
 fi
 echo "PASS: Universal guard cleared."

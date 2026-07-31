@@ -2,88 +2,116 @@
   "version": 1,
   "skills": {
     "agentic-loop": {
+      "name": "agentic-loop",
+      "description": "Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": ""
+      "computedHash": "225708d60d3a3e7d5cefc1cc5eaf4663c2f24b3056f7a267aaccb16c50b6c58f"
     },
     "context-engineering": {
+      "name": "context-engineering",
+      "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": ""
+      "computedHash": "eeeeea11a6b88659aab3b438262c40f3f749c1d7db26799987b69edd5f2df739"
     },
     "git-workflow": {
+      "name": "git-workflow",
+      "description": "Commit signing (SSH), history purge, branch hygiene, and pre-commit universal guard for Monozen repos.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-workflow/SKILL.md",
-      "computedHash": ""
+      "computedHash": "f4b10a41ea9389a9935dca32e48228af0502130858a58aabdc0c5c805ed368f5"
     },
     "monozen-architecture": {
+      "name": "monozen-architecture",
+      "description": "Monozen portfolio system architecture - 5-panel SPA structure, dual-theme lifecycle contracts, CSS specificity load order, panel switching state machine, and asset structure. Use when working on core portfolio architecture.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-architecture/SKILL.md",
-      "computedHash": ""
+      "computedHash": "cfc46cf86b1e1cf3f0d228d69e1921efca62d4a146a18104f673d3558f62a729"
     },
     "monozen-audit": {
+      "name": "monozen-audit",
+      "description": "Comprehensive audit protocol for the Monozen portfolio: covers edge-case & state transition verification, WebGL context/memory safety, CSP/security header sync, reduced-motion compliance, and runtime DevTools validation.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-audit/SKILL.md",
-      "computedHash": ""
+      "computedHash": "fedc3de91ffe9dabc1b8ed71fb635bf88705f97b30b86aaa7c657db826696520"
     },
     "monozen-nav": {
+      "name": "monozen-nav",
+      "description": "Monozen nav bar system architecture - glassmorphism capsule layout, corner brackets (GSAP Flip), brand crossfade on scroll, Sun/Moon theme gating, responsive breakpoints, and design rationale. Use when working on navigation UI, brand mark transitions, or nav layout.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-nav/SKILL.md",
-      "computedHash": ""
+      "computedHash": "d80d60007c86d8dca4b0c63c02c140f8ae250ecf04f54871a2e75e5ab9b02efc"
     },
     "monozen-themes": {
+      "name": "monozen-themes",
+      "description": "Monozen dual-theme identity system - Sun (Shaper) vs Moon (Systemizer) personas, design token architecture, color as marginalia, typography choices, visual rhyming, and CSS theme decoupling contracts. Use when making visual or theme-level changes.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-themes/SKILL.md",
-      "computedHash": ""
+      "computedHash": "7d08c61b4135a078f191b8203a7a9412d486fe57f30e1fe7ece34d98d40a43e6"
     },
     "monozen-webgl": {
+      "name": "monozen-webgl",
+      "description": "Monozen WebGL2 shader pipeline  -  __MzGL utilities, boot shaders, FoldGradient, PaperTexture, GemSmoke, context management, concurrent loop prevention. Use when working on shader effects, WebGL rendering, or paper-design integration for the Monozen portfolio.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-webgl/SKILL.md",
-      "computedHash": ""
+      "computedHash": "d46ad948b1f72524aedf41d3857acb8a29b86cdec0a1e9bac0570f9cb48770f8"
     },
     "monozen-workflow": {
+      "name": "monozen-workflow",
+      "description": "Iterative, evidence-driven development workflow for the Monozen portfolio - from TDD prove-it cycles to Chrome DevTools verification and Cloudflare Pages deployment.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-workflow/SKILL.md",
-      "computedHash": ""
+      "computedHash": "7c4fc3076ad8410f0a657e9d1581ea474a995a747fd0d51c5b688445d87783e8"
     },
     "production-web-audit": {
+      "name": "production-web-audit",
+      "description": "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/production-web-audit/SKILL.md",
-      "computedHash": ""
+      "computedHash": "9c954823546d2e4d7703d8f0be84db3fdcceaab43e6c9f7bfe9b8b6ac83fcb9c"
     },
     "prompt-engineering-loop": {
+      "name": "prompt-engineering-loop",
+      "description": "Iterative prompt refinement, ELI10 structuring, working examples, and adversarial pressure testing for AI agent instructions.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/prompt-engineering-loop/SKILL.md",
-      "computedHash": ""
+      "computedHash": "551d84a1d5839941231d1c2108243c82152515b19a8cdb7071ff5d2337aece11"
     },
     "skill-authoring": {
+      "name": "skill-authoring",
+      "description": "Meta-skill for authoring clean, runnable agent skill modules with frontmatter metadata, structured protocols, and zero em dashes.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
-      "computedHash": ""
+      "computedHash": "dadb160db7ed6315b2ae7f28d7e6e7ce0c89d93cc6d10b15d91c76ec4f5c0af9"
     },
     "task-decomposition": {
+      "name": "task-decomposition",
+      "description": "Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": ""
+      "computedHash": "94c190420fdafecceef559f0060000f84dabd0123458ab32edad25e3dc849d18"
     },
     "test-driven-dev": {
+      "name": "test-driven-dev",
+      "description": "TDD pattern for Monozen - failing test first, DevTools verification, universal guard gates.",
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/test-driven-dev/SKILL.md",
-      "computedHash": ""
+      "computedHash": "506cec32f0cc98fc8ce98925e62d0ff153ed4d68a0417293aab6c1c5d2d9f064"
     }
   }
 }

@@ -86,17 +86,29 @@ Skills flow from canonical authoring in this repo through validation and signing
 Every skill in this repo passes through a multi-stage gate before distribution:
 
 ```bash
-# Validate frontmatter, zero em-dashes, and path portability across all skills
+# Strict validation: YAML frontmatter (Ruby Psych), name/folder consistency,
+# zero em-dashes, no machine-specific paths, lock integrity (sha256),
+# internal link resolution, workflow YAML syntax
 npm run validate
 
-# Regenerate skills-lock.json manifest
+# Prove the validator itself: 16+ self-tests covering every contract violation
+npm test
+
+# Regenerate skills-lock.json manifest (name, description, sha256 content hash)
 npm run manifest
+```
+
+The pre-commit hook enforces the same gate locally (shift-left). Install it once:
+
+```bash
+bash scripts/install-hooks.sh
 ```
 
 The pre-commit hook enforces:
 - No sensitive IDs (zone/account IDs, SSH fingerprints, API tokens)
 - No unsigned commits (SSH signing required)
 - No tracked AGENTS.md or legacy artifacts
+- All skills pass the validation suite and the manifest is in sync
 
 ---
 
