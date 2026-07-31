@@ -58,7 +58,7 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 |---|---|---|
 | `monozen-architecture` | `/monozen-architecture` | 5-panel SPA architecture & theme decoupling contracts |
 | `monozen-themes` | `/monozen-themes` | Sun/Moon design tokens, typography, and visual identity |
-| `monozen-webgl` | `/monozen-webgl` | WebGL2 50% downsample pipeline & shader context management |
+| `monozen-webgl` | `/monozen-webgl` | WebGL2 shader pipeline: `__MzGL` utilities, FoldGradient, PaperTexture, GemSmoke, context management |
 | `monozen-nav` | `/monozen-nav` | Nav capsule, corner bracket GSAP Flip, and brand crossfade |
 
 ### Tooling (1 skill)
