@@ -36,7 +36,7 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 
 <img src="assets/skill-taxonomy.svg" alt="Monozen Skill Taxonomy" width="100%"/>
 
-### Workflow — 6 skills
+### Workflow (6 skills)
 | Skill | Invocation | Description |
 |---|---|---|
 | `agentic-loop` | `/agentic-loop` | Universal observe → plan → act → verify autonomous execution cycle |
@@ -46,14 +46,14 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 | `prompt-engineering-loop` | `/prompt-engineering-loop` | 6-step iterative prompt refinement & adversarial pressure testing |
 | `skill-authoring` | `/skill-authoring` | Meta-skill for authoring clean, runnable agent skill modules |
 
-### Audit — 3 skills
+### Audit (3 skills)
 | Skill | Invocation | Description |
 |---|---|---|
 | `monozen-audit` | `/monozen-audit` | Multi-axis QA: WebGL memory safety, CSP sync, reduced-motion, history purge |
 | `production-web-audit` | `/production-web-audit` | Universal pre-deployment security, performance, & CSP audit |
 | `test-driven-dev` | `/test-driven-dev` | TDD pattern: failing test first, verify via DevTools |
 
-### Architecture — 4 skills
+### Architecture (4 skills)
 | Skill | Invocation | Description |
 |---|---|---|
 | `monozen-architecture` | `/monozen-architecture` | 5-panel SPA architecture & theme decoupling contracts |
@@ -61,7 +61,7 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 | `monozen-webgl` | `/monozen-webgl` | WebGL2 50% downsample pipeline & shader context management |
 | `monozen-nav` | `/monozen-nav` | Nav capsule, corner bracket GSAP Flip, and brand crossfade |
 
-### Tooling — 1 skill
+### Tooling (1 skill)
 | Skill | Invocation | Description |
 |---|---|---|
 | `git-workflow` | `/git-workflow` | Commit signing (SSH), history purge, pre-commit universal guard |
@@ -72,7 +72,7 @@ Monozen operates on **cognitive persona isolation** and **epistemic discipline**
 
 <img src="assets/monozen-skills-arch.svg" alt="Monozen System Architecture" width="100%"/>
 
-Skills flow from canonical authoring in this repo through validation and signing, then are distributed to each CLI's native skill directory via `npx skills add`. No symlinks, no shared state — each consumer reads from its own path.
+Skills flow from canonical authoring in this repo through validation and signing, then are distributed to each CLI's native skill directory via `npx skills add`. No symlinks, no shared state. Each consumer reads from its own path.
 
 - 📖 **[FEDERATION.md](FEDERATION.md)**: 6-directory federation breakdown, resolution hierarchy, and consumer-to-path mapping.
 - 📖 **[WORKSTATION.md](WORKSTATION.md)**: Terminal multiplexer stack (`Ghostty` → `tmux` → `herdr`).
@@ -102,4 +102,4 @@ The pre-commit hook enforces:
 
 ## License
 
-MIT — Authored by [8-BitRhyon](https://github.com/8-BitRhyon).
+MIT. Authored by [8-BitRhyon](https://github.com/8-BitRhyon).

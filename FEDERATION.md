@@ -7,7 +7,7 @@
 
 ## Overview
 
-The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), validated through a multi-stage pipeline (frontmatter check, security gate, SSH signing), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path — no symlinks, no shared state.
+The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), validated through a multi-stage pipeline (frontmatter check, security gate, SSH signing), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path. No symlinks, no shared state.
 
 <img src="assets/monozen-skills-federation.svg" alt="Skills Federation Mindmap" width="100%"/>
 

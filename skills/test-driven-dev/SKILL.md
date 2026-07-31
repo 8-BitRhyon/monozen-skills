@@ -1,6 +1,6 @@
 ---
 name: test-driven-dev
-scope: TDD and verification for Monozen portfolio
+description: TDD pattern for Monozen - failing test first, DevTools verification, universal guard gates.
 ---
 
 # Test-Driven Dev (Monozen)

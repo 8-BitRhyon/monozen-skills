@@ -1,3 +1,8 @@
+---
+name: monozen-workflow
+description: Iterative, evidence-driven development workflow for the Monozen portfolio - from TDD prove-it cycles to Chrome DevTools verification and Cloudflare Pages deployment.
+---
+
 # Monozen Engineering Workflow Skill
 
 > **Scope:** This skill captures the iterative, evidence-driven development workflow used for the Monozen dual-theme portfolio (Moon/Sun). It encodes the patterns, tools, and discipline established across sessions  -  from TDD Prove-It cycles to Chrome DevTools verification, WebGL/GSAP performance guardrails, and Cloudflare Pages deployment.

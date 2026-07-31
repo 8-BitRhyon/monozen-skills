@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-scope: Commit signing, history purge, branch hygiene for Monozen
+description: Commit signing (SSH), history purge, branch hygiene, and pre-commit universal guard for Monozen repos.
 ---
 
 # Git Workflow (Monozen)

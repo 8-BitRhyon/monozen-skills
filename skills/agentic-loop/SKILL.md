@@ -1,3 +1,8 @@
+---
+name: agentic-loop
+description: Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.
+---
+
 # Agentic Loop Skill
 
 > **Scope:** Universal pattern for any autonomous agent workflow  -  the core observe→plan→act→verify cycle that prevents hallucination, drift, and incomplete work.
