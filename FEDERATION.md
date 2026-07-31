@@ -171,3 +171,37 @@ To add a new skill that appears in a specific consumer's directory:
 2. Set `consumers` in frontmatter (e.g., `consumers: [crush, claude-code]`)
 3. Run `scripts/manifest.sh` to update `index.json`
 4. The skill will be distributed to matching consumer paths on next `npx skills add`
+
+---
+
+## CI/CD Security: SHA-Pinned GitHub Actions
+
+Every GitHub Action referenced in `.github/workflows/` **must** be pinned to a full commit SHA, never a mutable version tag (`@v1`, `@latest`, `@main`).
+
+### Why
+
+Version tags are mutable references. The action owner (or anyone who compromises the action repo) can move a tag to point to different code at any time. A workflow using `action@v1` today could silently execute different, potentially malicious code tomorrow with no diff visible in this repo.
+
+A commit SHA is immutable. It always resolves to the exact commit it was reviewed against, so no one can swap in altered code by moving a tag. This closes the tag-reassignment supply chain vector entirely.
+
+This is a general GitHub Actions security practice, not specific to any runtime or language.
+
+### Enforcement
+
+The `zgosalvez/github-actions-ensure-sha-pinned-actions` step in the validate workflow scans every workflow and fails the build if any action uses a version tag instead of a SHA. This check is a release gate: a workflow with an unpinned action does not pass CI.
+
+### Rule of Thumb
+
+When adding any action to a workflow:
+
+1. Resolve the action to a specific release tag (e.g., `v1.321.0`)
+2. Get that tag's commit SHA (via `gh api repos/<owner>/<repo>/tags` or the GitHub UI)
+3. Pin with `uses: owner/repo@<full-40-char-sha>`
+4. Optionally append the human-readable version as a comment, e.g. `# v1.321.0`
+
+### Accepted Pattern
+
+```yaml
+- name: Set up Ruby
+  uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+```

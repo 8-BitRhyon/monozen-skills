@@ -98,6 +98,8 @@ npm test
 npm run manifest
 ```
 
+CI additionally enforces that every GitHub Action in `.github/workflows/` is pinned to a full commit SHA (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
+
 The pre-commit hook enforces the same gate locally (shift-left). Install it once:
 
 ```bash
