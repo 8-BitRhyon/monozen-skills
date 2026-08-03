@@ -7,7 +7,7 @@
 
 ## Overview
 
-The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), validated through a multi-stage pipeline (frontmatter check, security gate, SSH signing), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path. No symlinks, no shared state.
+The federation is a **write-once, read-from-anywhere** model. Skills are authored canonically in this repo (`skills/`), validated through a multi-stage pipeline (frontmatter check, em-dash/machine-path bans, lock integrity via `npm run validate`, self-tests, gitleaks secret scan in CI), then distributed to each CLI's native skill directory via `npx skills add`. Each consumer reads from its own path. No symlinks, no shared state.
 
 <img src="assets/monozen-skills-federation.svg" alt="Skills Federation Mindmap" width="100%"/>
 
@@ -17,7 +17,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ### `~/.agents/skills/` - 31 skills
 
-The primary skill directory. Installed by `npx skills add` and consumed by Claude Code, Cursor, CodeBuff, and Crush/kilo.
+The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
 ```
 agentic-loop            # Universal observe -> plan -> act -> verify cycle
@@ -53,18 +53,23 @@ quota-axi                # Local provider quota windows
 video-podcast-maker      # Video generation skill
 ```
 
-### `~/.commandcode/skills/`  -  8 skills
+### `~/.commandcode/skills/`  -  12 skills
 
-Command Code's skill directory. A subset of monozen skills plus AXI tools that are core to workflow.
+Command Code's skill directory. A subset of monozen skills plus AXI tools and Cloudflare SDK skills core to the workflow.
 
 ```
+agents-sdk                # Cloudflare Agents SDK
 chrome-devtools-axi     # AXI-wrapped browser automation
+cloudflare                # Cloudflare platform skill
+cloudflare-email-service  # Cloudflare email service
+cloudflare-one            # Cloudflare One Zero Trust
+cloudflare-one-migrations # Cloudflare One migrations
+durable-objects           # Cloudflare Durable Objects
 gh-axi                      # AXI-wrapped GitHub CLI
 herdr                       # herdr terminal multiplexer control
-monozen-portfolio            # Consolidated Monozen architecture + themes
-git-worktree                # Isolated git worktrees (parallel agents)
-git-workflow                # Git commit signing + hygiene
-axi                         # AXI-style CLI design skill
+sandbox-sdk                # Cloudflare sandbox SDK
+turnstile-spin             # Cloudflare Turnstile setup
+web-perf                   # Web performance auditing
 ```
 
 ### `~/.gemini/config/skills/`  -  11 skills
@@ -123,28 +128,24 @@ design          # Design partner for frontend interfaces
 
 | CLI | Resolves skills from | Shell substrate | Entry point |
 |---|---|---|---|
+| **Pi** | `~/.pi/agent/settings.json` -> `skills.paths` (`~/.agents/skills/`) | herdr (panes, sessions) | Global settings.json + AGENTS.md |
 | **Claude Code** | `~/.agents/skills/` + `AGENTS.md` at project root | herdr (panes, sessions) | Project-level AGENTS.md lists monozen-skills |
+| **OpenCode** | `~/.agents/skills/` + `AGENTS.md` | herdr | AGENTS.md at project root |
+| **Codex** | `~/.agents/skills/` + `AGENTS.md` | herdr | AGENTS.md at project root |
 | **Cursor** | `~/.agents/skills/` + `AGENTS.md` + `.cursorrules` | herdr | AGENTS.md at project root |
-| **CodeBuff** | `~/.agents/skills/` + `AGENTS.md` | herdr | Project-level AGENTS.md |
-| **Crush (kilo)** | `kilo.jsonc skills.paths[*]`  -  6 directories + `AGENTS.md` | herdr | Reads federation paths directly from config |
-| **Command Code** | `~/.commandcode/skills/` + `AGENTS.md` at project root | herdr | Project-level AGENTS.md references tools |
 | **Gemini** | `~/.gemini/config/skills/` + plugin skill dirs | herdr | Gemini UI config / plugin settings |
 
 ---
 
 ## Load Order
 
-Crush/kilo loads skills in the order defined by `kilo.jsonc > skills.paths`. When multiple directories contain skills with the same name, the **first path wins**.
+Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> skills.paths`, Cursor's plugin paths, Gemini's plugin dirs). When multiple directories contain skills with the same name, the **first path wins** (the repo's canonical `skills/` are federated into the earliest priority path so they shadow any external namesakes).
 
 ```jsonc
-// The order in ~/.config/kilo/kilo.jsonc determines priority
+// Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills",              // 1st priority (31 skills)
-    "~/.commandcode/skills",         // 2nd priority (8 skills)
-    "~/.gemini/config/skills",       // 3rd priority (11 skills)
-    "~/.gemini/config/plugins/modern-web-guidance-plugin/skills",   // 4th
-    "~/.gemini/config/plugins/ui-ux-pro-max-skill/.claude/skills"   // 5th
+    "~/.agents/skills"   // 1st priority (31 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```
