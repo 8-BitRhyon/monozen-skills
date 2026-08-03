@@ -53,6 +53,15 @@ echo ":: Installing treehouse (pooled git worktrees)..."
 if ! command -v treehouse &>/dev/null; then
   curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh || true
 fi
+if command -v treehouse &>/dev/null && [ ! -f ~/.config/treehouse/config.toml ]; then
+  echo ":: Initializing treehouse config..."
+  treehouse init || true
+fi
+
+echo ":: Installing firstmate (captain-and-crew agent distro)..."
+if [ ! -d ~/firstmate/.git ]; then
+  git clone --depth 1 https://github.com/kunchenguid/firstmate ~/firstmate || true
+fi
 
 # ── 3. Install herdr plugins ──────────────────────────────────
 echo ":: Installing herdr-file-viewer (git-aware TUI file viewer)..."
@@ -79,13 +88,37 @@ herdr plugin install lmilojevicc/herdr-tab-rename --yes || true
 echo ":: Installing llmtrim-herdr (token usage optimization)..."
 herdr plugin install fkiene/llmtrim-herdr --yes || true
 
-# ── 4. Prompt for optional tools ───────────────────────────────
+# ── 5. Post-install verification ──────────────────────────────
 echo ""
-echo "==> Optional tools (install manually if needed):"
-echo "  - herdr-remote:     herdr plugin install dcolinmorgan/herdr-remote"
-echo "  - ghzinga:          herdr plugin install dutifuldev/ghzinga"
-echo "  - herdr-sessionizer: herdr plugin install andrewchng/herdr-sessionizer"
-echo "  - agentbox:         herdr plugin install madarco/agentbox"
-echo ""
+echo "==> Verifying installation..."
+VERIFY_FAIL=0
+for tool in node npm gh herdr pi treehouse; do
+  if command -v "${tool}" &>/dev/null; then
+    echo "  [ok] ${tool}"
+  else
+    echo "  [MISSING] ${tool}"
+    VERIFY_FAIL=1
+  fi
+done
+if [ -d ~/.agents/skills ]; then
+  echo "  [ok] skills dir (~/.agents/skills, $(ls ~/.agents/skills | wc -l | tr -d ' ') entries)"
+else
+  echo "  [MISSING] ~/.agents/skills (run: npx skills add 8-BitRhyon/monozen-skills)"
+  VERIFY_FAIL=1
+fi
+if [ -f ~/.pi/agent/settings.json ]; then
+  echo "  [ok] Pi settings.json (pinned packages declared)"
+else
+  echo "  [MISSING] ~/.pi/agent/settings.json"
+  VERIFY_FAIL=1
+fi
+if command -v treehouse &>/dev/null; then
+  treehouse status >/dev/null 2>&1 && echo "  [ok] treehouse pool responds" || echo "  [warn] treehouse status failed (no repo context is fine)"
+fi
 
-echo "==> Done. Restart your agent session for skills to load."
+echo ""
+if [ "${VERIFY_FAIL}" -eq 0 ]; then
+  echo "==> All required tools present. Restart your agent session for skills to load."
+else
+  echo "==> Some required tools missing (see [MISSING] above). Re-run or install manually."
+fi

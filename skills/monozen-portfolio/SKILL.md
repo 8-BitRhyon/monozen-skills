@@ -36,7 +36,7 @@ Aggregated engineering protocol for the Monozen dual-persona portfolio (Moon Sys
 - Shift-key token tokens on `:root` (`--bg`, `--fg`, `--accent`, `--muted`, `--border`) per theme.
 
 ## Pre-Deploy Audit (script + runtime)
-- `security-guard-universal.sh` (this skill dir): blocks commits with IDs, secrets, fingerprints, legacy assets, unsigned commits.
+- `security-guard-universal.sh` (this skill dir): universal secret/ID/fingerprint gate. Runs on any repo; portfolio-specific extra checks live in an optional `.guard-policy.sh` hook, not in the script.
 - Runtime: `chrome-devtools-axi open http://localhost:8788` then `chrome console` = zero errors; `eval` terminal query path.
 - CSP: `_headers` AND `<meta>` directives must match; bump Service Worker `CACHE_NAME` each release.
 - Deploy: `npx wrangler pages deploy . --project-name monozen`.

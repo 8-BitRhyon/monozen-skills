@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Pin actions to full commit SHAs before production (supply-chain hygiene).
+      # Resolve: gh api repos/<owner>/<repo>/releases/latest, then pin the tag's commit.
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up runtime
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+      - name: Lint
+        run: npm run lint

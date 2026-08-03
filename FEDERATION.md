@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 31 skills
+### `~/.agents/skills/` - 35 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -24,6 +24,7 @@ agentic-loop            # Universal observe -> plan -> act -> verify cycle
 asta-skill              # Semantic Scholar corpus queries
 bangumi-frames          # Anime frame extraction from Bilibili
 chrome-devtools-axi     # AXI-wrapped browser automation
+code-review             # Five-dimension review protocol (universal)
 context-engineering       # Context window, token budget, session memory
 creating-mermaid-diagrams  # Mermaid diagram generation + Kroki export
 drawio-skill            # draw.io diagram XML + export
@@ -36,20 +37,23 @@ herdr                   # herdr terminal multiplexer control skill
 improve                 # Read-only codebase audit + improvement plans
 journal-abbrev          # Journal name abbreviation lookup
 monozen-portfolio        # Consolidated Monozen 5-panel SPA + theme contracts
+new-project             # Project bootstrap: scaffold + constitution + CI
 paper-fetch             # Paper PDF download via Unpaywall | Kroki
 pi-agent                # Pi agent runtime, extensions, settings
 pi-cli-runtime           # Pi-companion runtime contract
 pi-prompting            # Pi prompt composition guidance
 pi-result-handling      # Pi output presentation
 plantuml-skill          # PlantUML diagram generation + Kroki export
+pr-workflow             # Branch -> PR -> checks -> merge -> cleanup
 production-web-audit      # Pre-deployment security, perf, CSP audit
 prompt-engineering-loop    # Lean prompt refinement loop
+quota-axi               # Local provider quota windows
 semanticscholar-skill   # Semantic Scholar API search
 skill-authoring           # Meta-skill: author runnable OSS skills
 task-decomposition      # Task decomposition skill
 tasks-axi                 # Markdown-native backlog manager (captain)
+test-driven-dev         # Universal TDD: red -> green -> refactor
 tldraw-skill            # tldraw diagram JSON + export
-quota-axi                # Local provider quota windows
 video-podcast-maker      # Video generation skill
 ```
 
@@ -145,7 +149,7 @@ Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> sk
 // Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills"   // 1st priority (31 skills, canonical monozen skills shadow namesakes)
+    "~/.agents/skills"   // 1st priority (35 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```

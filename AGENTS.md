@@ -77,6 +77,7 @@ Guides and diagrams explain purpose and link to the owner above instead of resta
 
 ## Scope Ownership
 
+- Universal lifecycle skills (`new-project`, `test-driven-dev`, `code-review`, `pr-workflow`) apply to any repo.
 - Universal engineering skills (`agentic-loop`, `context-engineering`, `task-decomposition`, `skill-authoring`, etc.) apply to any repo.
 - Monozen portfolio-specific knowledge lives in `skills/monozen-portfolio/`.
 - Tool wrappers (GitHub, browser, Herdr) are described in their own skills and distributed as CLI if available.
