@@ -105,6 +105,11 @@ Dir.children(skills_dir).select { |f| File.directory?(File.join(skills_dir, f)) 
     puts "[FAIL] #{folder}/SKILL.md: Contains machine-specific path (/Users/ or file://). Use relative or ~/ paths."
     skill_fail += 1
   end
+  if content.bytesize > 4000
+    est_tokens = content.bytesize / 4
+    puts "[FAIL] #{folder}/SKILL.md: ~#{est_tokens} tokens (bytes/4 proxy) exceeds the 1000-token load budget. Split content into templates/ or references/."
+    skill_fail += 1
+  end
 
   if skill_fail == 0
     puts "[PASS] #{folder}"

@@ -11,18 +11,7 @@ description: Universal pattern for autonomous agent workflow - the core observe 
 
 ## The Loop (Non-Negotiable)
 
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│  1. OBSERVE │───▶│  2. PLAN    │───▶│  3. ACT     │───▶│  4. VERIFY  │
-└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
-      ▲                                                  │
-      │                                                  ▼
-      └──────────────────────────────────────────────────┘
-                           │
-                    ┌──────▼──────┐
-                    │  5. DOCUMENT │
-                    └─────────────┘
-```
+`OBSERVE -> PLAN -> ACT -> VERIFY` (loop back to OBSERVE on failure) + `DOCUMENT` on exit + `EXIT` boundaries.
 
 ### 1. OBSERVE  -  Read Before Write
 - **Tools:** `read`, `grep`, `glob`, `codebase_search`, `semantic_search`

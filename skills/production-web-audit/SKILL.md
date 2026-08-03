@@ -37,36 +37,19 @@ A universal, multi-axis audit protocol for web applications before shipping to p
 
 ## Universal Verification Protocol
 
-Execute the audit in 3 sequential steps:
+Execute in 3 sequential steps:
 
-### Step 1: Automated Test Gate
+1. **Automated test gate:** `npm test` - all suites pass.
+2. **Production build:** `npm run build` - compilation and bundling zero errors.
+3. **Runtime audit via `chrome-devtools-axi`:**
 ```bash
-npm test
-```
-*Requirement: All unit and integration test suites pass without failure.*
-
-### Step 2: Production Build Verification
-```bash
-npm run build
-```
-*Requirement: CSS compilation, bundler output, and revision metadata complete with zero errors.*
-
-### Step 3: Runtime Audit via Chrome DevTools (`chrome-devtools-axi`)
-```bash
-# 1. Start local preview server
 python3 -m http.server 8788 --directory . &
-
-# 2. Open page in DevTools & check console
 npx -y chrome-devtools-axi open http://localhost:8788
-npx -y chrome-devtools-axi console
-
-# 3. Verify page interaction & evaluate DOM/state
+npx -y chrome-devtools-axi console     # zero console errors
 npx -y chrome-devtools-axi eval "() => document.title"
-
-# 4. Close browser session
 npx -y chrome-devtools-axi stop
 ```
-*Requirement: Zero console errors, clean network traces, and verified DOM state.*
+*Requirement: zero console errors, clean network traces, verified DOM state.*
 
 ## Invocation
 

@@ -8,7 +8,8 @@
     "manifest": "bash scripts/manifest.sh",
     "validate": "bash scripts/validate.sh",
     "test": "bash scripts/test.sh",
-    "check": "bash scripts/validate.sh && bash scripts/test.sh && bash scripts/manifest.sh && git diff --exit-code skills-lock.json"
+    "smoke": "bash scripts/smoke-test.sh",
+    "check": "bash scripts/validate.sh && bash scripts/test.sh && bash scripts/smoke-test.sh && bash scripts/manifest.sh && git diff --exit-code skills-lock.json"
   },
   "keywords": [
     "monozen",
