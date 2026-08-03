@@ -19,12 +19,8 @@ description: Optimizes agent context window setup, token budget management, file
 
 ### Layer 1: Code Map (Per Task)
 ```bash
-# Get structure
-glob **/*.js
-glob **/*.test.js
-
-# Find relevant area
-grep -r "theme-changed" --include="*.js"
+glob **/*.js && glob **/*.test.js          # structure
+grep -r "theme-changed" --include="*.js"   # relevant area
 codebase_search "theme toggle boot guard"
 ```
 **Output:** File list + line numbers + 3-line context snippets.
@@ -69,6 +65,12 @@ git show <commit>:Website/assets/js/boot.js | head -200
 | History | ~2k | Only when blocked |
 
 **Technique:** Use `Task` agents for parallel context gathering  -  one reads constitution, another searches code, another checks tests.
+
+## Compaction Over Growth (token economics)
+
+Near budget? Compact, don't grow: summarize history into a compact handoff (decisions, unresolved bugs, key state, next step); sub-agents return distilled 1-2k summaries, never raw transcripts; drop old tool results. Keep the prefix byte-stable for provider caches (Anthropic 90% cheaper reads).
+
+*Evidence: Anthropic context-editing eval cut tokens 84% on a 100-turn workload while completing workflows that previously failed.*
 
 ---
 
