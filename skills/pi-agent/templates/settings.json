@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "npm:@andrewjacop/pi-herdr@0.2.5",
+    "npm:@ogulcancelik/pi-worktree@0.1.1"
+  ],
+  "extensions": [
+    "~/.pi/agent/extensions/terminal-title.ts"
+  ],
+  "model": {
+    "provider": "anthropic",
+    "id": "claude-sonnet-4-5"
+  },
+  "thinkingLevel": "high",
+  "skills": {
+    "paths": [
+      "~/.agents/skills"
+    ]
+  }
+}

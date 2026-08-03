@@ -53,11 +53,7 @@ description: Universal pattern for autonomous agent workflow - the core observe 
 ---
 
 ## Monozen-Specific Rules (Agentic Loop Extension)
-- Theme lifecycle: observe `data-theme` before editing; verify `__moonInit`/`__sunInit` called after `finishBoot()`.
-- WebGL: never assume `preserveDrawingBuffer` is true; verify via `chrome-devtools-axi`.
-- CSS: observe load order (`tailwind → main → moon → sun`) before adding selectors.
-- Security guard (`.git/hooks/pre-commit`) runs before every commit: blocks IDs, audit docs, legacy filenames, unsigned commits.
-- Universal audit (`.agents/skills/monozen-audit/security-guard-universal.sh`) runs before deploy.
+Load the `monozen-portfolio` skill before touching that project. It owns all theme lifecycle, WebGL safety, CSS load order, and pre-deploy audit contracts. Run its `security-guard-universal.sh` before commit/deploy in real repos: blocks IDs, secrets, fingerprints, legacy assets, unsigned commits.
 
 | Anti-Pattern | Symptom | Fix |
 |--------------|---------|-----|

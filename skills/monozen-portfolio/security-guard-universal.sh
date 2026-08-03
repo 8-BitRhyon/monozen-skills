@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 # Universal Security Guard - blocks commits/pushes with any ID, secret, fingerprint, token, or audit doc.
 # Works on ANY repo. No hardcoded project IDs.
 set -e
@@ -9,14 +9,14 @@ echo "=== UNIVERSAL SECURITY GUARD ==="
 # Generic ID/secret/fingerprint patterns (not project-specific)
 PATTERNS='(sha256-[a-zA-Z0-9+/]{20,}|[0-9a-f]{32,40}|Zone ID:|Account ID:|CLOUDFLARE_ACCOUNT_ID|fingerprint|cf_clearance)'
 
-# 1. No audit/internal docs tracked
-if git ls-files | grep -qiE '(^|/)AGENTS\.md$|(^|/)AUDIT\.md$|(^|/)m-hack-'; then
+# 1. No audit/internal docs tracked (AGENTS.md is now canonical and allowed)
+if git ls-files | grep -qiE '(^|/)AUDIT\.md$|(^|/)m-hack-'; then
   echo "BLOCKED: Internal/audit doc tracked."
   FAIL=1
 fi
 
-# 2. Any sensitive pattern in tracked .md / .txt / .json / .yml / .yaml / .md files
-MATCHES=$(git ls-files -- '*.md' '*.txt' '*.json' '*.yml' '*.yaml' | grep -vE 'package-lock\.json|package\.json|design\.md|monozen-audit/|skills-lock\.json' | xargs grep -niE "$PATTERNS" 2>/dev/null || true)
+# 2. No sensitive pattern in tracked .md / .txt / .json / .yml / .yaml files
+MATCHES=$(git ls-files -- '*.md' '*.txt' '*.json' '*.yml' '*.yaml' | grep -vE 'package-lock\.json|package\.json|design\.md|skills-lock\.json' | xargs grep -niE "$PATTERNS" 2>/dev/null || true)
 if [ -n "$MATCHES" ]; then
   echo "BLOCKED: Sensitive pattern found in tracked docs:"
   echo "$MATCHES" | head -10

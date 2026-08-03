@@ -5,6 +5,8 @@ set -euo pipefail
 # Installs all external skills, herdr plugins, and tools for a fresh machine.
 # Run after cloning the repo: bash scripts/setup.sh
 
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 echo "==> monozen-skills bootstrap"
 echo ""
 
@@ -26,11 +28,31 @@ npx skills add kunchenguid/gh-axi --skill gh-axi -g --yes || true
 echo ":: Installing chrome-devtools-axi (browser automation)..."
 npx skills add kunchenguid/chrome-devtools-axi --skill chrome-devtools-axi -g --yes || true
 
-echo ":: Installing herdr control skill..."
-npx skills add ogulcancelik/herdr --skill herdr -g --yes || true
+echo ":: Installing tasks-axi (markdown backlog)..."
+npx skills add kunchenguid/tasks-axi --skill tasks-axi -g --yes || true
+
+echo ":: Installing quota-axi (provider quota status)..."
+npx skills add kunchenguid/quota-axi --skill quota-axi -g --yes || true
 
 echo ":: Installing find-skills..."
 npx skills add vercel-labs/skills --skill find-skills -g --yes || true
+
+echo ":: Installing Pi companion packages..."
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent || true
+mkdir -p ~/.pi/agent/extensions
+cp "${REPO_DIR}/skills/pi-agent/templates/terminal-title.ts" ~/.pi/agent/extensions/ || true
+if [ -f ~/.pi/agent/settings.json ]; then
+  cp ~/.pi/agent/settings.json ~/.pi/agent/settings.json.bak.$(date +%s)
+fi
+cp "${REPO_DIR}/skills/pi-agent/templates/settings.json" ~/.pi/agent/settings.json || true
+
+echo ":: Pi packages declared in settings.json (auto-install on Pi >=0.82) - pi-herdr, pi-worktree"
+echo ":: If on an older Pi, install manually: npx -y pi install @andrewjacop/pi-herdr && npx -y pi install @ogulcancelik/pi-worktree || true"
+
+echo ":: Installing treehouse (pooled git worktrees)..."
+if ! command -v treehouse &>/dev/null; then
+  curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh || true
+fi
 
 # ── 3. Install herdr plugins ──────────────────────────────────
 echo ":: Installing herdr-file-viewer (git-aware TUI file viewer)..."

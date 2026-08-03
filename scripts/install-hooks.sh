@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # scripts/install-hooks.sh - Installs the monozen-skills pre-commit hook (shift-left).
-# The hook runs the same validation + manifest sync gate as CI, locally.
+# The hook runs the same validation + test + manifest sync gate as CI, locally.
 #
 # Usage: bash scripts/install-hooks.sh [--remove]
 
@@ -22,6 +22,9 @@ set -euo pipefail
 REPO_DIR="$(git rev-parse --show-toplevel)"
 echo "=== [pre-commit] Running skill validation suite ==="
 "${REPO_DIR}/scripts/validate.sh"
+
+echo "=== [pre-commit] Running validator self-tests ==="
+bash "${REPO_DIR}/scripts/test.sh" >/dev/null
 
 echo "=== [pre-commit] Checking manifest sync ==="
 bash "${REPO_DIR}/scripts/manifest.sh" >/dev/null
