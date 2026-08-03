@@ -17,6 +17,14 @@
       "skillPath": "skills/axi/SKILL.md",
       "computedHash": "b89127bf3cce3177c342b26d9469f9f1bf86a98c9fbd0de9f6eca293ed6fc30a"
     },
+    "code-review": {
+      "name": "code-review",
+      "description": "Universal code review protocol for any language and any repository: five review dimensions (correctness, readability, architecture, security, performance), severity triage (blocker/should/nit), and PR review workflow. Load when reviewing a diff, PR, or branch before merge.",
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/code-review/SKILL.md",
+      "computedHash": "50961fda31d25a310ba1350a561c7ca3492b9649dcba0044b0877f8488ea5f9e"
+    },
     "context-engineering": {
       "name": "context-engineering",
       "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
@@ -55,7 +63,15 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-portfolio/SKILL.md",
-      "computedHash": "a8db0c43b62e2a60a651635e667baaa3ca1735b167fc3e7602ea0705802cd573"
+      "computedHash": "c7046b52f27fe84333f814f971980b1dc95b0518a70930986b102120c01d8ff2"
+    },
+    "new-project": {
+      "name": "new-project",
+      "description": "Bootstrap any new software project from zero: repo creation, scaffold, constitution files (AGENTS.md, design.md, README.md), .gitignore, CI, signing, and first commit. Load whenever starting a new project or repository from scratch, for any language or stack.",
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/new-project/SKILL.md",
+      "computedHash": "b2131ddebcce0673a9f8df09598ab03c4badff742c92ad51bf1922c5090105e7"
     },
     "pi-agent": {
       "name": "pi-agent",
@@ -64,6 +80,14 @@
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
       "computedHash": "be39d6a6dc1523e09a9630a9c4e5fbd2690797267a74057c5f141a8cb724b553"
+    },
+    "pr-workflow": {
+      "name": "pr-workflow",
+      "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pr-workflow/SKILL.md",
+      "computedHash": "906ecf676772a469728065cc8819260ee21b373242541cec499cc66fb06cc997"
     },
     "production-web-audit": {
       "name": "production-web-audit",
@@ -96,6 +120,14 @@
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
       "computedHash": "94c190420fdafecceef559f0060000f84dabd0123458ab32edad25e3dc849d18"
+    },
+    "test-driven-dev": {
+      "name": "test-driven-dev",
+      "description": "Universal test-driven development protocol for any language or stack: write failing test first (red), minimal implementation (green), refactor, verify with real runtime evidence. Load when implementing any new feature, fixing a bug, or when a repo has no test-first discipline.",
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-driven-dev/SKILL.md",
+      "computedHash": "e35f2188391edc58fba6a684a152542365fb4ee64b6fc0961bf72be49a6a683b"
     }
   }
 }

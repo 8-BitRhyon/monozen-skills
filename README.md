@@ -25,10 +25,14 @@ Monozen operates on **epistemic discipline** and **cognitive persona isolation**
 
 ## Skill Catalog
 
-All 12 skills, federated via `npx skills add 8-BitRhyon/monozen-skills`:
+All 16 skills, federated via `npx skills add 8-BitRhyon/monozen-skills`:
 
 | Skill | Invocation | Role |
 |---|---|---|
+| `new-project` | `/new-project` | Bootstrap any project: scaffold, AGENTS.md, .gitignore, CI, first commit |
+| `test-driven-dev` | `/test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
+| `code-review` | `/code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
+| `pr-workflow` | `/pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
 | `agentic-loop` | `/agentic-loop` | Universal observe -> plan -> act -> verify cycle |
 | `task-decomposition` | `/task-decomposition` | Breaks complex requests into atomic, testable units |
 | `context-engineering` | `/context-engineering` | Optimizes context window, token budget, session memory |
@@ -60,27 +64,35 @@ The full captain-and-crew distro is `firstmate` (see Environment below): talk to
 ## How Skills Are Processed
 
 ```
-AUTHOR   skills/<name>/SKILL.md (strict YAML frontmatter)
+IDEA     prompt-engineering-loop -> task-decomposition (units, acceptance criteria)
    │
    ▼
-GATE     pre-commit hook (scripts/install-hooks.sh), local shift-left:
-         validate  -> test -> manifest -> lock-sync diff
+BOOTSTRAP new-project skill: scaffold, AGENTS.md, .gitignore, CI, first commit
    │
    ▼
-PR       push feature branch (main is protected) -> open PR
+IMPLEMENT test-driven-dev (red -> green -> refactor) + agentic-loop, one commit per unit
    │
    ▼
-CI       .github/workflows/validate.yml
-         validate job: validate + test + manifest-sync + SHA-pinned actions
-         secrets job:  gitleaks full-history secret scan
+REVIEW   code-review skill: 5 dimensions, severity triage, PR review
    │
    ▼
-MERGE    required checks pass -> merge to main
+GATE     pre-commit hook (scripts/install-hooks.sh): validate -> test -> manifest -> lock-sync
    │
    ▼
-SHIP     consumers run `npx skills add 8-BitRhyon/monozen-skills`
-         -> skills federated to each CLI's native skill directory
+PR       pr-workflow skill: branch -> gh pr create -> CI checks -> merge
+   │
+   ▼
+CI       .github/workflows/validate.yml: validate + test + manifest-sync + SHA-pinned actions
+         secrets job: gitleaks full-history secret scan
+   │
+   ▼
+MERGE    required checks pass -> merge -> delete branch -> return worktrees
+   │
+   ▼
+RELEASE  production-web-audit (CSP, memory, a11y, console) -> deploy
 ```
+
+Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.
 
 ---
 
