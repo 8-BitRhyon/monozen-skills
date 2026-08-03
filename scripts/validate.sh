@@ -240,6 +240,60 @@ while IFS= read -r wf; do
 done <<< "$(git -C "${REPO_DIR}" ls-files -- '.github/workflows/*.yml' '.github/workflows/*.yaml' || true)"
 
 # ---------------------------------------------------------------
+# 7. Metadata drift: README/FEDERATION/diagrams vs skills-lock.json
+# ---------------------------------------------------------------
+ruby - "${REPO_DIR}" "${LOCK_FILE}" <<'RUBY' || ERRORS=$((ERRORS + 1))
+require "json"
+
+repo, lock_path = ARGV
+lock = JSON.parse(File.read(lock_path))
+skills = lock["skills"].keys.sort
+failures = 0
+
+check = ->(cond, msg) do
+  unless cond
+    puts "[FAIL] #{msg}"
+    failures += 1
+  end
+end
+
+readme = File.read(File.join(repo, "README.md"))
+fed = File.read(File.join(repo, "FEDERATION.md"))
+taxo = File.read(File.join(repo, "assets", "skill-taxonomy.mmd"))
+arch = File.read(File.join(repo, "assets", "monozen-skills-arch.mmd"))
+
+# README catalog: "All N skills" header must match lock count
+m = readme.match(/All (\d+) skills/)
+check.call(m && m[1].to_i == skills.size, "README.md claims '#{m && m[1]} skills' but skills-lock.json has #{skills.size}")
+
+# README catalog table must list every locked skill (and nothing extra)
+table = readme.scan(/^\| `([a-z0-9-]+)` \|/).flatten.uniq.sort
+missing = skills - table
+check.call(missing.empty?, "README.md skill catalog missing: #{missing.join(', ')}")
+extra = table - skills
+check.call(extra.empty?, "README.md skill catalog has non-lock entries: #{extra.join(', ')}")
+
+# FEDERATION primary listing: count + full canonical coverage
+m = fed.match(/### `~\/\.agents\/skills\/`\s+- (\d+) skills/)
+if m
+  block = fed.split(/### `~\/\.agents\/skills\/`\s+- \d+ skills/, 2)[1]
+  block = block.split("```", 3)[1].to_s
+  entries = block.lines.map { |l| l.strip.split(/\s+#/, 2).first.to_s }.reject(&:empty?)
+  check.call(entries.size == m[1].to_i, "FEDERATION.md claims #{m[1]} skills in ~/.agents/skills but lists #{entries.size}")
+  fed_missing = skills - entries
+  check.call(fed_missing.empty?, "FEDERATION.md ~/.agents/skills missing canonical: #{fed_missing.join(', ')}")
+else
+  check.call(false, "FEDERATION.md missing ~/.agents/skills count header")
+end
+
+# Diagrams must agree with the lock count
+check.call(taxo.include?("#{skills.size} canonical skills"), "skill-taxonomy.mmd root does not say '#{skills.size} canonical skills'")
+check.call(arch.include?("#{skills.size} canonical skills"), "monozen-skills-arch.mmd does not say '#{skills.size} canonical skills'")
+
+exit(failures == 0 ? 0 : 1)
+RUBY
+
+# ---------------------------------------------------------------
 echo "=================================================="
 if [ "${ERRORS}" -eq 0 ]; then
   echo "✅ All skills & repo contracts validated successfully. Zero errors."

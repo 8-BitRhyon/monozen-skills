@@ -7,7 +7,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": "512ed3f3113cc54593a242b5f30b3b664d7f618e9c88cb95dc1f2d451336bdb2"
+      "computedHash": "1d4e8e08c7c91f06be8e582268d17c30d696bd6d1c92589209143289d2a43250"
     },
     "axi": {
       "name": "axi",
@@ -39,7 +39,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-workflow/SKILL.md",
-      "computedHash": "0324b19255ad6cc85fb2a5cdad19de367d5d00d08f41f09454178fca7cd6e6d9"
+      "computedHash": "e592ca04b3e5e39dae5966689f48759f0772e5b28654ceda736c82ff7fc1ffa2"
     },
     "git-worktree": {
       "name": "git-worktree",

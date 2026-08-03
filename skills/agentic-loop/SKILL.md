@@ -50,6 +50,12 @@ description: Universal pattern for autonomous agent workflow - the core observe 
 - **Commit:** Descriptive message linking change → reason → verification
 - **Skill:** If pattern repeats, codify in a skill.
 
+### 6. EXIT  -  Loop Boundaries (Non-Negotiable)
+- Max 3 plan->act->verify iterations per task. After 3 failed verifications, STOP and escalate to the human with: what was tried, evidence of failure, and the decision needed.
+- Exit when: verification passes at the task's minimum ladder level (see `prompt-engineering-loop`), OR the scope changed (re-plan from OBSERVE once, then escalate if still stuck).
+- Never loop on hope: if two consecutive attempts fail for the same root cause, stop guessing and re-observe (read the code, not assumptions).
+- A task that grows beyond 3 files or 2 concepts is a decomposition failure: stop, run `task-decomposition`, resume as sub-tasks.
+
 ---
 
 ## Monozen-Specific Rules (Agentic Loop Extension)
