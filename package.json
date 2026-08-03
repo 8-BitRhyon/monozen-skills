@@ -1,24 +1,27 @@
 {
   "name": "monozen-skills",
-  "version": "1.1.0",
-  "description": "Centralized agent skill definitions for the Monozen system - federated across Claude Code, Cursor, CodeBuff, Crush/kilo, and Gemini CLIs.",
+  "version": "1.2.0",
+  "description": "Centralized agent skill definitions for the Monozen agentic engineering system - Pi harness, Herdr multiplexer, AXI CLI wrappers, and unified AGENTS.md, federated across Claude Code, OpenCode, Codex, Cursor, and Gemini.",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "manifest": "bash scripts/manifest.sh",
     "validate": "bash scripts/validate.sh",
     "test": "bash scripts/test.sh",
-    "check": "bash scripts/validate.sh && bash scripts/test.sh"
+    "check": "bash scripts/validate.sh && bash scripts/test.sh && bash scripts/manifest.sh && git diff --exit-code skills-lock.json"
   },
   "keywords": [
     "monozen",
     "agent-skills",
     "federation",
-    "cli",
-    "claude-code",
-    "cursor",
+    "axi",
+    "pi-agent",
     "herdr",
-    "crush",
-    "kilo",
+    "git-worktree",
+    "claude-code",
+    "opencode",
+    "codex",
+    "cursor",
     "gemini"
   ],
   "repository": {

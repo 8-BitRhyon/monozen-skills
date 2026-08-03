@@ -15,43 +15,42 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 32 skills
+### `~/.agents/skills/` - 31 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Claude Code, Cursor, CodeBuff, and Crush/kilo.
 
 ```
+agentic-loop            # Universal observe -> plan -> act -> verify cycle
 asta-skill              # Semantic Scholar corpus queries
 bangumi-frames          # Anime frame extraction from Bilibili
-chrome-devtools-axi     # AXI-wrapped browser automation (chrome-devtools-mcp)
+chrome-devtools-axi     # AXI-wrapped browser automation
+context-engineering       # Context window, token budget, session memory
 creating-mermaid-diagrams  # Mermaid diagram generation + Kroki export
 drawio-skill            # draw.io diagram XML + export
 excalidraw              # Excalidraw diagram generation + export
 find-skills             # Agent skill discovery & suggestions
 gh-axi                  # AXI-wrapped GitHub CLI (gh)
-gsap-core               # GSAP .to(), .from(), easing, matchMedia
-gsap-frameworks         # GSAP in Vue, Svelte
-gsap-performance        # GSAP optimization, will-change, batching
-gsap-plugins            # GSAP DrawSVG, Flip, ScrollTrigger, SplitText
-gsap-react              # GSAP in React, useGSAP hook
-gsap-scrolltrigger      # GSAP ScrollTrigger plugin
-gsap-timeline           # GSAP timeline sequencing
-gsap-utils              # GSAP utils: clamp, mapRange, random
+git-workflow            # Git commit signing + hygiene skill
+git-worktree            # Isolated git worktrees (parallel agents)
 herdr                   # herdr terminal multiplexer control skill
 improve                 # Read-only codebase audit + improvement plans
 journal-abbrev          # Journal name abbreviation lookup
-monozen-architecture    # Monozen 5-panel SPA architecture
-monozen-nav             # Monozen nav bar, corner brackets, brand
-monozen-themes          # Monozen Sun/Moon dual-theme identity
-monozen-webgl           # Monozen WebGL2 shader pipeline
-paper-fetch             # Paper PDF download via Unpaywall → Sci-Hub
-pi-cli-runtime          # Pi-companion runtime contract
+monozen-portfolio        # Consolidated Monozen 5-panel SPA + theme contracts
+paper-fetch             # Paper PDF download via Unpaywall | Kroki
+pi-agent                # Pi agent runtime, extensions, settings
+pi-cli-runtime           # Pi-companion runtime contract
 pi-prompting            # Pi prompt composition guidance
 pi-result-handling      # Pi output presentation
 plantuml-skill          # PlantUML diagram generation + Kroki export
+production-web-audit      # Pre-deployment security, perf, CSP audit
+prompt-engineering-loop    # Lean prompt refinement loop
 semanticscholar-skill   # Semantic Scholar API search
-target-prioritization   # Drug target prioritization from gene lists
+skill-authoring           # Meta-skill: author runnable OSS skills
+task-decomposition      # Task decomposition skill
+tasks-axi                 # Markdown-native backlog manager (captain)
 tldraw-skill            # tldraw diagram JSON + export
-video-podcast-maker     # Automated narrated video production
+quota-axi                # Local provider quota windows
+video-podcast-maker      # Video generation skill
 ```
 
 ### `~/.commandcode/skills/`  -  8 skills
@@ -60,12 +59,12 @@ Command Code's skill directory. A subset of monozen skills plus AXI tools that a
 
 ```
 chrome-devtools-axi     # AXI-wrapped browser automation
-gh-axi                  # AXI-wrapped GitHub CLI
-herdr                   # herdr terminal multiplexer control
-monozen-architecture    # Monozen 5-panel SPA architecture
-monozen-nav             # Monozen nav bar, corner brackets, brand
-monozen-themes          # Monozen Sun/Moon dual-theme identity
-monozen-webgl           # Monozen WebGL2 shader pipeline
+gh-axi                      # AXI-wrapped GitHub CLI
+herdr                       # herdr terminal multiplexer control
+monozen-portfolio            # Consolidated Monozen architecture + themes
+git-worktree                # Isolated git worktrees (parallel agents)
+git-workflow                # Git commit signing + hygiene
+axi                         # AXI-style CLI design skill
 ```
 
 ### `~/.gemini/config/skills/`  -  11 skills
@@ -141,7 +140,7 @@ Crush/kilo loads skills in the order defined by `kilo.jsonc > skills.paths`. Whe
 // The order in ~/.config/kilo/kilo.jsonc determines priority
 "skills": {
   "paths": [
-    "~/.agents/skills",              // 1st priority (32 skills)
+    "~/.agents/skills",              // 1st priority (31 skills)
     "~/.commandcode/skills",         // 2nd priority (8 skills)
     "~/.gemini/config/skills",       // 3rd priority (11 skills)
     "~/.gemini/config/plugins/modern-web-guidance-plugin/skills",   // 4th
@@ -154,23 +153,23 @@ Crush/kilo loads skills in the order defined by `kilo.jsonc > skills.paths`. Whe
 
 ## Skill Canonicalization
 
-This repo is the **source of truth**. When skills overlap between directories (e.g., `design` appears in 3 places), the canonical version lives in this repo under `skills/design/` and should be distributed to all consumers that need it.
+This repo is the **source of truth** for its own universal skills (`agentic-loop`, `axi`, `herdr`, `git-worktree`, `pi-agent`, `monozen-portfolio`, etc.). Skills that overlap between external directories (e.g., `design`, `banner-design` in Gemini plugin dirs) live in those external repos, not here. This repo federates its canonical set, it does not deduplicate third-party registries.
 
-The `install.sh` script handles deduplication:
-- Skills unique to a consumer → installed only to that consumer's path
-- Shared skills → installed to all matching consumer paths
-- Overrides → the `consumers` field in frontmatter explicitly lists targets
+Installation per consumer is handled by `scripts/setup.sh`:
+- Universal skills → installed to every consumer path that needs them (`~/.agents/skills/` and friends)
+- Consumer-specific skills → mentioned in the per-consumer directory block above
+- `skills-lock.json` (generated by `npm run manifest`) is the canonical manifest: name, description, source, and a sha256 content hash per skill. `validate.sh` enforces that the lock is complete, orphan-free, and in sync with disk.
 
 ---
 
 ## Adding to the Federation
 
-To add a new skill that appears in a specific consumer's directory:
+To add a new skill that appears in every consumer's directory:
 
-1. Create the skill file in `skills/<domain>/`
-2. Set `consumers` in frontmatter (e.g., `consumers: [crush, claude-code]`)
-3. Run `scripts/manifest.sh` to update `index.json`
-4. The skill will be distributed to matching consumer paths on next `npx skills add`
+1. Create the skill folder `skills/<name>/SKILL.md` with `name` + `description` frontmatter (name must equal the folder name).
+2. Run `npm run manifest` to regenerate `skills-lock.json`, then `npm run validate && npm test`.
+3. Commit the skill and the lock file together (the pre-commit hook enforces lock sync).
+4. Consumers pick it up on next `npx skills add 8-BitRhyon/monozen-skills`.
 
 ---
 

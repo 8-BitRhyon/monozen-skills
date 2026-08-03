@@ -1,0 +1,32 @@
+{
+  "models": {
+    "claude-sonnet-4-5": {
+      "provider": "anthropic",
+      "name": "Claude Sonnet 4.5",
+      "cost": { "input": 3, "output": 15, "cacheRead": 0.3, "cacheWrite": 3.75 },
+      "contextWindow": 200000,
+      "maxTokens": 32000
+    },
+    "claude-opus-4-6": {
+      "provider": "anthropic",
+      "name": "Claude Opus 4.6",
+      "cost": { "input": 15, "output": 75, "cacheRead": 1.5, "cacheWrite": 18.75 },
+      "contextWindow": 200000,
+      "maxTokens": 32000
+    }
+  },
+  "providers": {
+    "azure-openai-responses": {
+      "api": "openai-responses",
+      "baseUrl": "https://my-resource.openai.azure.com/openai",
+      "apiKey": "$AZURE_OPENAI_API_KEY",
+      "models": []
+    },
+    "opencode-go": {
+      "api": "openai-completions",
+      "baseUrl": "https://opencode.ai/api",
+      "apiKey": "$OPENCODE_API_KEY",
+      "models": []
+    }
+  }
+}

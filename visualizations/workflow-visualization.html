@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monozen Agentic Workflow — Full Stack Visualization</title>
+<title>Monozen Agentic Workflow - Full Stack Visualization</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
   :root{--bg:#0b0c15;--surface:#12132b;--primary:#8b7eff;--accent:#ff6b6b;--green:#4ecdc4;--yellow:#ffe066;--text:#eaeaf2;--text-dim:#8a8aa8;--border:#2a2a45;--layer:#1a1b36;--arrow:#8b7eff44}
@@ -67,7 +67,7 @@
 
   <section class="layers">
     <article class="layer-card">
-      <div class="layer-number">LAYER 0 — SHELL SUBSTRATE</div>
+      <div class="layer-number">LAYER 0 - SHELL SUBSTRATE</div>
       <h3>Terminal &amp; Toolchain</h3>
       <p class="layer-desc">The foundation everything runs on: Ghostty (transparent, non-native fullscreen), tmux (catppuccin pills), zsh with aliases, and fzf wired to fd/rg.</p>
       <div class="components">
@@ -88,7 +88,7 @@
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 1 — WORKSPACE ISOLATION</div>
+      <div class="layer-number">LAYER 1 - WORKSPACE ISOLATION</div>
       <h3>Git Worktrees Per Agent</h3>
       <p class="layer-desc">Every agent pane gets its own isolated directory + branch while sharing the same `.git`. Worktrunk manages creation; setup installs `.env`/`mise` per project; resurrect saves the layout.</p>
       <div class="components">
@@ -104,7 +104,7 @@
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 2 — AGENT MULTIPLEXING</div>
+      <div class="layer-number">LAYER 2 - AGENT MULTIPLEXING</div>
       <h3>Parallel TUI Agents</h3>
       <p class="layer-desc">Herdr manages workspace/tab/pane for Kilo, Aider, Crush, Freebuff, Antigravity CLI, and Command Code. Plugins provide lifecycle reporting (blocked/working/done/idle), notification toasts, and workspace layouts.</p>
       <div class="components">
@@ -124,7 +124,7 @@
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 3 — LIFECYCLE HOOKS</div>
+      <div class="layer-number">LAYER 3 - LIFECYCLE HOOKS</div>
       <h3>Agent State Awareness</h3>
       <p class="layer-desc">Every agent reports its lifecycle: session start, pre/post tool use, blocked, working, idle, done. Native macOS toasts on blocked/done with click-to-focus. Session persistence via resurrect. Workspace isolation prevents file collisions.</p>
       <div class="components">
@@ -139,7 +139,7 @@
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 4 — CONTEXT PROVISIONING</div>
+      <div class="layer-number">LAYER 4 - CONTEXT PROVISIONING</div>
       <h3>Clean Code Context</h3>
       <p class="layer-desc">Agents receive clean structural context. fzf + fd + rg + yazi + bat + zoxide provide file/search/preview/navigation. Repomix and ast-grep remain optional for heterogeneous agents lacking native search.</p>
       <div class="components">
@@ -194,8 +194,8 @@
 
   <section class="audit" aria-label="Security audit results">
     <h3>Security Audit Results (Read-Only, No Modifications)</h3>
-    <div class="audit-row"><span class="label">freebuff.plugin</span> SAFE — only touches ~/.local/bin/freebuff, ~/.config/manicode/projects/*/chats/; no external network; no secret access; no hidden prompts</div>
-    <div class="audit-row"><span class="label">commandcode.plugin</span> SAFE WITH CAVEATS — taste files (.commandcode/taste/) are documented agent behavior instructions (not hidden prompts); install-hooks.mjs writes expected ~/.commandcode/settings.json; no malicious filesystem/network access</div>
+    <div class="audit-row"><span class="label">freebuff.plugin</span> SAFE - only touches ~/.local/bin/freebuff, ~/.config/manicode/projects/*/chats/; no external network; no secret access; no hidden prompts</div>
+    <div class="audit-row"><span class="label">commandcode.plugin</span> SAFE WITH CAVEATS - taste files (.commandcode/taste/) are documented agent behavior instructions (not hidden prompts); install-hooks.mjs writes expected ~/.commandcode/settings.json; no malicious filesystem/network access</div>
     <div class="audit-row"><span class="label">worktrunk / worktree-setup</span> Installed from verified GitHub repos (devashish2203/herdr-worktrunk, tdi/herdr-worktree-setup)</div>
     <div class="audit-row"><span class="label">resurrect / workspace-manager / zoxide / triage / attention</span> Installed; no malicious indicators in source; all open-source with active commits</div>
   </section>
@@ -225,7 +225,7 @@
 </div>
 
 <footer class="footer">
-  <p>Monozen Agentic Workflow Visualization — updated from <a href="https://github.com/8-BitRhyon/monozen-skills">monozen-skills</a> repo (commit 965c4a3)</p>
+  <p>Monozen Agentic Workflow Visualization - updated from <a href="https://github.com/8-BitRhyon/monozen-skills">monozen-skills</a> repo (commit 965c4a3)</p>
   <p style="margin-top:.5rem;opacity:.6">14 herdr plugins installed &bull; 4 audited plugins (freebuff + commandcode: read-only audit, no files changed) &bull; 1 new visualization added</p>
 </footer>
 
