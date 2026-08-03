@@ -55,3 +55,10 @@ Use socket-mode (`@andrewjacop/pi-herdr`) for programmatic control from within P
 - `herdr pane list` shows each pane with a correct state label after a spawn.
 - A blocked call surfaces a toast and the captain can escalate to the human.
 - Killing a pane cleans its process tree; `herdr session` returns to the captain without orphan panes.
+
+## Invocation
+
+Load when:
+- Running multiple agents in one workspace or supervising a crew from a captain pane
+- User asks "spawn an agent", "split pane", "supervise the crew", "herdr"
+- Orchestrating parallel work via the first-mate pattern

@@ -56,3 +56,10 @@ Skill files should cost under ~1,000 tokens to load. To stay inside that budget:
 - An empty result prints `0 results` explicitly.
 - Unknown flag exits 2 and names the failure loudly.
 - A dump of any list shows total counts and no invisible fields.
+
+## Invocation
+
+Load when:
+- Wrapping a CLI for agents or choosing a tool interface
+- User asks "build a CLI for X", "wrap this tool", "AXI wrapper"
+- Debugging verbose agent tool output that burns tokens

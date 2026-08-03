@@ -55,6 +55,13 @@ description: Universal pattern for autonomous agent workflow - the core observe 
 ## Monozen-Specific Rules (Agentic Loop Extension)
 Load the `monozen-portfolio` skill before touching that project. It owns all theme lifecycle, WebGL safety, CSS load order, and pre-deploy audit contracts. Run its `security-guard-universal.sh` before commit/deploy in real repos: blocks IDs, secrets, fingerprints, legacy assets, unsigned commits.
 
+## Invocation
+
+Load when:
+- Starting any autonomous task (observe -> plan -> act -> verify)
+- User asks "do this task", "work on this", "figure out X"
+- Resuming work with an unclear next step
+
 | Anti-Pattern | Symptom | Fix |
 |--------------|---------|-----|
 | **Write-before-read** | Edits wrong file, breaks imports | Mandatory `read` first |

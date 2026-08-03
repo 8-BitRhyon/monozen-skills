@@ -53,3 +53,10 @@ The extension paints a spinner while a turn is running and the final status (ses
 - `/reload` picks up edits without restarting.
 - `/model` shows the configured catalog; `/login` wires a provider.
 - `/extensions` (or runtime status) confirms extensions loaded, idle spinner clears on completion.
+
+## Invocation
+
+Load when:
+- Setting up Pi, writing a Pi extension, or tuning models/settings
+- User asks "pi config", "extension", "models.json", "settings.json"
+- Diagnosing Pi auth, package, or extension issues

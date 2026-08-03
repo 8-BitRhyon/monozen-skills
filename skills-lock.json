@@ -7,7 +7,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": "3d6e9474a1f9006e6c137a5a572a6c2af5386af34e28b260385bbf77592b06ab"
+      "computedHash": "512ed3f3113cc54593a242b5f30b3b664d7f618e9c88cb95dc1f2d451336bdb2"
     },
     "axi": {
       "name": "axi",
@@ -15,7 +15,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
-      "computedHash": "b89127bf3cce3177c342b26d9469f9f1bf86a98c9fbd0de9f6eca293ed6fc30a"
+      "computedHash": "08948800d2e502ffba00fad639fdf51b56dccfbdb6eaf086ad57e758af511fa7"
     },
     "code-review": {
       "name": "code-review",
@@ -39,7 +39,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-workflow/SKILL.md",
-      "computedHash": "d1dcfef97e4531a9802ab7b0aa7be0b010543fb4cae9cce3e1d6f4d1ed3621f3"
+      "computedHash": "0324b19255ad6cc85fb2a5cdad19de367d5d00d08f41f09454178fca7cd6e6d9"
     },
     "git-worktree": {
       "name": "git-worktree",
@@ -47,7 +47,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-worktree/SKILL.md",
-      "computedHash": "c80666093aac4028c5a22a5e6da14042f1c15c9d34a10d0fb52b26434e3e532b"
+      "computedHash": "2f22af532e6f68e54f0bd68b37ceb963cfa7882f0f570528215136acf75baffd"
     },
     "herdr": {
       "name": "herdr",
@@ -55,7 +55,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "24ff2bf983a5df0e64e895b7a34b4a31a3eeb8be423bfc3a6c155f845b65e9b4"
+      "computedHash": "25d0c75b8fc757f6e39b0e86339563edd4566f6c9ff5d36866739555a0d8ce1a"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
@@ -63,7 +63,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-portfolio/SKILL.md",
-      "computedHash": "c7046b52f27fe84333f814f971980b1dc95b0518a70930986b102120c01d8ff2"
+      "computedHash": "df2f341d0e53a282cd6c82733e97020f89d2c87be688395998f0690d9175b8ec"
     },
     "new-project": {
       "name": "new-project",
@@ -71,7 +71,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/new-project/SKILL.md",
-      "computedHash": "b2131ddebcce0673a9f8df09598ab03c4badff742c92ad51bf1922c5090105e7"
+      "computedHash": "720b4e1b416d5f908b3cb6ad96b385d6944efee8509906b8e7c9fa8692dfaebe"
     },
     "pi-agent": {
       "name": "pi-agent",
@@ -79,7 +79,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
-      "computedHash": "be39d6a6dc1523e09a9630a9c4e5fbd2690797267a74057c5f141a8cb724b553"
+      "computedHash": "93e5d6d1c18046d4347d0096762b18491b9dd1555612754bbbf15e926ed0985f"
     },
     "pr-workflow": {
       "name": "pr-workflow",
@@ -95,7 +95,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/production-web-audit/SKILL.md",
-      "computedHash": "9c954823546d2e4d7703d8f0be84db3fdcceaab43e6c9f7bfe9b8b6ac83fcb9c"
+      "computedHash": "0fc0e0fe2ec7ba8bb16a543e5e1fa0a061e7970e630e055d3bf5a1a72f8bc297"
     },
     "prompt-engineering-loop": {
       "name": "prompt-engineering-loop",
@@ -111,7 +111,7 @@
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
-      "computedHash": "dadb160db7ed6315b2ae7f28d7e6e7ce0c89d93cc6d10b15d91c76ec4f5c0af9"
+      "computedHash": "b427f0d32d90eab454f41a3eaac8f668a9c06f3e702d70423a7e5396dc606132"
     },
     "task-decomposition": {
       "name": "task-decomposition",

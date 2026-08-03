@@ -126,9 +126,9 @@ fi
 # 2. Global em dash prohibition across all tracked text files
 # ---------------------------------------------------------------
 if git -C "${REPO_DIR}" rev-parse --git-dir >/dev/null 2>&1; then
-  TEXT_FILES="$(git -C "${REPO_DIR}" ls-files -- '*.md' '*.json' '*.yml' '*.yaml' '*.sh' '*.mmd' '*.conf' '*.toml' '*.ini' '*.template' '*.rb' '*.py' '*.html' '*.svg' 'dotfiles/*' '.gitignore')"
+  TEXT_FILES="$(git -C "${REPO_DIR}" ls-files -- '*.md' '*.json' '*.yml' '*.yaml' '*.sh' '*.mmd' '*.conf' '*.toml' '*.ini' '*.template' '*.rb' '*.py' '*.html' '*.svg' 'dotfiles/*' '**/.gitignore' '.gitignore')"
 else
-  TEXT_FILES="$(find "${REPO_DIR}" -type f \( -name '*.md' -o -name '*.json' -o -name '*.yml' -o -name '*.yaml' -o -name '*.sh' -o -name '*.mmd' -o -name '*.conf' -o -name '*.toml' -o -name '*.ini' -o -name '*.template' -o -name '*.rb' -o -name '*.py' -o -name '*.html' -o -name '*.svg' \) -not -path '*/.git/*')"
+  TEXT_FILES="$(find "${REPO_DIR}" -type f \( -name '*.md' -o -name '*.json' -o -name '*.yml' -o -name '*.yaml' -o -name '*.sh' -o -name '*.mmd' -o -name '*.conf' -o -name '*.toml' -o -name '*.ini' -o -name '*.template' -o -name '*.rb' -o -name '*.py' -o -name '*.html' -o -name '*.svg' -o -name '.gitignore' \) -not -path '*/.git/*')"
 fi
 
 while IFS= read -r f; do

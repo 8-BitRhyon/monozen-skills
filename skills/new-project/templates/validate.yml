@@ -13,17 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # Pin actions to full commit SHAs before production (supply-chain hygiene).
-      # Resolve: gh api repos/<owner>/<repo>/releases/latest, then pin the tag's commit.
+      # Actions are SHA-pinned (supply-chain hygiene). Resolve a new tag:
+      # gh api repos/<owner>/<repo>/releases/latest, then pin that commit's SHA.
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
       - name: Set up runtime
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: '20'
       - name: Install
         run: npm ci
       - name: Test
         run: npm test
-      - name: Lint
-        run: npm run lint
+      # Add lint only if the stack has a lint script, e.g.:
+      # - name: Lint
+      #   run: npm run lint

@@ -15,10 +15,11 @@ description: "Bootstrap any new software project from zero: repo creation, scaff
    - `templates/AGENTS.md` -> repo root (agent contract)
    - `templates/.gitignore` -> repo root (adapt per stack)
    - `templates/validate.yml` -> `.github/workflows/validate.yml` (CI gate; adapt test command)
-   - Optionally `templates/design.md` -> `design.md` (one-page architecture note)
-4. **Commit skeleton + constitution as one commit** (never mix scaffold with feature work).
-5. **Add a first feature** using `test-driven-dev` (test first), one logical change per commit.
-6. **Code review** via `code-review` skill, then land via `pr-workflow`.
+   - `templates/design.md` -> `design.md` (one-page architecture note, optional for trivial projects)
+4. **Install the pre-commit gate** (shift-left): run the repo's hook installer if one exists, or add the gate from `scripts/install-hooks.sh` pattern (validate -> test -> manifest/lock).
+5. **Commit skeleton + constitution as one commit** (never mix scaffold with feature work).
+6. **Add a first feature** using `test-driven-dev` (test first), one logical change per commit.
+7. **Code review** via `code-review` skill, then land via `pr-workflow`.
 
 ## Rules
 

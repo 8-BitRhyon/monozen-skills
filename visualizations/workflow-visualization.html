@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monozen Agentic Workflow - Full Stack Visualization</title>
+<title>Monozen Agentic Workflow - Lifecycle Visualization</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
   :root{--bg:#0b0c15;--surface:#12132b;--primary:#8b7eff;--accent:#ff6b6b;--green:#4ecdc4;--yellow:#ffe066;--text:#eaeaf2;--text-dim:#8a8aa8;--border:#2a2a45;--layer:#1a1b36;--arrow:#8b7eff44}
@@ -59,8 +59,8 @@
 
 <header class="hero">
   <h1>Monozen Agentic Workflow</h1>
-  <p class="subtitle">A 5-layer sandbox: shell substrate &rarr; workspace isolation &rarr; agent multiplexing &rarr; lifecycle hooks &rarr; context provisioning. Every component verified, audited, or installed.</p>
-  <div class="meta">14 herdr plugins &bull; fzf + fd + rg + yazi + zoxide &bull; worktrunk isolation &bull; native notifications &bull; multi-agent safe</div>
+  <p class="subtitle">The project lifecycle as runnable protocols: idea &rarr; bootstrap &rarr; implement &rarr; review &rarr; gate &rarr; PR &rarr; release. Every stage is a skill in the registry.</p>
+  <div class="meta">16 canonical skills &bull; Pi + herdr + treehouse + firstmate &bull; AXI CLIs &bull; SHA-pinned CI &bull; gitleaks secrets gate</div>
 </header>
 
 <div class="container">
@@ -68,13 +68,13 @@
   <section class="layers">
     <article class="layer-card">
       <div class="layer-number">LAYER 0 - SHELL SUBSTRATE</div>
-      <h3>Terminal &amp; Toolchain</h3>
-      <p class="layer-desc">The foundation everything runs on: Ghostty (transparent, non-native fullscreen), tmux (catppuccin pills), zsh with aliases, and fzf wired to fd/rg.</p>
+      <h3>Terminal &amp; Multiplexer</h3>
+      <p class="layer-desc">Ghostty (GPU terminal), tmux (catppuccin pills), herdr (agent-aware multiplexer with state: working/idle/blocked), zsh toolchain.</p>
       <div class="components">
         <span class="component installed">Ghostty</span>
         <span class="component installed">tmux</span>
-        <span class="component installed">zsh</span>
         <span class="component installed">herdr</span>
+        <span class="component installed">zsh</span>
         <span class="component installed">fzf</span>
         <span class="component installed">fd</span>
         <span class="component installed">rg</span>
@@ -83,141 +83,131 @@
         <span class="component installed">bat</span>
         <span class="component installed">eza</span>
         <span class="component installed">delta</span>
-        <span class="component new">agentbox</span>
       </div>
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 1 - WORKSPACE ISOLATION</div>
-      <h3>Git Worktrees Per Agent</h3>
-      <p class="layer-desc">Every agent pane gets its own isolated directory + branch while sharing the same `.git`. Worktrunk manages creation; setup installs `.env`/`mise` per project; resurrect saves the layout.</p>
+      <div class="layer-number">LAYER 1 - AGENT RUNTIME</div>
+      <h3>Harness + Crew Distro</h3>
+      <p class="layer-desc">Pi is the primary coding-agent harness; firstmate is the captain-and-crew distro (talk to one agent, ship with a crew). Claude Code / OpenCode / Codex are co-harnesses.</p>
       <div class="components">
-        <span class="component installed">worktrunk</span>
-        <span class="component installed">worktree-setup</span>
-        <span class="component installed">workspace-manager</span>
-        <span class="component installed">sessionizer</span>
-        <span class="component installed">zoxide</span>
-        <span class="component installed">resurrect</span>
+        <span class="component installed">Pi</span>
+        <span class="component installed">firstmate</span>
+        <span class="component installed">Claude Code</span>
+        <span class="component installed">OpenCode</span>
+        <span class="component installed">Codex</span>
+        <span class="component new">pi-herdr / pi-worktree</span>
+      </div>
+    </article>
+
+    <article class="layer-card">
+      <div class="layer-number">LAYER 2 - WORKSPACE ISOLATION</div>
+      <h3>Pooled Git Worktrees</h3>
+      <p class="layer-desc">treehouse manages a reusable pool of isolated worktrees under ~/.treehouse/. Dependencies and build cache survive between tasks; leases prevent collisions.</p>
+      <div class="components">
+        <span class="component installed">treehouse</span>
+        <span class="component installed">git-worktree</span>
+        <span class="component installed">pi-worktree</span>
         <span class="component installed">git</span>
-        <span class="component new">agentbox (VM sandbox)</span>
       </div>
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 2 - AGENT MULTIPLEXING</div>
-      <h3>Parallel TUI Agents</h3>
-      <p class="layer-desc">Herdr manages workspace/tab/pane for Kilo, Aider, Crush, Freebuff, Antigravity CLI, and Command Code. Plugins provide lifecycle reporting (blocked/working/done/idle), notification toasts, and workspace layouts.</p>
+      <div class="layer-number">LAYER 3 - TOOLING</div>
+      <h3>AXI CLI Wrappers</h3>
+      <p class="layer-desc">Agent-ergonomic CLIs with TOON output instead of MCP schema overhead: ~79k tokens/task vs ~185k. No GUI required, terminal-native by design.</p>
       <div class="components">
-        <span class="component installed">freebuff.plugin</span>
-        <span class="component installed">commandcode.plugin</span>
-        <span class="component installed">focus-notify</span>
-        <span class="component installed">reviewr</span>
-        <span class="component installed">file-viewer</span>
-        <span class="component installed">spreader</span>
-        <span class="component installed">herdr-plus</span>
-        <span class="component installed">tab-rename</span>
-        <span class="component installed">github-start</span>
-        <span class="component installed">vim-nav</span>
-        <span class="component new">triage</span>
-        <span class="component new">attention</span>
+        <span class="component installed">gh-axi</span>
+        <span class="component installed">chrome-devtools-axi</span>
+        <span class="component installed">tasks-axi</span>
+        <span class="component installed">quota-axi</span>
+        <span class="component installed">axi skill</span>
       </div>
     </article>
 
     <article class="layer-card">
-      <div class="layer-number">LAYER 3 - LIFECYCLE HOOKS</div>
-      <h3>Agent State Awareness</h3>
-      <p class="layer-desc">Every agent reports its lifecycle: session start, pre/post tool use, blocked, working, idle, done. Native macOS toasts on blocked/done with click-to-focus. Session persistence via resurrect. Workspace isolation prevents file collisions.</p>
+      <div class="layer-number">LAYER 4 - VERIFICATION GATE</div>
+      <h3>CI + Secret Scan</h3>
+      <p class="layer-desc">GitHub Actions validates skills, self-tests the validator, checks manifest sync, enforces SHA-pinned actions, and runs gitleaks over full history.</p>
       <div class="components">
-        <span class="component installed">freebuff.watcher</span>
-        <span class="component installed">cmd-hooks</span>
-        <span class="component installed">focus-notify</span>
-        <span class="component installed">resurrect</span>
-        <span class="component installed">worktrunk</span>
-        <span class="component new">triage (attention ranking)</span>
-        <span class="component new">attention (jump-to-agent)</span>
-      </div>
-    </article>
-
-    <article class="layer-card">
-      <div class="layer-number">LAYER 4 - CONTEXT PROVISIONING</div>
-      <h3>Clean Code Context</h3>
-      <p class="layer-desc">Agents receive clean structural context. fzf + fd + rg + yazi + bat + zoxide provide file/search/preview/navigation. Repomix and ast-grep remain optional for heterogeneous agents lacking native search.</p>
-      <div class="components">
-        <span class="component installed">fzf</span>
-        <span class="component installed">fd</span>
-        <span class="component installed">rg</span>
-        <span class="component installed">yazi</span>
-        <span class="component installed">zoxide</span>
-        <span class="component installed">bat</span>
-        <span class="component new">repomix (optional)</span>
-        <span class="component new">ast-grep (optional)</span>
+        <span class="component installed">validate.sh</span>
+        <span class="component installed">test.sh</span>
+        <span class="component installed">manifest.sh</span>
+        <span class="component installed">install-hooks.sh</span>
+        <span class="component installed">gitleaks</span>
+        <span class="component installed">SHA-pin check</span>
       </div>
     </article>
   </section>
 
-  <section class="pipeline" aria-label="Agent workflow pipeline">
-    <h2>Agentic Workflow Pipeline</h2>
-    <p class="sub">How data flows from workspace isolation through agent execution to result visibility</p>
-    <div class="pipeline-track" role="list" aria-label="Pipeline steps">
-      <article class="step" role="listitem" aria-label="Workspace isolation">
-        <div class="step-number">STEP 1</div>
-        <h4>Isolation</h4>
-        <p>worktrunk creates isolated git worktrees per agent pane</p>
+  <section class="pipeline" aria-label="Project lifecycle pipeline">
+    <h2>Project Lifecycle</h2>
+    <p class="sub">Every stage is a runnable protocol in skills/ - universal across languages and stacks</p>
+    <div class="pipeline-track" role="list" aria-label="Lifecycle stages">
+      <article class="step" role="listitem" aria-label="Idea">
+        <div class="step-number">STAGE 1</div>
+        <h4>Idea</h4>
+        <p>prompt-engineering-loop + task-decomposition: units with acceptance criteria</p>
       </article>
-      <article class="step" role="listitem" aria-label="Agent launch">
-        <div class="step-number">STEP 2</div>
-        <h4>Launch</h4>
-        <p>freebuff / commandcode / Aider / Crush / Kilo start in pane</p>
+      <article class="step" role="listitem" aria-label="Bootstrap">
+        <div class="step-number">STAGE 2</div>
+        <h4>Bootstrap</h4>
+        <p>new-project: scaffold, AGENTS.md, .gitignore, CI, first commit</p>
       </article>
-      <article class="step" role="listitem" aria-label="Lifecycle reporting">
-        <div class="step-number">STEP 3</div>
-        <h4>Lifecycle</h4>
-        <p>Plugins + focus-notify report blocked / working / done / idle</p>
+      <article class="step" role="listitem" aria-label="Implement">
+        <div class="step-number">STAGE 3</div>
+        <h4>Implement</h4>
+        <p>test-driven-dev: red -> green -> refactor -> runtime proof</p>
       </article>
-      <article class="step" role="listitem" aria-label="Context search">
-        <div class="step-number">STEP 4</div>
-        <h4>Context</h4>
-        <p>Agent queries fzf / fd / rg / yazi / bat / zoxide natively</p>
-      </article>
-      <article class="step" role="listitem" aria-label="Session persistence">
-        <div class="step-number">STEP 5</div>
-        <h4>Persistence</h4>
-        <p>resurrect saves layout; workspace-manager applies per-workspace defaults</p>
-      </article>
-      <article class="step" role="listitem" aria-label="Result visibility">
-        <div class="step-number">STEP 6</div>
+      <article class="step" role="listitem" aria-label="Review">
+        <div class="step-number">STAGE 4</div>
         <h4>Review</h4>
-        <p>reviewr sidebar + git diff; focus-notify pulls terminal to finished pane</p>
+        <p>code-review: 5 dimensions + severity triage</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Gate">
+        <div class="step-number">STAGE 5</div>
+        <h4>Gate</h4>
+        <p>pre-commit: validate -> test -> manifest -> lock-sync</p>
+      </article>
+      <article class="step" role="listitem" aria-label="PR">
+        <div class="step-number">STAGE 6</div>
+        <h4>PR</h4>
+        <p>pr-workflow: branch -> PR -> CI checks -> merge -> cleanup</p>
+      </article>
+      <article class="step" role="listitem" aria-label="Release">
+        <div class="step-number">STAGE 7</div>
+        <h4>Release</h4>
+        <p>production-web-audit: CSP, memory, a11y, console - then deploy</p>
       </article>
     </div>
   </section>
 
-  <section class="audit" aria-label="Security audit results">
-    <h3>Security Audit Results (Read-Only, No Modifications)</h3>
-    <div class="audit-row"><span class="label">freebuff.plugin</span> SAFE - only touches ~/.local/bin/freebuff, ~/.config/manicode/projects/*/chats/; no external network; no secret access; no hidden prompts</div>
-    <div class="audit-row"><span class="label">commandcode.plugin</span> SAFE WITH CAVEATS - taste files (.commandcode/taste/) are documented agent behavior instructions (not hidden prompts); install-hooks.mjs writes expected ~/.commandcode/settings.json; no malicious filesystem/network access</div>
-    <div class="audit-row"><span class="label">worktrunk / worktree-setup</span> Installed from verified GitHub repos (devashish2203/herdr-worktrunk, tdi/herdr-worktree-setup)</div>
-    <div class="audit-row"><span class="label">resurrect / workspace-manager / zoxide / triage / attention</span> Installed; no malicious indicators in source; all open-source with active commits</div>
+  <section class="audit" aria-label="Security posture">
+    <h3>Security Posture</h3>
+    <div class="audit-row"><span class="label">Secrets</span> gitleaks full-history scan in CI; universal guard blocks IDs/secrets/fingerprints at commit/deploy</div>
+    <div class="audit-row"><span class="label">Supply chain</span> All GitHub Actions SHA-pinned (zgosalvez ensure-sha-pinned check)</div>
+    <div class="audit-row"><span class="label">Machine hygiene</span> Zero /Users/ paths or file:// refs in committed artifacts; em dashes banned repo-wide</div>
+    <div class="audit-row"><span class="label">Plugins</span> Only install herdr plugins listed in scripts/setup.sh; audit diffs before enabling</div>
   </section>
 
-  <section aria-label="Cross-layer connections" style="padding:2rem 0;">
+  <section aria-label="Cross-stage connections" style="padding:2rem 0;">
     <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.01em">Why This Is Seamless</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;">
       <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
-        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--primary);">Isolation → Launch</h4>
-        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">worktrunk creates a separate git branch per agent pane. Aider edits `src/auth.js` on branch `feature/auth`; Crush edits the same file on `feature/login` without collision. workspace-manager applies `.env` and `mise` setup automatically.</p>
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--primary);">Bootstrap -> Implement</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">new-project ships constitution + CI before the first feature, so test-driven-dev and the pre-commit gate work from commit one. No retrofitting.</p>
       </div>
       <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
-        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--accent);">Lifecycle → Awareness</h4>
-        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">freebuff and commandcode plugins report blocked/working/done to herdr's socket API. focus-notify fires a native macOS toast when any agent finishes or needs approval. You click the toast and the terminal jumps to the exact pane.</p>
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--accent);">Review -> Merge</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">code-review tags findings blocker/should/nit; pr-workflow polls required checks and merges only green. Protected main makes PRs mandatory.</p>
       </div>
       <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
-        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--yellow);">Persistence → Continuity</h4>
-        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">resurrect saves workspace, tab, pane, cwd, and running agent state. Restart herdr or the machine: the multi-agent layout (freebuff pane + reviewr sidebar + file-viewer) restores exactly. No manual re-setup.</p>
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--yellow);">Isolation -> Parallelism</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">treehouse gives each crewmate a pooled worktree with deps intact; herdr supervises states; firstmate reconciles results into one PR stream.</p>
       </div>
       <div style="background:var(--layer);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;">
-        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--green);">Context → Speed</h4>
-        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">Every agent pane has native access to fd (fast file find), rg (content grep), yazi (file manager with preview), bat (syntax highlight), and zoxide (directory jump). No context-switching out of the terminal.</p>
+        <h4 style="font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--green);">CLI -> Token Economy</h4>
+        <p style="font-size:.85rem;color:var(--text-dim);line-height:1.5;">AXI wrappers (TOON, totals, empty states, exit codes) keep every tool call lean: ~79k tokens/task vs ~185k for MCP schema overhead.</p>
       </div>
     </div>
   </section>
@@ -225,8 +215,8 @@
 </div>
 
 <footer class="footer">
-  <p>Monozen Agentic Workflow Visualization - updated from <a href="https://github.com/8-BitRhyon/monozen-skills">monozen-skills</a> repo (commit 965c4a3)</p>
-  <p style="margin-top:.5rem;opacity:.6">14 herdr plugins installed &bull; 4 audited plugins (freebuff + commandcode: read-only audit, no files changed) &bull; 1 new visualization added</p>
+  <p>Monozen Agentic Workflow Visualization - from <a href="https://github.com/8-BitRhyon/monozen-skills">monozen-skills</a> repo</p>
+  <p style="margin-top:.5rem;opacity:.6">16 canonical skills &bull; 7-stage lifecycle &bull; all stages are runnable protocols</p>
 </footer>
 
 </body>
