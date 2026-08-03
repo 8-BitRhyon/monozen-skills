@@ -292,6 +292,6 @@ Every agent (Pi, Claude Code, OpenCode, Codex) must actually use the built/downl
 | Agent discovery | Plugin detects agent | `herdr pane list` shows agent label |
 | Lifecycle hooks | Agent reports blocked/working/idle | Watch pane status; `focus-notify` fires toast |
 | Context access | Agent can invoke fzf/fd/rg/yazi/bat | Test from agent pane: `rg "test"`, `yy`, `fd .` |
-| Workspace isolation | Worktree per agent pane | `herdr plugin pane open --plugin worktrunk ...` |
-| Session persistence | Layout survives restart | `herdr-resurrect` saves; restart tmux/herdr and restore |
+| Workspace isolation | Worktree per agent pane | `treehouse get` (pooled) or `git worktree add` from the captain pane |
+| Session persistence | Layout survives restart | `herdr-sessionizer` saves; restart tmux/herdr and restore |
 | Plugin audit | Installed safely | Only install plugins listed in `scripts/setup.sh`; review diff for exfiltration/prompt injection |

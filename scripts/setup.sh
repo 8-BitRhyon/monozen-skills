@@ -46,8 +46,7 @@ if [ -f ~/.pi/agent/settings.json ]; then
 fi
 cp "${REPO_DIR}/skills/pi-agent/templates/settings.json" ~/.pi/agent/settings.json || true
 
-echo ":: Pi packages declared in settings.json (auto-install on Pi >=0.82) - pi-herdr, pi-worktree"
-echo ":: If on an older Pi, install manually: npx -y pi install @andrewjacop/pi-herdr && npx -y pi install @ogulcancelik/pi-worktree || true"
+echo ":: Pi packages declared in settings.json (auto-install on Pi >=0.82): pi-herdr, pi-worktree"
 
 echo ":: Installing treehouse (pooled git worktrees)..."
 if ! command -v treehouse &>/dev/null; then
@@ -88,7 +87,7 @@ herdr plugin install lmilojevicc/herdr-tab-rename --yes || true
 echo ":: Installing llmtrim-herdr (token usage optimization)..."
 herdr plugin install fkiene/llmtrim-herdr --yes || true
 
-# ── 5. Post-install verification ──────────────────────────────
+# ── 4. Post-install verification ──────────────────────────────
 echo ""
 echo "==> Verifying installation..."
 VERIFY_FAIL=0

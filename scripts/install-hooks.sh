@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # scripts/install-hooks.sh - Installs the monozen-skills pre-commit hook (shift-left).
-# The hook runs the same validation + test + manifest sync gate as CI, locally.
+# The hook runs the local gate (validate + test + manifest sync); CI adds the
+# SHA-pinned actions check and gitleaks secrets scan on top.
 #
 # Usage: bash scripts/install-hooks.sh [--remove]
 

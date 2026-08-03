@@ -70,3 +70,10 @@ The `firstmate` distro spawns every crewmate in its own treehouse worktree (or O
 - `treehouse status` shows each task worktree + lease, idle and clean after `return`.
 - `git worktree list` shows one entry per active task, each on its own branch.
 - `git status` in two worktrees shows independent dirty states.
+
+## Invocation
+
+Load when:
+- Spawning parallel subagents or parallelizing work
+- User asks "parallel agents", "worktrees", "isolated task"
+- Before delegating any unit that could collide with sibling work

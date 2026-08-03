@@ -89,7 +89,7 @@ CI       .github/workflows/validate.yml: validate + test + manifest-sync + SHA-p
 MERGE    required checks pass -> merge -> delete branch -> return worktrees
    │
    ▼
-RELEASE  production-web-audit (CSP, memory, a11y, console) -> deploy
+RELEASE  production-web-audit (CSP, memory, a11y, console) - pre-deploy audit protocol; deploy per stack
 ```
 
 Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.

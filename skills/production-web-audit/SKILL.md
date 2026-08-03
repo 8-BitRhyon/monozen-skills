@@ -67,3 +67,10 @@ npx -y chrome-devtools-axi eval "() => document.title"
 npx -y chrome-devtools-axi stop
 ```
 *Requirement: Zero console errors, clean network traces, and verified DOM state.*
+
+## Invocation
+
+Load when:
+- Deploying any web application to production
+- User asks "audit", "pre-deploy", "is this safe to ship", "release"
+- After any change touching CSP, listeners, Service Worker, or animation

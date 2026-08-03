@@ -111,11 +111,11 @@ git push
 
 ## Meta-Skills (Skills for Skills)
 
-| Skill | Purpose |
-|-------|---------|
-| `find-skills` | Discover existing skills |
-| `skill-authoring` | This skill |
-| `improve` | Audit codebase for skill opportunities |
+| Skill | Purpose | Source |
+|-------|---------|--------|
+| `find-skills` | Discover existing skills | External (vercel-labs/skills, installed by setup.sh) |
+| `skill-authoring` | This skill | This repo |
+| `improve` | Audit codebase for skill opportunities | External (not installed by setup.sh) |
 
 ---
 

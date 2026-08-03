@@ -49,3 +49,10 @@ Aggregated engineering protocol for the Monozen dual-persona portfolio (Moon Sys
 | CSS transform anim vs GSAP | Move rotation to inner child |
 | Font FOUT on split-screen | Preload before split-screen branch |
 | `preserveDrawingBuffer:false` reads | Verify via screenshot, never readPixels |
+
+## Invocation
+
+Load when:
+- Working on any file under the Monozen portfolio project
+- User asks about themes, WebGL, nav, or portfolio deploy
+- Pre-deploy audit of the portfolio (run `security-guard-universal.sh` first)
