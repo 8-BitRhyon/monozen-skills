@@ -22,7 +22,7 @@ flowchart LR
     end
 
     subgraph RUNTIME["Agent Runtime"]
-        KC[Kilo / Claude Code]
+        KC[Pi / Claude Code / OpenCode / Codex<br/>firstmate crew distro]
         LG[lazygit]
         NV[nvim]
     end
@@ -59,7 +59,7 @@ flowchart LR
 ```
 herdr agent tab bar  -  top
 ──────────────────────────────
-[agent panes  -  Kilo, Claude Code]
+[agent panes  -  Pi, Claude Code, crewmates]
 ──────────────────────────────
 tmux Catppuccin pills  -  bottom
    #W █ #N     session     ~/dir 
@@ -119,24 +119,23 @@ tmux Catppuccin pills  -  bottom
 
 ### herdr plugins
 
-| Plugin | Function |
-|--------|----------|
-| Tab Auto-Rename | Tab label ← focused pane directory |
-| Herdr Plus | Project templates, quick action launcher |
-| Spreader | YAML layout application |
-| reviewr | Terminal code-review sidebar |
-| Focus Notify | Native macOS toast on agent blocked/done; click-to-focus pane |
-| Freebuff Plugin | Launch/manage Freebuff agent; lifecycle watcher reports blocked/working/idle |
-| Command Code Plugin | Launch/manage Command Code agent; cmd-hooks report status events |
-| Worktrunk | Git worktree management inside herdr (per-agent isolation) |
-| Worktree Setup | Per-project setup (.env, mise) when worktrees created |
-| Herdr Resurrect | Snapshot/restore workspace, tab, pane, agent layout |
-| herdr-triage | Attention ranking (blocked first) | Installed |
-| herdr-attention | Jump to agent needing input | Installed |
-| llmtrim | ⚠️ LLM token proxy  -  intercepts agent API calls. See gotcha #9. |
-| GitHub Start | Tab origin from GitHub issue/PR |
-| File Viewer | Git-aware read-only file tree |
-| Vim Navigation | Ctrl+h/j/k/l bridging herdr panes ↔ nvim |
+| Plugin | Function | Installed by setup.sh |
+|--------|----------|-----------------------|
+| herdr-file-viewer | Git-aware read-only file tree | Yes |
+| herdr-reviewr | Terminal code-review sidebar | Yes |
+| herdr-spreader | YAML layout application | Yes |
+| herdr-plus | Project templates, quick action launcher | Yes |
+| github-start | Tab origin from GitHub issue/PR | Yes |
+| vim-herdr-navigation | Ctrl+h/j/k/l bridging herdr panes <-> nvim | Yes |
+| herdr-tab-rename | Auto-sync tab label to focused pane directory | Yes |
+| llmtrim-herdr | Token usage optimization | Yes |
+| Focus Notify | Native macOS toast on agent blocked/done; click-to-focus pane | Native |
+| herdr-remote | Remote sessions | Optional |
+| ghzinga | GitHub agent launcher | Optional |
+| herdr-sessionizer | Session snapshot/restore | Optional |
+| agentbox | Agent launcher | Optional |
+
+Setup is `bash scripts/setup.sh` (plugins section 3).
 
 ---
 
@@ -209,8 +208,8 @@ token usage. It runs locally, never phones home, but it sees every API key and
 prompt passing through herdr agent panes. Understand the interception surface
 before enabling.
 
-### 10. Plugin security audit
-`herdr-freebuff-plugin` (TheMetalStorm) and `herdr-commandcode-plugin` (TheMetalStorm) were audited: no malicious code, no prompt injection, no external exfiltration. Both modify only expected paths (`~/.local/bin/freebuff`, `~/.config/manicode/projects/*/chats/`, `~/.commandcode/settings.json`). Taste files in commandcode are agent behavior instructions, not hidden prompts. Safe to install.
+### 10. Plugin trust
+Only install herdr plugins listed in `scripts/setup.sh` (section 3). Audit any new plugin's diff before enabling: verify no network exfiltration, no prompt injection, and that it only writes expected paths.
 
 ---
 
@@ -286,7 +285,7 @@ z portf            # directory jump → Portfolio
 
 ## Agent execution verification (heterogeneous agents)
 
-Every agent (Kilo, Aider, Crush, Freebuff, Antigravity CLI) must actually use the built/downloaded toolchain. Verify per agent:
+Every agent (Pi, Claude Code, OpenCode, Codex) must actually use the built/downloaded toolchain. Verify per agent:
 
 | Layer | What to verify | How |
 |---|---|---|
@@ -295,4 +294,4 @@ Every agent (Kilo, Aider, Crush, Freebuff, Antigravity CLI) must actually use th
 | Context access | Agent can invoke fzf/fd/rg/yazi/bat | Test from agent pane: `rg "test"`, `yy`, `fd .` |
 | Workspace isolation | Worktree per agent pane | `herdr plugin pane open --plugin worktrunk ...` |
 | Session persistence | Layout survives restart | `herdr-resurrect` saves; restart tmux/herdr and restore |
-| Plugin audit | Installed safely | Security audit on `freebuff` (`scripts/launch.sh`, `watcher-lib.sh`) and `commandcode` (`cmd-hooks/install-hooks.mjs`, `.commandcode/taste/`) - no malicious network/filesystem access, taste files are behavior instructions not hidden prompts |
+| Plugin audit | Installed safely | Only install plugins listed in `scripts/setup.sh`; review diff for exfiltration/prompt injection |

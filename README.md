@@ -46,12 +46,41 @@ All 12 skills, federated via `npx skills add 8-BitRhyon/monozen-skills`:
 
 ## The Captains-and-Crew Operating Model
 
-The workstation runs one captain agent per task on an isolated Git worktree, supervised from a Herdr pane (`@andrewjacop/pi-herdr`, `@ogulcancelik/pi-worktree`):
+The workstation runs one captain agent per task on an isolated Git worktree (pooled via `treehouse`), supervised from a Herdr pane:
 
 1. **One captain.** A single orchestrator (Pi / Claude Code / OpenCode / Codex) owns the task end to end.
-2. **Delegation.** Independent units are spawned in isolated worktrees (`git-worktree`) and Herdr panes; never two agents in the same working tree.
+2. **Delegation.** Independent units are spawned in isolated worktrees (`treehouse` pool, see `git-worktree` skill) and Herdr panes; never two agents in the same working tree.
 3. **Escalation is cheap.** Ask the human for decisions you cannot verify; do the work you can. Auto-fix typos; never change product behavior silently.
-4. **Cleanup.** After a subagent finishes, report to the captain and remove the worktree (`git worktree remove`).
+4. **Cleanup.** After a subagent finishes, report to the captain and return the worktree to the pool (`treehouse return`). Never leave stale worktrees, leases, or branches.
+
+The full captain-and-crew distro is `firstmate` (see Environment below): talk to one agent, ship with a crew.
+
+---
+
+## How Skills Are Processed
+
+```
+AUTHOR   skills/<name>/SKILL.md (strict YAML frontmatter)
+   │
+   ▼
+GATE     pre-commit hook (scripts/install-hooks.sh), local shift-left:
+         validate  -> test -> manifest -> lock-sync diff
+   │
+   ▼
+PR       push feature branch (main is protected) -> open PR
+   │
+   ▼
+CI       .github/workflows/validate.yml
+         validate job: validate + test + manifest-sync + SHA-pinned actions
+         secrets job:  gitleaks full-history secret scan
+   │
+   ▼
+MERGE    required checks pass -> merge to main
+   │
+   ▼
+SHIP     consumers run `npx skills add 8-BitRhyon/monozen-skills`
+         -> skills federated to each CLI's native skill directory
+```
 
 ---
 
