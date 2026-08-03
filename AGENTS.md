@@ -13,6 +13,8 @@ This repository is the canonical registry of executable agent skills. Skills are
 - **One logical change per commit.** No drive-by refactoring. Small diffs that can be bisected.
 - **Write failing tests first.** TDD prove-it cycle: red, green, refactor, verify.
 - **Token-aware output.** Prefer token-efficient formats (TOON, truncated tables, minimal fields). Keep skill prompts and tool output lean.
+- **Cache-friendly sessions (prompt caching).** Provider caches (Anthropic 90% cheaper reads, Gemini 75%, OpenAI 50%) hit only on a byte-stable prefix. Therefore: load docs in a FIXED order (AGENTS.md -> README.md -> skills frontmatter -> skills on demand), never reorder, never put timestamps/dynamic state in the header, freeze tool schemas mid-session. Put volatile content in tool output or the tail, never the prefix.
+- **Compaction over context growth.** When a session nears its budget, summarize history (decisions, unresolved bugs, key state) and continue with the summary + most recent work, rather than growing the window. Sub-agents return distilled 1-2k summaries, not raw transcripts.
 - **No em dashes.** Use `-` or `:` instead of the Unicode U+2014 character in every artifact this repo produces.
 - **No machine-specific paths.** Never commit absolute home paths or local file URI references. Use `~`, `$HOME`, or relative paths.
 - **Secure by default.** Never commit secrets, keys, zone/account IDs, or fingerprints. Run the `pre-commit` gate before pushing.

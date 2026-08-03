@@ -112,7 +112,7 @@ Dir.children(skills_dir).select { |f| File.directory?(File.join(skills_dir, f)) 
   end
 
   if skill_fail == 0
-    puts "[PASS] #{folder}"
+    puts "[PASS] #{folder}" if ENV["VALIDATE_VERBOSE"]
   else
     failures += skill_fail
   end
@@ -197,6 +197,15 @@ folders.each do |folder|
   end
   if actual != expected
     puts "[FAIL] skills-lock.json: '#{folder}' computedHash is stale. Run 'npm run manifest'."
+    failures += 1
+  end
+  est = entry.is_a?(Hash) ? entry["tokenEstimate"] : nil
+  expected_est = File.read(md).bytesize / 4
+  if est.nil? || est != expected_est
+    puts "[FAIL] skills-lock.json: '#{folder}' tokenEstimate is stale (#{est || 'missing'} vs #{expected_est}). Run 'npm run manifest'."
+    failures += 1
+  elsif est > 1000
+    puts "[FAIL] skills-lock.json: '#{folder}' exceeds 1000-token load budget (~#{est}). Split content into templates/ or references/."
     failures += 1
   end
 end
@@ -299,9 +308,8 @@ exit(failures == 0 ? 0 : 1)
 RUBY
 
 # ---------------------------------------------------------------
-echo "=================================================="
 if [ "${ERRORS}" -eq 0 ]; then
-  echo "✅ All skills & repo contracts validated successfully. Zero errors."
+  echo "✅ Validation passed. (VALIDATE_VERBOSE=1 for per-skill output)"
   exit 0
 else
   echo "❌ Validation failed with ${ERRORS} error(s)."

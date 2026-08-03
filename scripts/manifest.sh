@@ -42,6 +42,7 @@ Dir.children(skills_dir).select { |f| File.directory?(File.join(skills_dir, f)) 
   skills[folder] = {
     "name" => (fm["name"] || "").to_s.strip,
     "description" => (fm["description"] || "").to_s.strip,
+    "tokenEstimate" => content.bytesize / 4,
     "source" => "8-BitRhyon/monozen-skills",
     "sourceType" => "github",
     "skillPath" => "skills/#{folder}/SKILL.md",

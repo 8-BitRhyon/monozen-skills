@@ -4,6 +4,7 @@
     "agentic-loop": {
       "name": "agentic-loop",
       "description": "Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.",
+      "tokenEstimate": 947,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/agentic-loop/SKILL.md",
@@ -12,6 +13,7 @@
     "axi": {
       "name": "axi",
       "description": "Build and use agent-ergonomic CLI wrappers (AXI style) instead of MCP: TOON output, minimal schemas, truncation hints, total counts, empty states, structured errors, exit codes 0/1/2, and next-step hints. Load when wrapping a CLI for agents or choosing a tool interface.",
+      "tokenEstimate": 784,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
@@ -20,6 +22,7 @@
     "code-review": {
       "name": "code-review",
       "description": "Universal code review protocol for any language and any repository: five review dimensions (correctness, readability, architecture, security, performance), severity triage (blocker/should/nit), and PR review workflow. Load when reviewing a diff, PR, or branch before merge.",
+      "tokenEstimate": 728,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/code-review/SKILL.md",
@@ -28,14 +31,16 @@
     "context-engineering": {
       "name": "context-engineering",
       "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
+      "tokenEstimate": 976,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": "eeeeea11a6b88659aab3b438262c40f3f749c1d7db26799987b69edd5f2df739"
+      "computedHash": "5a2fdf1c866b4ae3d522bd636be76f0440e912cb9f981b10c0598c028d466664"
     },
     "git-workflow": {
       "name": "git-workflow",
       "description": "Commit signing (SSH), history purge, branch hygiene, and pre-commit universal guard for Monozen repos.",
+      "tokenEstimate": 281,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-workflow/SKILL.md",
@@ -44,6 +49,7 @@
     "git-worktree": {
       "name": "git-worktree",
       "description": "Create, use, and clean up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse pooled worktrees, pi-worktree wrapper, per-task isolation, merge back, and cleanup discipline. Load before spawning parallel subagents or parallelizing work.",
+      "tokenEstimate": 991,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-worktree/SKILL.md",
@@ -52,6 +58,7 @@
     "herdr": {
       "name": "herdr",
       "description": "Operate the Herdr terminal multiplexer for multi-agent orchestration: panes, sockets, agent state (working/idle/blocked), spawning crew panes, focus/notify, and the first-mate captain pattern. Load whenever running multiple agents in one workspace or supervising the crew from a captain pane.",
+      "tokenEstimate": 832,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
@@ -60,6 +67,7 @@
     "monozen-portfolio": {
       "name": "monozen-portfolio",
       "description": "Consolidated Monozen portfolio skill: dual-theme (Sun/Moon) lifecycle contracts, 5-panel SPA architecture, CSS specificity load order, WebGL context safety, nav capsule behavior, and pre-deploy audit protocol. Load when working on any file under the Monozen portfolio project.",
+      "tokenEstimate": 903,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-portfolio/SKILL.md",
@@ -68,6 +76,7 @@
     "new-project": {
       "name": "new-project",
       "description": "Bootstrap any new software project from zero: repo creation, scaffold, constitution files (AGENTS.md, design.md, README.md), .gitignore, CI, signing, and first commit. Load whenever starting a new project or repository from scratch, for any language or stack.",
+      "tokenEstimate": 684,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/new-project/SKILL.md",
@@ -76,6 +85,7 @@
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
+      "tokenEstimate": 846,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
@@ -84,14 +94,16 @@
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
+      "tokenEstimate": 885,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "27baf544d7f0e55adf929f4494fdd739c046b1f0485d8f257e26d40685e84ca0"
+      "computedHash": "2871ebf6caf514b286ae7f1b272d95406af47a4c002252ddaf4e266538906128"
     },
     "production-web-audit": {
       "name": "production-web-audit",
       "description": "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.",
+      "tokenEstimate": 957,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/production-web-audit/SKILL.md",
@@ -100,6 +112,7 @@
     "prompt-engineering-loop": {
       "name": "prompt-engineering-loop",
       "description": "Lean iterative prompt refinement protocol - ELI10 structuring, clarifying questions, working examples, adversarial pressure testing, and verification-ladder stopping criteria for AI agent instructions.",
+      "tokenEstimate": 656,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/prompt-engineering-loop/SKILL.md",
@@ -108,6 +121,7 @@
     "skill-authoring": {
       "name": "skill-authoring",
       "description": "Meta-skill for authoring clean, runnable agent skill modules with frontmatter metadata, structured protocols, and zero em dashes.",
+      "tokenEstimate": 802,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
@@ -116,6 +130,7 @@
     "task-decomposition": {
       "name": "task-decomposition",
       "description": "Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.",
+      "tokenEstimate": 980,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
@@ -124,6 +139,7 @@
     "test-driven-dev": {
       "name": "test-driven-dev",
       "description": "Universal test-driven development protocol for any language or stack: write failing test first (red), minimal implementation (green), refactor, verify with real runtime evidence. Load when implementing any new feature, fixing a bug, or when a repo has no test-first discipline.",
+      "tokenEstimate": 637,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/test-driven-dev/SKILL.md",
