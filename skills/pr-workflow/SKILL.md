@@ -37,7 +37,8 @@ PR body must state: what changed, why, and the verification evidence (tests, run
 ## Checks + Review
 
 - Wait for CI: `gh pr checks --watch` (validate + secrets jobs in this repo).
-- Review gate: `code-review` skill on the diff. Blockers must be fixed; shoulds tracked.
+- **Independent review gate (mandatory, non-negotiable):** before merge, run a fresh-context review of the diff via a separate review agent/session - never review your own work in the session that wrote it. Load the `code-review` skill in a clean context (new worktree or new pane), apply the five dimensions, tag findings blocker/should/nit.
+- Blockers must be fixed; shoulds tracked or fixed. No merge with open blockers.
 - Required status checks must pass before merge on protected branches.
 
 ## Merge

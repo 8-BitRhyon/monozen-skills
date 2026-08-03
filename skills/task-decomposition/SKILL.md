@@ -87,22 +87,17 @@ Every task has a **done definition** (test, command, visual).
 
 ## Progress Tracking
 
-Use `todowrite` with this structure:
+Use `todowrite` with this structure (one `in_progress` at a time, update in real-time):
 ```json
-{
-  "todos": [
-    {"content": "Globe ResizeObserver: write failing tests", "status": "in_progress", "priority": "high"},
-    {"content": "Globe ResizeObserver: implement fix", "status": "pending", "priority": "high"},
-    {"content": "Font preload reorder: write failing tests", "status": "pending", "priority": "high"},
-    {"content": "Font preload reorder: implement fix", "status": "pending", "priority": "high"},
-    {"content": "Full test suite verification", "status": "pending", "priority": "high"},
-    {"content": "Chrome DevTools verification", "status": "pending", "priority": "high"},
-    {"content": "Deploy preview + curl verify", "status": "pending", "priority": "medium"}
-  ]
-}
+{"todos": [
+  {"content": "Globe ResizeObserver: write failing tests", "status": "in_progress", "priority": "high"},
+  {"content": "Globe ResizeObserver: implement fix", "status": "pending", "priority": "high"},
+  {"content": "Font preload reorder: write failing tests", "status": "pending", "priority": "high"},
+  {"content": "Font preload reorder: implement fix", "status": "pending", "priority": "high"},
+  {"content": "Full test suite verification", "status": "pending", "priority": "high"},
+  {"content": "Chrome DevTools verification", "status": "pending", "priority": "high"}
+]}
 ```
-
-**Rule:** Exactly ONE `in_progress` at a time. Update in real-time.
 
 ---
 

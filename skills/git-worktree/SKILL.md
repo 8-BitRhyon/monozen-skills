@@ -14,6 +14,13 @@ description: "Create, use, and clean up isolated git worktrees so parallel agent
 - Clean up: report diff to captain, then release the worktree. No stale worktrees left behind.
 - Deterministic steps live in scripts (agent edits the script when it breaks, not the tree).
 
+## Parallelism Governor (scale safety)
+
+- **Max concurrent crewmates: 4** (or `treehouse status` pool size, whichever is lower). Beyond that, queue tasks instead of spawning.
+- **Pool exhaustion** (`treehouse status` shows all trees leased/in-use): do NOT spawn more agents. Block the task until a `return` frees a tree, or wait for a lease.
+- **Contention preflight:** before parallel `npm install`/build/`gh` calls, stagger heavy operations (shared caches, registry/API rate limits). If a quota tool is available (`quota-axi`), confirm headroom before spawning >2 crewmates.
+- **Merge ordering:** when N branches target main, merge sequentially in dependency order (smallest/least-conflicting first); rebase each on fresh main before merging to keep conflicts bounded.
+
 ## Preferred Runtime: treehouse (pooled worktrees)
 
 `treehouse` (kunchenguid) manages a reusable pool of isolated worktrees under `~/.treehouse/`. Each agent gets a clean worktree instantly, with dependencies and build cache preserved between uses:
@@ -33,43 +40,27 @@ treehouse prune --yes        # reclaim idle, merged, clean worktrees
 ## Core Git Commands
 
 ```bash
-# create a linked worktree on a new branch
+# create a linked worktree on a new branch (list/remove: git worktree list/remove, --force for dirty trees)
 git worktree add ../wt-dark-mode -b feat/dark-mode
-
-# list current worktrees (with branch and path)
-git worktree list
-
-# remove after merging (requires a clean tree)
-git worktree remove ../wt-dark-mode
-
-# throwaway removal of a dirty tree
-git worktree remove --force ../wt-dark-mode
 ```
 
 ## Wrapper (Pi)
 - `treehouse get --lease` for the pooled, reusable path (preferred, cache-aware).
-- `@ogulcancelik/pi-worktree` automates one-off creation from within Pi:
-
-```bash
-pi-worktree create --name dark-mode --base main --branch feat/dark-mode
-pi-worktree list
-pi-worktree remove --name dark-mode
-```
+- `@ogulcancelik/pi-worktree` for one-off creation: `pi-worktree create --name dark-mode --base main --branch feat/dark-mode` (also `list` / `remove --name`).
 
 ## Firstmate Integration
-The `firstmate` distro spawns every crewmate in its own treehouse worktree (or Orca worktree when `backend=orca`), supervises to completion, then returns the worktree to the pool. A crewmate never writes two agents into one tree. For a full captain distro, clone `kunchenguid/firstmate` and launch a harness inside it - see the `herdr` skill.
+The `firstmate` distro spawns each crewmate in its own treehouse worktree, supervises to completion, then returns the tree to the pool - see the `herdr` skill for the full captain distro.
 
 ## Integration With the Captain
 - Captain stays on `main`; crew panes run inside worktree dirs.
 - Each crew pane is `cd`ed into its worktree, isolated from siblings.
 - On completion crew reports: what changed + how verified.
 - Captain reviews diff, merges to its branch (or opens PR), then releases worktrees back to the pool.
-- Deliberately do not allocate worktrees for read-only work.
+- Do not allocate worktrees for read-only work.
 
 ## Verification
 - `treehouse status` shows each task worktree + lease, idle and clean after `return`.
-- `git worktree list` shows one entry per active task, each on its own branch.
-- `git status` in two worktrees shows independent dirty states.
+- `git worktree list` shows one entry per active task; `git status` in two worktrees shows independent dirty states.
 
 ## Invocation
 
