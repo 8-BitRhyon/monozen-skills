@@ -48,6 +48,13 @@ The extension paints a spinner while a turn is running and the final status (ses
 - Radius custom gateways use `"oauth": "radius"` + `baseUrl`.
 - No credentials here: reference `$ENV_VAR` or `!cmd` in `auth.json` keys instead.
 
+## Herdr Integration
+Install the native agent-state hook so herdr tracks Pi turns without scraping buffers:
+```
+herdr integration install pi
+```
+This writes `~/.pi/agent/extensions/herdr-agent-state.ts` (check with `herdr integration status`). Pi panes then report `idle/working/blocked/done` states to `herdr agent list` and the sidebar. See the `herdr` skill for orchestration.
+
 ## Verification
 - `pi -e ./templates/terminal-title.ts` runs an extension once.
 - `/reload` picks up edits without restarting.

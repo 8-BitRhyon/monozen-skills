@@ -44,12 +44,9 @@ treehouse prune --yes        # reclaim idle, merged, clean worktrees
 git worktree add ../wt-dark-mode -b feat/dark-mode
 ```
 
-## Wrapper (Pi)
-- `treehouse get --lease` for the pooled, reusable path (preferred, cache-aware).
+## Wrappers
 - `@ogulcancelik/pi-worktree` for one-off creation: `pi-worktree create --name dark-mode --base main --branch feat/dark-mode` (also `list` / `remove --name`).
-
-## Firstmate Integration
-The `firstmate` distro spawns each crewmate in its own treehouse worktree, supervises to completion, then returns the tree to the pool - see the `herdr` skill for the full captain distro.
+- Running the crew inside herdr? `herdr worktree create --branch <b>` opens a fresh worktree-scoped workspace with its own pane (see the `herdr` skill). For pooled, cache-aware reuse, `treehouse` remains preferred.
 
 ## Integration With the Captain
 - Captain stays on `main`; crew panes run inside worktree dirs.

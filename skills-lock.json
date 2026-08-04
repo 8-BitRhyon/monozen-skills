@@ -49,20 +49,20 @@
     "git-worktree": {
       "name": "git-worktree",
       "description": "Create, use, and clean up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse pooled worktrees, pi-worktree wrapper, per-task isolation, merge back, and cleanup discipline. Load before spawning parallel subagents or parallelizing work.",
-      "tokenEstimate": 991,
+      "tokenEstimate": 970,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-worktree/SKILL.md",
-      "computedHash": "5d66f2019c46c0a17bae66e43f90f7b413bc2377d56485c34779c76897d702b5"
+      "computedHash": "a7ba6bc0920a531310a906e2cb1e0915dc7ed44c7af899cdbea6005923e31e4b"
     },
     "herdr": {
       "name": "herdr",
-      "description": "Operate the Herdr terminal multiplexer for multi-agent orchestration: panes, sockets, agent state (working/idle/blocked), spawning crew panes, focus/notify, and the first-mate captain pattern. Load whenever running multiple agents in one workspace or supervising the crew from a captain pane.",
-      "tokenEstimate": 832,
+      "description": "Operate the Herdr terminal multiplexer for multi-agent orchestration: workspaces/tabs/panes, agent states (idle/working/blocked/done), native agent-state integrations, socket API, daemon persistence, and the captain-crew pattern. Load when running multiple agents in one workspace or supervising a crew from a captain pane.",
+      "tokenEstimate": 985,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "25d0c75b8fc757f6e39b0e86339563edd4566f6c9ff5d36866739555a0d8ce1a"
+      "computedHash": "81e5cbdb6b87dfce3577d515649e869c51c1d358aa95cac0e77745d44014cf4e"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
@@ -85,11 +85,11 @@
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
-      "tokenEstimate": 846,
+      "tokenEstimate": 941,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
-      "computedHash": "93e5d6d1c18046d4347d0096762b18491b9dd1555612754bbbf15e926ed0985f"
+      "computedHash": "c8ed8eed546e7fe93a98b9f330e87bd99c194b2aac6aa70e15305ace4d4da604"
     },
     "pr-workflow": {
       "name": "pr-workflow",
