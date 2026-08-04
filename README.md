@@ -4,6 +4,26 @@
 
 `monozen-skills` is the canonical registry of **executable agent skill protocols** for the Monozen engineering system, re-architected around Kun Chen's agentic engineering framework: Pi as harness, Herdr as multiplexer, AXI-style CLI wrappers for tools, and isolated Git worktrees for parallel work. Publish once, distribute to any agent CLI (`Claude Code`, `OpenCode`, `Codex`, `Gemini`, `Pi`).
 
+## Quick Install (one command)
+
+From any machine with node + Homebrew (no clone needed):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/8-BitRhyon/monozen-skills/main/scripts/install.sh | sh
+```
+
+Variants:
+
+| Command | Installs |
+|---|---|
+| `... \| sh` | Full workstation: skills, Pi runtime, treehouse, firstmate, herdr plugins |
+| `... \| sh -s -- --skills` | Agent skills only (minimal; canonical + AXI wrappers) |
+| `... \| sh -s -- --with-prereqs` | Full + Homebrew-install missing node/gh/herdr |
+| `... \| sh -s -- --dry-run` | Preview every step, change nothing |
+| `... \| sh -s -- --pi --treehouse` | Any combination of compartments |
+
+Cloned the repo instead? `bash scripts/install.sh` (alias: `bash scripts/setup.sh`). Compartments: `--skills`, `--pi`, `--treehouse`, `--firstmate`, `--herdr-plugins`. Idempotent: re-run to retry only what failed.
+
 ```bash
 npx skills add 8-BitRhyon/monozen-skills
 ```
