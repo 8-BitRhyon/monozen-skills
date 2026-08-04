@@ -287,17 +287,53 @@ check.call(missing.empty?, "README.md skill catalog missing: #{missing.join(', '
 extra = table - skills
 check.call(extra.empty?, "README.md skill catalog has non-lock entries: #{extra.join(', ')}")
 
-# FEDERATION primary listing: count + full canonical coverage
-m = fed.match(/### `~\/\.agents\/skills\/`\s+- (\d+) skills/)
-if m
-  block = fed.split(/### `~\/\.agents\/skills\/`\s+- \d+ skills/, 2)[1]
-  block = block.split("```", 3)[1].to_s
+# FEDERATION sections: every "N skills" header must match its listed block.
+# Sections start at "N skills" headers and end at level-2 headings or the
+# next count header.
+fed_lines = fed.lines
+sections = []  # [line_no, claimed_count, body]
+dir_counts = {}  # backticked directory path (trailing slash stripped) -> count
+cur = nil
+fed_lines.each_with_index do |line, i|
+  if line.start_with?("## ") && !line.start_with?("### ")
+    cur = nil
+  elsif (m = line.match(/^\s*(?:#+\s*)?.*?-\s+(\d+) skills\s*$/))
+    sections << [i + 1, m[1].to_i, ""]
+    cur = sections.last
+    d = line.match(/`([^`]+)`/)
+    dir_counts[d[1].sub(%r{/$}, "")] = m[1].to_i if d
+  elsif cur
+    cur[2] += line
+  end
+end
+
+check.call(sections.any?, "FEDERATION.md has no 'N skills' section headers")
+sections.each do |lineno, claimed, body|
+  block = body.split("```", 3)[1].to_s
   entries = block.lines.map { |l| l.strip.split(/\s+#/, 2).first.to_s }.reject(&:empty?)
-  check.call(entries.size == m[1].to_i, "FEDERATION.md claims #{m[1]} skills in ~/.agents/skills but lists #{entries.size}")
+  check.call(entries.size == claimed, "FEDERATION.md:#{lineno} claims #{claimed} skills but lists #{entries.size}")
+end
+
+# Canonical coverage in the primary ~/.agents/skills section
+primary = sections.first
+if primary
+  block = primary[2].split("```", 3)[1].to_s
+  entries = block.lines.map { |l| l.strip.split(/\s+#/, 2).first.to_s }.reject(&:empty?)
   fed_missing = skills - entries
   check.call(fed_missing.empty?, "FEDERATION.md ~/.agents/skills missing canonical: #{fed_missing.join(', ')}")
-else
-  check.call(false, "FEDERATION.md missing ~/.agents/skills count header")
+end
+
+# Directory-aware count references in fenced code blocks (e.g. jsonc config
+# examples): any "N skills" must agree with the header count of every
+# directory the block names. Catches stale comments like a note claiming 35
+# under a directory header that says 36.
+fed.scan(/```[a-z]*\n(.*?)```/m).flatten.each do |block|
+  mentioned = dir_counts.select { |dir, _count| block.include?(dir) }
+  next if mentioned.empty?
+  block.scan(/\b(\d+) skills\b/).flatten.map(&:to_i).each do |n|
+    ok = mentioned.values.all? { |count| count == n }
+    check.call(ok, "FEDERATION.md code block count disagrees with directory header: '#{n} skills' vs #{mentioned.map { |d, c| "#{d}=#{c}" }.join(', ')}")
+  end
 end
 
 # Diagrams must agree with the lock count

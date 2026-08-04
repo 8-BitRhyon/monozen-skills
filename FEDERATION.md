@@ -150,7 +150,7 @@ Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> sk
 // Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills"   // 1st priority (35 skills, canonical monozen skills shadow namesakes)
+    "~/.agents/skills"   // 1st priority (36 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```

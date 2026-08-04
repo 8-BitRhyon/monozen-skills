@@ -121,6 +121,10 @@ mutate_broken_link() {
   printf '\n- [ghost skill](skills/ghost-skill/SKILL.md)\n' >> README.md
 }
 
+mutate_federation_count_drift() {
+  node -e 'const fs=require("fs");const p="FEDERATION.md";let t=fs.readFileSync(p,"utf8");t=t.replace(/(\d+) skills, canonical/, (m,n)=>`${Number(n)+1} skills, canonical`);fs.writeFileSync(p,t)'
+}
+
 mutate_missing_asset() {
   printf '\n![img](assets/does-not-exist.svg)\n' >> README.md
 }
@@ -169,6 +173,7 @@ run_test "unregistered skill folder is rejected" 1 "missing from manifest" -- mu
 run_test "orphan lock entry is rejected" 1 "Orphan" -- mutate_orphan_lock_entry
 run_test "stale computedHash is rejected" 1 "stale" -- mutate_stale_hash
 run_test "broken internal link is rejected" 1 "Broken link" -- mutate_broken_link
+run_test "FEDERATION count comment drift is rejected" 1 "disagree" -- mutate_federation_count_drift
 run_test "missing asset reference is rejected" 1 "Broken link" -- mutate_missing_asset
 run_test "missing skills-lock.json is rejected" 1 "does not exist" -- mutate_no_lock_file
 run_test "invalid workflow YAML is rejected" 1 "Invalid YAML syntax" -- mutate_invalid_workflow_yaml
