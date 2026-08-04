@@ -36,13 +36,15 @@ for arg in "$@"; do
 done
 
 if [ "${#REPOS[@]}" -eq 0 ]; then
+  # Cap at 1000 (the CLI's effective ceiling); pass explicit repo names to go
+  # beyond that.
   while IFS= read -r repo; do
     [ -n "${repo}" ] && REPOS+=("${repo}")
-  done < <(gh repo list --limit 200 --json nameWithOwner --jq '.[].nameWithOwner')
+  done < <(gh repo list --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner' 2>/dev/null)
 fi
 
 changed=0
-for repo in "${REPOS[@]}"; do
+for repo in ${REPOS[@]+"${REPOS[@]}"}; do
   branch="$(gh api "repos/${repo}" --jq .default_branch 2>/dev/null)" || { echo "[skip] ${repo}: no access"; continue; }
   if [ -z "${branch}" ]; then
     echo "[skip] ${repo}: no default branch"
@@ -87,6 +89,9 @@ for repo in "${REPOS[@]}"; do
         "allow_force_pushes" => cur.dig("allow_force_pushes", "enabled") || false,
         "allow_deletions" => cur.dig("allow_deletions", "enabled") || false,
         "required_conversation_resolution" => cur.dig("required_conversation_resolution", "enabled") || false,
+        "block_creations" => cur.dig("block_creations", "enabled") || false,
+        "lock_branch" => cur.dig("lock_branch", "enabled") || false,
+        "allow_fork_syncing" => cur.dig("allow_fork_syncing", "enabled") || false,
         "restrictions" => cur["restrictions"]
       })
     end
@@ -107,7 +112,8 @@ for repo in "${REPOS[@]}"; do
     continue
   fi
   if err="$(printf '%s' "${plan}" | gh api -X PUT "repos/${repo}/branches/${branch}/protection" --input - 2>&1 >/dev/null)"; then
-    echo "[ok]  ${repo}@${branch}: now requires ${REVIEW_CHECK}"
+    sig="$(gh api "repos/${repo}/branches/${branch}/protection/required_signatures" --jq '.enabled' 2>/dev/null || echo 'unset')"
+    echo "[ok]  ${repo}@${branch}: now requires ${REVIEW_CHECK} (required_signatures: ${sig})"
     changed=$((changed + 1))
   else
     reason="$(printf '%s' "${err}" | ruby -rjson -e 'begin; puts JSON.parse(STDIN.read)["message"]; rescue JSON::ParserError; end' 2>/dev/null)"
