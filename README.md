@@ -9,24 +9,26 @@
 From any machine with node + Homebrew (no clone needed):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/8-BitRhyon/monozen-skills/main/scripts/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/8-BitRhyon/monozen-skills/main/scripts/install.sh | bash
 ```
 
 Variants:
 
 | Command | Installs |
 |---|---|
-| `... \| sh` | Full workstation: skills, Pi runtime, treehouse, firstmate, herdr plugins |
-| `... \| sh -s -- --skills` | Agent skills only (minimal; canonical + AXI wrappers) |
-| `... \| sh -s -- --with-prereqs` | Full + Homebrew-install missing node/gh/herdr |
-| `... \| sh -s -- --dry-run` | Preview every step, change nothing |
-| `... \| sh -s -- --pi --treehouse` | Any combination of compartments |
+| `... \| bash` | Full workstation: skills, Pi runtime, treehouse, firstmate, herdr plugins |
+| `... \| bash -s -- --skills` | Agent skills only (minimal; canonical + AXI wrappers) |
+| `... \| bash -s -- --with-prereqs` | Full + Homebrew-install missing prereqs (node/npm/git/herdr as needed) |
+| `... \| bash -s -- --dry-run` | Preview every step, change nothing |
+| `... \| bash -s -- --pi --treehouse` | Any combination of compartments |
 
-Cloned the repo instead? `bash scripts/install.sh` (alias: `bash scripts/setup.sh`). Compartments: `--skills`, `--pi`, `--treehouse`, `--firstmate`, `--herdr-plugins`. Idempotent: re-run to retry only what failed.
+Cloned the repo instead? `bash scripts/install.sh` (alias: `bash scripts/setup.sh`). Compartments: `--skills`, `--pi`, `--treehouse`, `--firstmate`, `--herdr-plugins`. Idempotent: re-run to retry only what failed. Prereqs are checked per compartment: `--skills`/`--pi` need node+npm, `--firstmate` needs git, `--herdr-plugins` needs herdr.
 
 ```bash
 npx skills add 8-BitRhyon/monozen-skills
 ```
+
+**After install**: restart your agent session so skills and plugins load. For the load order consumers should follow, see [FEDERATION.md](FEDERATION.md#load-order). If skills never load on Pi, check that `~/.pi/agent/settings.json` still has `skills.paths` and the `pi-herdr` extension after the install.
 
 ---
 
@@ -153,7 +155,7 @@ bash scripts/install-hooks.sh
 
 ## Environment
 
-- **Agent harness**: Pi (`@pi-coding-agent`), plus Claude Code / OpenCode / Codex.
+- **Agent harness**: Pi (`@earendil-works/pi-coding-agent`), plus Claude Code / OpenCode / Codex.
 - **Multiplexer**: Herdr (`herdr`, plugins list in WORKSTATION.md).
 - **Crew distro**: firstmate (`kunchenguid/firstmate`) - talk to one agent, ship with a crew.
 - **Tools**: AXI wrappers (`gh-axi`, `chrome-devtools-axi`, `aws-axi`) - see `axi` skill.
