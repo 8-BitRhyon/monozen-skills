@@ -142,6 +142,25 @@ mutate_duplicate_folder_case() {
   cp skills/git-workflow/SKILL.md skills/Git-Workflow/SKILL.md
 }
 
+mutate_budget_overflow() {
+  node -e 'const fs=require("fs"),c=require("crypto");const f=require("./skills-lock.json");const k=Object.keys(f.skills)[0];const md=`skills/${k}/SKILL.md`;fs.appendFileSync(md,"\n"+"pad ".repeat(200));const buf=fs.readFileSync(md);f.skills[k].computedHash=c.createHash("sha256").update(buf).digest("hex");f.skills[k].tokenEstimate=Math.floor(buf.length/4);fs.writeFileSync("skills-lock.json",JSON.stringify(f,null,2)+"\n")'
+}
+
+mutate_em_dash_svg() {
+  # octal escapes (portable to bash 3.2 on macOS): \342\200\224 = UTF-8 em dash
+  printf '\342\200\224' >> assets/monozen-skills-federation.svg
+}
+
+mutate_token_estimate_drift() {
+  node -e 'const fs=require("fs");const f=require("./skills-lock.json");const k=Object.keys(f.skills)[0];f.skills[k].tokenEstimate+=1;fs.writeFileSync("skills-lock.json",JSON.stringify(f,null,2)+"\n")'
+}
+
+mutate_federation_comment_mask() {
+  # Replace a canonical entry with a comment-only line, keeping the claimed
+  # count unchanged: the old parser counted the comment as an entry.
+  node -e 'const fs=require("fs");const p="FEDERATION.md";let t=fs.readFileSync(p,"utf8");t=t.split("\n").map(l=>/^code-review\s/.test(l)?"# code-review":l).join("\n");fs.writeFileSync(p,t)'
+}
+
 # macOS APFS is case-insensitive and cannot represent case-variant folder names;
 # run the collision test only where it is representable (CI: ext4).
 case_sensitive_fs() {
@@ -177,6 +196,10 @@ run_test "FEDERATION count comment drift is rejected" 1 "disagree" -- mutate_fed
 run_test "missing asset reference is rejected" 1 "Broken link" -- mutate_missing_asset
 run_test "missing skills-lock.json is rejected" 1 "does not exist" -- mutate_no_lock_file
 run_test "invalid workflow YAML is rejected" 1 "Invalid YAML syntax" -- mutate_invalid_workflow_yaml
+run_test "load budget overflow is rejected" 1 "load budget" -- mutate_budget_overflow
+run_test "em dash in generated SVG is rejected" 1 "em dash" -- mutate_em_dash_svg
+run_test "stale tokenEstimate is rejected" 1 "tokenEstimate is stale" -- mutate_token_estimate_drift
+run_test "FEDERATION comment-masked skill is rejected" 1 "missing canonical" -- mutate_federation_comment_mask
 if case_sensitive_fs; then
   run_test "case-insensitive duplicate folders are rejected" 1 "duplicate" -- mutate_duplicate_folder_case
 else
@@ -192,15 +215,33 @@ fi
 
   # determinism: two consecutive runs produce byte-identical output
   bash scripts/manifest.sh >/dev/null
-  cp skills-lock.json /tmp/monozen-lock-a.json
+  cp skills-lock.json "${FIXTURE_DIR}/lock-a.json"
   bash scripts/manifest.sh >/dev/null
-  if cmp -s /tmp/monozen-lock-a.json skills-lock.json; then
+  if cmp -s "${FIXTURE_DIR}/lock-a.json" skills-lock.json; then
     echo "[TEST PASS] manifest generation is deterministic"
     PASS=$((PASS + 1))
   else
     echo "[TEST FAIL] manifest generation is not deterministic"
     FAIL=$((FAIL + 1))
   fi
+
+  # description-only lock edit is invisible to validate.sh (hash unchanged)
+  # but the manifest regen + diff gate must catch it
+  node -e 'const fs=require("fs");const f=require("./skills-lock.json");const k=Object.keys(f.skills)[0];f.skills[k].description="tampered description";fs.writeFileSync("skills-lock.json",JSON.stringify(f,null,2)+"\n")'
+  if git diff --exit-code skills-lock.json >/dev/null 2>&1; then
+    echo "[TEST FAIL] tampered description produced no lock diff (validate gate is blind to it)"
+    FAIL=$((FAIL + 1))
+  else
+    bash scripts/manifest.sh >/dev/null
+    if git diff --exit-code skills-lock.json >/dev/null 2>&1; then
+      echo "[TEST PASS] lock description drift is caught by manifest regen"
+      PASS=$((PASS + 1))
+    else
+      echo "[TEST FAIL] manifest regen did not restore the canonical lock"
+      FAIL=$((FAIL + 1))
+    fi
+  fi
+  git checkout -- skills-lock.json
 
   # new valid skill folder gets registered with a real hash
   mkdir -p skills/z-register
@@ -228,7 +269,6 @@ fi
   fi
 
   rm -rf "${FIXTURE_DIR}"
-  rm -f /tmp/monozen-lock-a.json
 )
 
 echo "=================================================="

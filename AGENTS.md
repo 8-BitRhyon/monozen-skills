@@ -61,7 +61,7 @@ When this agent (or the captain) spawns subagents:
   1. `npm run validate`
   2. `npm test`
   3. `npm run manifest` (and the lock file must be in sync)
-- `scripts/install-hooks.sh` installs the shift-left pre-commit hook, which runs validate + test + manifest sync locally before every commit.
+- `scripts/install-hooks.sh` installs the shift-left pre-commit hook, which runs validate + test + smoke + manifest sync locally before every commit.
 - Genesis: `CLAUDE.md` is a symlink to this file so Claude Code and other consumers read the same canonical instructions.
 
 ## Documentation Ownership (one owner per fact)

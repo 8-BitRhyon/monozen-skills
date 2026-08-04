@@ -1,19 +1,26 @@
 #!/usr/bin/env bash
 # scripts/install-hooks.sh - Installs the monozen-skills pre-commit hook (shift-left).
-# The hook runs the local gate (validate + test + manifest sync); CI adds the
-# SHA-pinned actions check and gitleaks secrets scan on top.
+# The hook runs the local gate (validate + test + smoke + manifest sync); CI adds
+# the SHA-pinned actions check and gitleaks secrets scan on top.
 #
 # Usage: bash scripts/install-hooks.sh [--remove]
+#
+# Works in linked worktrees too: the hook path resolves via
+# `git rev-parse --git-path` instead of assuming .git/hooks/.
 
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-HOOK_PATH="${REPO_DIR}/.git/hooks/pre-commit"
+HOOK_PATH="$(git -C "${REPO_DIR}" rev-parse --git-path hooks/pre-commit)"
 
 if [ "${1:-}" = "--remove" ]; then
   rm -f "${HOOK_PATH}"
   echo "[hooks] Removed pre-commit hook."
   exit 0
+fi
+
+if [ ! -d "$(dirname "${HOOK_PATH}")" ]; then
+  mkdir -p "$(dirname "${HOOK_PATH}")"
 fi
 
 cat > "${HOOK_PATH}" <<'HOOK'
@@ -26,6 +33,9 @@ echo "=== [pre-commit] Running skill validation suite ==="
 
 echo "=== [pre-commit] Running validator self-tests ==="
 bash "${REPO_DIR}/scripts/test.sh" >/dev/null
+
+echo "=== [pre-commit] Running smoke test ==="
+bash "${REPO_DIR}/scripts/smoke-test.sh" >/dev/null
 
 echo "=== [pre-commit] Checking manifest sync ==="
 bash "${REPO_DIR}/scripts/manifest.sh" >/dev/null
