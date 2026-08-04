@@ -26,7 +26,7 @@ description: "Bootstrap any new software project from zero: repo creation, scaff
 - Constitution before features: `AGENTS.md`, `.gitignore`, CI must exist before the first feature commit.
 - One logical change per commit; scaffold is one commit.
 - CI gate (validate.yml) must run `test` on push/PR; adapt to the stack's test command.
-- Commit signing per `git-workflow` (SSH/GP G) before the first commit; never co-author an agent.
+- Commit signing per `git-workflow` (SSH) before the first commit; never co-author an agent.
 - No machine-specific paths in any committed file (`~` and relative paths only).
 - No em dashes (U+2014) in any committed artifact.
 

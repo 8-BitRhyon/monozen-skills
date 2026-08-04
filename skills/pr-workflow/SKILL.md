@@ -16,7 +16,7 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 ## Commit
 
 - Conventional commits, one logical change per commit: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `ci:`.
-- Sign commits per `git-workflow` (SSH/GP G). Never co-author an agent.
+- Sign commits per `git-workflow` (SSH). Never co-author an agent.
 
 ## Open PR
 
@@ -38,7 +38,7 @@ PR body must state: what changed, why, and the verification evidence (tests, run
 
 ## Checks + Review
 
-- Wait for CI: `npx -y gh-axi pr checks --watch` (validate + secrets jobs in this repo).
+- Wait for CI: re-run `npx -y gh-axi pr checks <n>` until all checks pass (validate + secrets jobs in this repo); gh-axi has no `--watch` flag, or use `gh pr checks <n> --watch` for live polling.
 - **Independent review gate (mandatory, non-negotiable):** before merge, run a fresh-context review of the diff via a separate review agent/session - never review your own work in the session that wrote it. Load the `code-review` skill in a clean context (new worktree or new pane), apply the five dimensions, tag findings blocker/should/nit.
 - Blockers must be fixed; shoulds tracked or fixed. No merge with open blockers.
 - Required status checks must pass before merge on protected branches.

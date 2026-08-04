@@ -35,9 +35,11 @@ read Website/globe-module.js:970:1020
 
 ### Layer 3: Runtime Reality (Verification)
 ```bash
-# Chrome DevTools for live state
-npx -y chrome-devtools-axi evaluate --url https://rhyon.dev --expression "window.__bootFinished"
-npx -y chrome-devtools-axi snapshot --url https://rhyon.dev --selector '#threeGlobeContainer'
+# Chrome DevTools for live state (see the axi skill for the full CLI surface:
+# open <url> | snapshot | eval <js> | console)
+npx -y chrome-devtools-axi open https://rhyon.dev
+npx -y chrome-devtools-axi eval "window.__bootFinished"
+npx -y chrome-devtools-axi snapshot --selector '#threeGlobeContainer'
 ```
 **Rule:** Tests lie. Browser tells truth.
 

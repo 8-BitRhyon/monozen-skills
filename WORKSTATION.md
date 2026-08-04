@@ -119,7 +119,7 @@ tmux Catppuccin pills  -  bottom
 
 ### herdr plugins
 
-| Plugin | Function | Installed by setup.sh |
+| Plugin | Function | Installed by install.sh --herdr-plugins |
 |--------|----------|-----------------------|
 | herdr-file-viewer | Git-aware read-only file tree | Yes |
 | herdr-reviewr | Terminal code-review sidebar | Yes |
@@ -135,7 +135,7 @@ tmux Catppuccin pills  -  bottom
 | herdr-sessionizer | Session snapshot/restore | Optional |
 | agentbox | Agent launcher | Optional |
 
-Setup is `bash scripts/setup.sh` (plugins section 3).
+Setup is `bash scripts/install.sh` (--herdr-plugins compartment).
 
 ---
 
@@ -187,20 +187,8 @@ Keys stored in `~/.secrets.zsh` (`chmod 600`), sourced by `.zshrc`. Never
 written to `.zshrc`. Global `.gitignore` excludes `.secrets.zsh` as
 belt-and-suspenders. Rotate any key that was ever in plaintext.
 
-### 8. GPG commit signing
-Signed commits verify authorship. Procedure:
-```sh
-brew install gnupg
-gpg --quick-generate-key "Your Name <email>" rsa3072 sign 0
-gpg --list-secret-keys --keyid-format=long
-git config user.signingkey <key-id>
-git config commit.gpgsign true
-git config tag.gpgsign true
-```
-Register public key on GitHub → Settings → SSH and GPG keys → New GPG key.
-```sh
-gpg --armor --export <key-id> | pbcopy
-```
+### 8. Commit signing
+Signed commits verify authorship. The canonical procedure is SSH signing per the `git-workflow` skill (`gpg.format=ssh`, `~/.ssh/allowed_signers`, registered under GitHub SSH keys). GPG (`commit.gpgsign`) is a legacy alternative; never mix the two in one repo.
 
 ### 9. �️ llmtrim  -  local MITM proxy
 The llmtrim plugin intercepts all LLM API calls from agent panes to compress
@@ -209,7 +197,7 @@ prompt passing through herdr agent panes. Understand the interception surface
 before enabling.
 
 ### 10. Plugin trust
-Only install herdr plugins listed in `scripts/setup.sh` (section 3). Audit any new plugin's diff before enabling: verify no network exfiltration, no prompt injection, and that it only writes expected paths.
+Only install herdr plugins listed in `scripts/install.sh` (--herdr-plugins compartment). Audit any new plugin's diff before enabling: verify no network exfiltration, no prompt injection, and that it only writes expected paths.
 
 ---
 
@@ -294,4 +282,4 @@ Every agent (Pi, Claude Code, OpenCode, Codex) must actually use the built/downl
 | Context access | Agent can invoke fzf/fd/rg/yazi/bat | Test from agent pane: `rg "test"`, `yy`, `fd .` |
 | Workspace isolation | Worktree per agent pane | `treehouse get` (pooled) or `git worktree add` from the captain pane |
 | Session persistence | Layout survives restart | `herdr-sessionizer` saves; restart tmux/herdr and restore |
-| Plugin audit | Installed safely | Only install plugins listed in `scripts/setup.sh`; review diff for exfiltration/prompt injection |
+| Plugin audit | Installed safely | Only install plugins listed in `scripts/install.sh`; review diff for exfiltration/prompt injection |

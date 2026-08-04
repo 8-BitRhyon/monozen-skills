@@ -49,11 +49,7 @@ The extension paints a spinner while a turn is running and the final status (ses
 - No credentials here: reference `$ENV_VAR` or `!cmd` in `auth.json` keys instead.
 
 ## Herdr Integration
-Install the native agent-state hook so herdr tracks Pi turns without scraping buffers:
-```
-herdr integration install pi
-```
-This writes `~/.pi/agent/extensions/herdr-agent-state.ts` (check with `herdr integration status`). Pi panes then report `idle/working/blocked/done` states to `herdr agent list` and the sidebar. See the `herdr` skill for orchestration.
+`herdr integration install pi` wires Pi turns into herdr agent states. Details and ownership live in the `herdr` skill; run `herdr integration status` to verify.
 
 ## Verification
 - `pi -e ./templates/terminal-title.ts` runs an extension once.

@@ -37,7 +37,7 @@ Aggregated engineering protocol for the Monozen dual-persona portfolio (Moon Sys
 
 ## Pre-Deploy Audit (script + runtime)
 - `security-guard-universal.sh` (this skill dir): universal secret/ID/fingerprint gate. Runs on any repo; portfolio-specific extra checks live in an optional `.guard-policy.sh` hook, not in the script.
-- Runtime: `chrome-devtools-axi open http://localhost:8788` then `chrome console` = zero errors; `eval` terminal query path.
+- Runtime: `chrome-devtools-axi open http://localhost:8788` then `chrome-devtools-axi console` = zero errors; `eval` terminal query path. (Full pre-deploy runtime protocol lives in `production-web-audit`.)
 - CSP: `_headers` AND `<meta>` directives must match; bump Service Worker `CACHE_NAME` each release.
 - Deploy: `npx wrangler pages deploy . --project-name monozen`.
 

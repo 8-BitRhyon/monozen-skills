@@ -31,11 +31,11 @@
     "context-engineering": {
       "name": "context-engineering",
       "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
-      "tokenEstimate": 976,
+      "tokenEstimate": 995,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": "5a2fdf1c866b4ae3d522bd636be76f0440e912cb9f981b10c0598c028d466664"
+      "computedHash": "e65f658065af37914f71ecf04dc5183c304d9987f64226c0584d01daa3773833"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -67,38 +67,38 @@
     "monozen-portfolio": {
       "name": "monozen-portfolio",
       "description": "Consolidated Monozen portfolio skill: dual-theme (Sun/Moon) lifecycle contracts, 5-panel SPA architecture, CSS specificity load order, WebGL context safety, nav capsule behavior, and pre-deploy audit protocol. Load when working on any file under the Monozen portfolio project.",
-      "tokenEstimate": 903,
+      "tokenEstimate": 924,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-portfolio/SKILL.md",
-      "computedHash": "df2f341d0e53a282cd6c82733e97020f89d2c87be688395998f0690d9175b8ec"
+      "computedHash": "c795f75a666249b1792df77d47ef38da083fa9b2edbe86397b74e0a10e13f3f7"
     },
     "new-project": {
       "name": "new-project",
       "description": "Bootstrap any new software project from zero: repo creation, scaffold, constitution files (AGENTS.md, design.md, README.md), .gitignore, CI, signing, and first commit. Load whenever starting a new project or repository from scratch, for any language or stack.",
-      "tokenEstimate": 684,
+      "tokenEstimate": 683,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/new-project/SKILL.md",
-      "computedHash": "720b4e1b416d5f908b3cb6ad96b385d6944efee8509906b8e7c9fa8692dfaebe"
+      "computedHash": "17901735777f90d381504c67fffb540c40b879819e2cc9d58e0e79a78d323f70"
     },
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
-      "tokenEstimate": 941,
+      "tokenEstimate": 892,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
-      "computedHash": "c8ed8eed546e7fe93a98b9f330e87bd99c194b2aac6aa70e15305ace4d4da604"
+      "computedHash": "154560577af5d3717102dff2ca5b9a589719bdbdd60b813a93a58decf546030e"
     },
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 885,
+      "tokenEstimate": 911,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "2871ebf6caf514b286ae7f1b272d95406af47a4c002252ddaf4e266538906128"
+      "computedHash": "cb5fdc106f82b87a1fa3d5e9e326139d768589dba572fa3696cc2e33899c909b"
     },
     "production-web-audit": {
       "name": "production-web-audit",
