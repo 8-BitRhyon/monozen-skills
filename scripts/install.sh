@@ -8,16 +8,25 @@
 #   bash scripts/install.sh [--all]                 full workstation (default)
 #   bash scripts/install.sh --skills                agent skills only (minimal)
 #   bash scripts/install.sh --pi --treehouse        selected compartments
-#   bash scripts/install.sh --with-prereqs          brew-install missing node/gh/herdr
+#   bash scripts/install.sh --with-prereqs          brew-install missing prereqs
 #   bash scripts/install.sh --dry-run               print steps, execute nothing
 #
 # Compartments: --skills --pi --treehouse --firstmate --herdr-plugins
+# Prerequisites are checked per compartment: skills/pi need node+npm,
+# firstmate needs git, plugins need herdr. --with-prereqs brew-installs
+# whatever the selected compartments need.
 # Exit: 0 ok, 1 one or more steps failed, 2 prerequisites missing.
 
 set -uo pipefail
 
 RAW_BASE="https://raw.githubusercontent.com/8-BitRhyon/monozen-skills/main"
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd || echo '')"
+REPO_DIR=""
+if [ -f "${BASH_SOURCE[0]}" ] && [ "${BASH_SOURCE[0]}" != "bash" ]; then
+  candidate="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd || echo '')"
+  if [ -n "${candidate}" ] && git -C "${candidate}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    REPO_DIR="${candidate}"
+  fi
+fi
 
 WANT_SKILLS=0; WANT_PI=0; WANT_TREEHOUSE=0; WANT_FIRSTMATE=0; WANT_PLUGINS=0
 WITH_PREREQS=0; DRY_RUN=0
@@ -59,10 +68,24 @@ run() {
 echo "==> monozen-skills bootstrap $(if [ "${DRY_RUN}" -eq 1 ]; then echo '(dry-run)'; fi)"
 
 # ---------------------------------------------------------------
-# Prerequisites: node, npm, gh, herdr
+# Prerequisites: per compartment (skills/pi: node+npm, firstmate: git,
+# plugins: herdr). --all needs all of node, npm, git, herdr.
 # ---------------------------------------------------------------
+NEEDED=()
+needed() {
+  local tool="$1"
+  case " ${NEEDED[*]-} " in
+    *" ${tool} "*) ;;
+    *) NEEDED+=("${tool}") ;;
+  esac
+}
+[ "${WANT_SKILLS}" -eq 1 ] && { needed node; needed npm; }
+[ "${WANT_PI}" -eq 1 ] && { needed node; needed npm; }
+[ "${WANT_FIRSTMATE}" -eq 1 ] && needed git
+[ "${WANT_PLUGINS}" -eq 1 ] && needed herdr
+
 MISSING=()
-for tool in node npm gh herdr; do
+for tool in "${NEEDED[@]}"; do
   command -v "${tool}" >/dev/null 2>&1 || MISSING+=("${tool}")
 done
 
@@ -83,6 +106,8 @@ if [ "${#MISSING[@]}" -gt 0 ]; then
       echo "ERROR: --with-prereqs needs Homebrew (https://brew.sh)." >&2
       exit 2
     fi
+  elif [ "${DRY_RUN}" -eq 1 ]; then
+    echo "  [dry]  would install missing prereqs: ${MISSING[*]}"
   else
     echo "ERROR: missing prerequisites: ${MISSING[*]}" >&2
     echo "  Install them, or re-run with --with-prereqs (Homebrew auto-install):" >&2
@@ -99,7 +124,7 @@ fi
 # ---------------------------------------------------------------
 install_skills() {
   echo "==> Compartment: agent skills"
-  run npx -y skills add 8-BitRhyon/monozen-skills && step_ok "canonical monozen skills" || step_fail "canonical monozen skills"
+  run npx -y skills add 8-BitRhyon/monozen-skills -g --yes && step_ok "canonical monozen skills" || step_fail "canonical monozen skills"
   run npx -y skills add kunchenguid/gh-axi --skill gh-axi -g --yes && step_ok "gh-axi" || step_fail "gh-axi"
   run npx -y skills add kunchenguid/chrome-devtools-axi --skill chrome-devtools-axi -g --yes && step_ok "chrome-devtools-axi" || step_fail "chrome-devtools-axi"
   run npx -y skills add kunchenguid/tasks-axi --skill tasks-axi -g --yes && step_ok "tasks-axi" || step_fail "tasks-axi"
@@ -149,6 +174,8 @@ install_pi() {
     fi
   else
     step_skip "settings.json (already present, not overwritten)"
+    echo "   Note: existing settings.json keeps its skills.paths and pi-herdr entries;"
+    echo "   if skills never load, check those fields and restart the session."
   fi
   echo "   Pi packages (pi-herdr, pi-worktree) auto-install on Pi >=0.82 via settings.json"
 }
@@ -163,8 +190,15 @@ install_treehouse() {
   elif [ "${DRY_RUN}" -eq 1 ]; then
     echo "  [dry]  curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh"
   else
-    curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh >/dev/null 2>&1
-    command -v treehouse >/dev/null 2>&1 && step_ok "treehouse installed" || step_fail "treehouse install"
+    tmp="$(mktemp)"
+    if curl -fsSL https://kunchenguid.github.io/treehouse/install.sh -o "${tmp}" 2>/dev/null; then
+      sh "${tmp}" >/dev/null 2>&1
+      rc=$?
+    else
+      rc=1
+    fi
+    rm -f "${tmp}"
+    [ "${rc}" -eq 0 ] && command -v treehouse >/dev/null 2>&1 && step_ok "treehouse installed" || step_fail "treehouse install"
   fi
   if [ ! -f ~/.config/treehouse/config.toml ] && command -v treehouse >/dev/null 2>&1; then
     run treehouse init && step_ok "treehouse config" || step_fail "treehouse init"
@@ -224,7 +258,7 @@ verify() {
   fi
   if "$@" >/dev/null 2>&1; then step_ok "${label}"; else step_fail "${label}"; fi
 }
-for tool in node npm gh herdr; do
+for tool in "${NEEDED[@]}"; do
   verify "${tool} present" command -v "${tool}"
 done
 if [ "${WANT_SKILLS}" -eq 1 ]; then
