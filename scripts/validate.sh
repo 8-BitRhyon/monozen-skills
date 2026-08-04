@@ -25,6 +25,10 @@ SKILLS_DIR="${REPO_DIR}/skills"
 LOCK_FILE="${REPO_DIR}/skills-lock.json"
 
 # Construct the em dash at runtime so this script itself contains no literal em dash
+if ! command -v ruby >/dev/null 2>&1; then
+  echo "[FAIL] ruby is required (Psych YAML + JSON checks). Install via brew install ruby." >&2
+  exit 1
+fi
 EMDASH="$(ruby -e 'print "\u2014"')"
 
 ERRORS=0
@@ -130,13 +134,17 @@ fi
 # ---------------------------------------------------------------
 # 2. Global em dash prohibition across all tracked text files
 # ---------------------------------------------------------------
+# Binary denylist: everything else tracked is scanned (SKILL.md, LICENSE,
+# templates/*.ts, generated artifacts, etc).
+BINARY_EXTS='\.(png|jpe?g|gif|ico|bmp|pdf|zip|gz|woff2?|ttf|otf|lock|crl?|pem|key|mp4|webm|ds_store)$'
 if git -C "${REPO_DIR}" rev-parse --git-dir >/dev/null 2>&1; then
-  TEXT_FILES="$(git -C "${REPO_DIR}" ls-files -- '*.md' '*.json' '*.yml' '*.yaml' '*.sh' '*.mmd' '*.conf' '*.toml' '*.ini' '*.template' '*.rb' '*.py' '*.html' '*.svg' 'dotfiles/*' '**/.gitignore' '.gitignore')"
+  TEXT_FILES="$(git -C "${REPO_DIR}" ls-files | grep -viE "${BINARY_EXTS}" || true)"
 else
-  TEXT_FILES="$(find "${REPO_DIR}" -type f \( -name '*.md' -o -name '*.json' -o -name '*.yml' -o -name '*.yaml' -o -name '*.sh' -o -name '*.mmd' -o -name '*.conf' -o -name '*.toml' -o -name '*.ini' -o -name '*.template' -o -name '*.rb' -o -name '*.py' -o -name '*.html' -o -name '*.svg' -o -name '.gitignore' \) -not -path '*/.git/*')"
+  TEXT_FILES="$(find "${REPO_DIR}" -type f -not -path '*/.git/*' -not -path '*/node_modules/*' | grep -viE "${BINARY_EXTS}" | sed "s|^${REPO_DIR}/||" || true)"
 fi
 
 while IFS= read -r f; do
+  [ -n "${f}" ] || continue
   [ -f "${REPO_DIR}/${f}" ] || continue
   if grep -q -- "${EMDASH}" "${REPO_DIR}/${f}"; then
     fail "${f}: Contains em dash. Replace with '-', ':', or ' - '"
@@ -144,15 +152,23 @@ while IFS= read -r f; do
 done <<< "${TEXT_FILES}"
 
 # ---------------------------------------------------------------
-# 3. Machine-specific paths in tracked Markdown (outside skills/, covered above)
+# 3. Machine-specific paths in all tracked text files outside skills/
+# (skills/ is covered per-skill above)
 # ---------------------------------------------------------------
-MD_FILES="$(git -C "${REPO_DIR}" ls-files -- '*.md' | grep -v '^skills/' || true)"
 while IFS= read -r f; do
   [ -n "${f}" ] || continue
-  if grep -qE '/Users/|file://' "${REPO_DIR}/${f}"; then
+  [ -f "${REPO_DIR}/${f}" ] || continue
+  case "${f}" in
+    # test.sh: mutation fixtures intentionally contain path-shaped strings.
+    # validate.sh: contains its own ban pattern literals.
+    skills/*|scripts/test.sh|scripts/validate.sh) continue ;;
+  esac
+  # Path-shaped only: /Users/<name> or file:/// so docs that *describe* the
+  # ban (and the validator's own messages) do not trip themselves.
+  if grep -qE '/Users/[A-Za-z0-9._-]+|file:///' "${REPO_DIR}/${f}"; then
     fail "${f}: Contains machine-specific path (/Users/ or file://)"
   fi
-done <<< "${MD_FILES}"
+done <<< "${TEXT_FILES}"
 
 # ---------------------------------------------------------------
 # 4. skills-lock.json integrity (JSON, completeness, orphans, hashes)
@@ -308,17 +324,22 @@ fed_lines.each_with_index do |line, i|
 end
 
 check.call(sections.any?, "FEDERATION.md has no 'N skills' section headers")
-sections.each do |lineno, claimed, body|
+parse_entries = ->(body) {
   block = body.split("```", 3)[1].to_s
-  entries = block.lines.map { |l| l.strip.split(/\s+#/, 2).first.to_s }.reject(&:empty?)
+  block.lines.map { |l| l.strip }
+    .reject { |l| l.empty? || l.start_with?("#") }
+    .map { |l| l.split(/\s+#/, 2).first }
+    .reject(&:empty?)
+}
+sections.each do |lineno, claimed, body|
+  entries = parse_entries.call(body)
   check.call(entries.size == claimed, "FEDERATION.md:#{lineno} claims #{claimed} skills but lists #{entries.size}")
 end
 
 # Canonical coverage in the primary ~/.agents/skills section
 primary = sections.first
 if primary
-  block = primary[2].split("```", 3)[1].to_s
-  entries = block.lines.map { |l| l.strip.split(/\s+#/, 2).first.to_s }.reject(&:empty?)
+  entries = parse_entries.call(primary[2])
   fed_missing = skills - entries
   check.call(fed_missing.empty?, "FEDERATION.md ~/.agents/skills missing canonical: #{fed_missing.join(', ')}")
 end
