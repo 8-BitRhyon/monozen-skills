@@ -4,11 +4,11 @@
     "agentic-loop": {
       "name": "agentic-loop",
       "description": "Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.",
-      "tokenEstimate": 947,
+      "tokenEstimate": 908,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": "8f6400fb8dd5976fc1dec6d7f179f8f73912386f7c52af0c7e7fbac36c65fb6c"
+      "computedHash": "28c588f52b17c21ce462ee4562a751c0431be066ec0dd44025cb527b56d46b44"
     },
     "axi": {
       "name": "axi",
@@ -31,11 +31,11 @@
     "context-engineering": {
       "name": "context-engineering",
       "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
-      "tokenEstimate": 995,
+      "tokenEstimate": 916,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": "e65f658065af37914f71ecf04dc5183c304d9987f64226c0584d01daa3773833"
+      "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -58,20 +58,20 @@
     "herdr": {
       "name": "herdr",
       "description": "Operate the Herdr terminal multiplexer for multi-agent orchestration: workspaces/tabs/panes, agent states (idle/working/blocked/done), native agent-state integrations, socket API, daemon persistence, and the captain-crew pattern. Load when running multiple agents in one workspace or supervising a crew from a captain pane.",
-      "tokenEstimate": 985,
+      "tokenEstimate": 989,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "81e5cbdb6b87dfce3577d515649e869c51c1d358aa95cac0e77745d44014cf4e"
+      "computedHash": "f7be6d541aad5fe083d222d6afde2b62726d3d2c252658d373a10d0ca5126ed9"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
       "description": "Consolidated Monozen portfolio skill: dual-theme (Sun/Moon) lifecycle contracts, 5-panel SPA architecture, CSS specificity load order, WebGL context safety, nav capsule behavior, and pre-deploy audit protocol. Load when working on any file under the Monozen portfolio project.",
-      "tokenEstimate": 924,
+      "tokenEstimate": 921,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/monozen-portfolio/SKILL.md",
-      "computedHash": "c795f75a666249b1792df77d47ef38da083fa9b2edbe86397b74e0a10e13f3f7"
+      "computedHash": "ad447186845321f0564b48777820ac635641463f804e4abd7ace87c375ac176a"
     },
     "new-project": {
       "name": "new-project",
@@ -121,20 +121,20 @@
     "skill-authoring": {
       "name": "skill-authoring",
       "description": "Meta-skill for authoring clean, runnable agent skill modules with frontmatter metadata, structured protocols, and zero em dashes.",
-      "tokenEstimate": 802,
+      "tokenEstimate": 758,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
-      "computedHash": "b427f0d32d90eab454f41a3eaac8f668a9c06f3e702d70423a7e5396dc606132"
+      "computedHash": "9141c2068d0b85d0d1460e1787b76d5041ad3d866a9f99e87a44a3a14e5927b5"
     },
     "task-decomposition": {
       "name": "task-decomposition",
       "description": "Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.",
-      "tokenEstimate": 980,
+      "tokenEstimate": 909,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": "2c915b6b333686c343c466014771b66e465ede2bfeaccc0152094ad34d525658"
+      "computedHash": "9e23126e47e5ecd15469db53741c59f47e2ab4f9ab56b68ee18aea31eab4081e"
     },
     "test-driven-dev": {
       "name": "test-driven-dev",
