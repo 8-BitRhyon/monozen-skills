@@ -32,86 +32,49 @@ npx skills add 8-BitRhyon/monozen-skills
 
 ---
 
-## Engineering Philosophy & Core Identity
+## Engineering Philosophy
 
-Monozen operates on **epistemic discipline** and **cognitive persona isolation**:
-
-- **Moon (The Systemizer)**: Cold diagnostic precision, WebGL memory safety, unit test gates (`npm test`), and zero-hallucination verification.
-- **Sun (The Shaper)**: Technical drafting table, crisp line geometry, real-browser DevTools validation (`chrome-devtools-axi`).
-- **Evidence Over Hope**: *"Seems right is not done."* Every change is governed by failing TDD prove-it cycles, build verification, and real-browser DevTools inspections.
-
-📖 **Read the full manifesto in [PHILOSOPHY.md](PHILOSOPHY.md).**
-📖 **Read the canonical agent instructions in [AGENTS.md](AGENTS.md).**
+Moon (The Systemizer) and Sun (The Shaper) drive the two core disciplines: **evidence over hope** ("seems right is not done") and **cognitive persona isolation**. The full manifesto is in [PHILOSOPHY.md](PHILOSOPHY.md); the canonical agent rules live in [AGENTS.md](AGENTS.md).
 
 ---
 
 ## Skill Catalog
 
-All 16 skills, federated via `npx skills add 8-BitRhyon/monozen-skills`:
+All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + token budget in [skills-lock.json](skills-lock.json)):
 
-| Skill | Invocation | Role |
-|---|---|---|
-| `new-project` | `/new-project` | Bootstrap any project: scaffold, AGENTS.md, .gitignore, CI, first commit |
-| `test-driven-dev` | `/test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
-| `code-review` | `/code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
-| `pr-workflow` | `/pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
-| `agentic-loop` | `/agentic-loop` | Universal observe -> plan -> act -> verify cycle |
-| `task-decomposition` | `/task-decomposition` | Breaks complex requests into atomic, testable units |
-| `context-engineering` | `/context-engineering` | Optimizes context window, token budget, session memory |
-| `prompt-engineering-loop` | `/prompt-engineering-loop` | Lean iterative prompt refinement and adversarial pressure testing |
-| `skill-authoring` | `/skill-authoring` | Meta-skill for authoring clean, runnable skill modules |
-| `axi` | `/axi` | Design token-efficient AXI CLIs (TOON output) instead of MCP payloads |
-| `pi-agent` | `/pi-agent` | Pi runtime config: extensions, settings.json, models.json |
-| `herdr` | `/herdr` | Herdr multiplexer: panes, states, captain-and-crew (firstmate) orchestration |
-| `git-worktree` | `/git-worktree` | Isolated git worktrees (treehouse pool, pi-worktree), merge back, cleanup |
-| `git-workflow` | `/git-workflow` | Commit signing (SSH), branch hygiene, history purge |
-| `production-web-audit` | `/production-web-audit` | Universal pre-deployment security, performance, CSP audit |
-| `monozen-portfolio` | `/monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
+| Skill | Role |
+|---|---|
+| `new-project` | Bootstrap any project: scaffold, AGENTS.md, .gitignore, CI, first commit |
+| `test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
+| `code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
+| `pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
+| `agentic-loop` | Universal observe -> plan -> act -> verify cycle |
+| `task-decomposition` | Breaks complex requests into atomic, testable units |
+| `context-engineering` | Optimizes context window, token budget, session memory |
+| `prompt-engineering-loop` | Lean iterative prompt refinement and adversarial pressure testing |
+| `skill-authoring` | Meta-skill for authoring clean, runnable skill modules |
+| `axi` | Design token-efficient AXI CLIs (TOON output) instead of MCP payloads |
+| `pi-agent` | Pi runtime config: extensions, settings.json, models.json |
+| `herdr` | Herdr multiplexer: panes, states, captain-and-crew (firstmate) orchestration |
+| `git-worktree` | Isolated git worktrees (treehouse pool, pi-worktree), merge back, cleanup |
+| `git-workflow` | Commit signing (SSH), branch hygiene, history purge |
+| `production-web-audit` | Universal pre-deployment security, performance, CSP audit |
+| `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
 
----
-
-## The Captains-and-Crew Operating Model
-
-The workstation runs one captain agent per task on an isolated Git worktree (pooled via `treehouse`), supervised from a Herdr pane:
-
-1. **One captain.** A single orchestrator (Pi / Claude Code / OpenCode / Codex) owns the task end to end.
-2. **Delegation.** Independent units are spawned in isolated worktrees (`treehouse` pool, see `git-worktree` skill) and Herdr panes; never two agents in the same working tree.
-3. **Escalation is cheap.** Ask the human for decisions you cannot verify; do the work you can. Auto-fix typos; never change product behavior silently.
-4. **Cleanup.** After a subagent finishes, report to the captain and return the worktree to the pool (`treehouse return`). Never leave stale worktrees, leases, or branches.
-
-The full captain-and-crew distro is `firstmate` (see Environment below): talk to one agent, ship with a crew.
+Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 
 ---
+
+## Operating Model
+
+One captain agent per task on an isolated git worktree (pooled via `treehouse`), supervised from a herdr pane; independent units go to subagents in their own worktrees, and every worktree returns to the pool when done. The full protocol is the canonical operating model in [AGENTS.md](AGENTS.md#harness-agnostic-operating-model); the captain-and-crew distro is `firstmate` (see Environment below).
 
 ## How Skills Are Processed
 
 ```
-IDEA     prompt-engineering-loop -> task-decomposition (units, acceptance criteria)
-   │
-   ▼
-BOOTSTRAP new-project skill: scaffold, AGENTS.md, .gitignore, CI, first commit
-   │
-   ▼
-IMPLEMENT test-driven-dev (red -> green -> refactor) + agentic-loop, one commit per unit
-   │
-   ▼
-REVIEW   code-review skill: 5 dimensions, severity triage, PR review
-   │
-   ▼
-GATE     pre-commit hook (scripts/install-hooks.sh): validate -> test -> manifest -> lock-sync
-   │
-   ▼
-PR       pr-workflow skill: branch -> gh pr create -> CI checks -> merge
-   │
-   ▼
-CI       .github/workflows/validate.yml: validate + test + manifest-sync + SHA-pinned actions
-         secrets job: gitleaks full-history secret scan
-   │
-   ▼
-MERGE    required checks pass -> merge -> delete branch -> return worktrees
-   │
-   ▼
-RELEASE  production-web-audit (CSP, memory, a11y, console) - pre-deploy audit protocol; deploy per stack
+idea -> new-project -> test-driven-dev + agentic-loop -> code-review
+     -> pre-commit gate (validate -> test -> smoke -> manifest)
+     -> pr-workflow -> CI (validate + secrets) -> merge -> production-web-audit
 ```
 
 Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.
@@ -129,27 +92,7 @@ Skills flow from canonical authoring in this repo through validation, then are d
 
 ## Validation Pipeline
 
-Every skill in this repo passes through a multi-stage gate before distribution:
-
-```bash
-# Strict validation: YAML frontmatter (Ruby Psych), name/folder consistency,
-# zero em-dashes, no machine-specific paths, lock integrity (sha256), internal links
-npm run validate
-
-# Prove the validator itself: self-tests covering every contract violation
-npm test
-
-# Regenerate skills-lock.json manifest (name, description, sha256 content hash)
-npm run manifest
-```
-
-CI additionally enforces that every GitHub Action in `.github/workflows/` is pinned to a full commit SHA (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
-
-The pre-commit hook enforces the same gate locally (shift-left). Install it once:
-
-```bash
-bash scripts/install-hooks.sh
-```
+Every change passes, in order: `npm run validate` (frontmatter, em dashes, machine paths, lock integrity, internal links, FEDERATION counts), `npm test` (self-tests for every contract violation), and `npm run manifest` + lock-sync. Contributors need node (tests) and Ruby/Psych (validator). The pre-commit hook runs the same gate locally (`bash scripts/install-hooks.sh`); CI adds SHA-pinned actions and the gitleaks secrets scan (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
 
 ---
 

@@ -14,13 +14,13 @@ description: Breaks complex engineering requests into ordered, independent, test
 ### 1. Atomicity
 Each task = **one** verifiable outcome.
 - ❌ "Fix the portfolio"
-- ✅ "Globe squish: add ResizeObserver to container"
-- ✅ "Story panel FOUT: move font preload before split-screen"
+- ✅ "<unit>: add <behavior> to <module>"
+- ✅ "<unit>: move <dependency> before <phase>"
 
 ### 2. Independence
 Tasks should not share mutable state.
-- Globe fix → `globe-module.js` + `test/globe.test.js`
-- Font fix → `boot.js` + `test/boot.test.js`
+- <unit A> → `module-a.js` + `test/a.test.js`
+- <unit B> → `boot.js` + `test/boot.test.js`
 - **Can run in parallel** → use `Task` tool for parallel agents
 
 ### 3. Verifiability
@@ -53,20 +53,20 @@ Every task has a **done definition** (test, command, visual).
 ### Tasks (in dependency order)
 
 #### Phase 1: Foundation (parallel)
-- [ ] Task 1.1: Audit current theme toggle flow → `grep theme-changed`
-- [ ] Task 1.2: List all `__init`/`__destroy` pairs → `grep __.*Init`
+- [ ] Task 1.1: Audit current <feature> flow → `grep <signal>`
+- [ ] Task 1.2: List all <init>/<destroy> pairs → `grep <pattern>`
 
 #### Phase 2: Implementation (sequential)
-- [ ] Task 2.1: Add guard to theme toggle (needs 1.1)
+- [ ] Task 2.1: Add guard to <feature> (needs 1.1)
 - [ ] Task 2.2: Write Prove-It test for guard (independent)
 
 #### Phase 3: Verification (parallel after 2.x)
 - [ ] Task 3.1: Full test suite
-- [ ] Task 3.2: Chrome DevTools verification
+- [ ] Task 3.2: Runtime verification (browser/CLI)
 - [ ] Task 3.3: Deploy preview + curl check
 
 ### Risks
-- Theme toggle during boot: corrupts GemSmoke transition
+- <feature> during boot: corrupts <transition>
 - Mitigation: guard + test + manual verify
 ```
 
@@ -90,12 +90,12 @@ Every task has a **done definition** (test, command, visual).
 Use `todowrite` with this structure (one `in_progress` at a time, update in real-time):
 ```json
 {"todos": [
-  {"content": "Globe ResizeObserver: write failing tests", "status": "in_progress", "priority": "high"},
-  {"content": "Globe ResizeObserver: implement fix", "status": "pending", "priority": "high"},
-  {"content": "Font preload reorder: write failing tests", "status": "pending", "priority": "high"},
-  {"content": "Font preload reorder: implement fix", "status": "pending", "priority": "high"},
+  {"content": "<unit A>: write failing tests", "status": "in_progress", "priority": "high"},
+  {"content": "<unit A>: implement fix", "status": "pending", "priority": "high"},
+  {"content": "<unit B>: write failing tests", "status": "pending", "priority": "high"},
+  {"content": "<unit B>: implement fix", "status": "pending", "priority": "high"},
   {"content": "Full test suite verification", "status": "pending", "priority": "high"},
-  {"content": "Chrome DevTools verification", "status": "pending", "priority": "high"}
+  {"content": "Runtime verification (browser/CLI)", "status": "pending", "priority": "high"}
 ]}
 ```
 
@@ -108,13 +108,3 @@ Load when:
 - You feel "where do I start?"
 - Previous work had missed steps or rework
 - Planning a multi-session effort
-
----
-
-## Evolution
-
-| Version | Change |
-|---------|--------|
-| v1.0 | Core decomposition + parallelization |
-| v1.1 | Added todowrite integration |
-| v1.2 | Added risk/mitigation column |

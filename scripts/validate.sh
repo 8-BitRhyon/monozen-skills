@@ -292,9 +292,10 @@ fed = File.read(File.join(repo, "FEDERATION.md"))
 taxo = File.read(File.join(repo, "assets", "skill-taxonomy.mmd"))
 arch = File.read(File.join(repo, "assets", "monozen-skills-arch.mmd"))
 
-# README catalog: "All N skills" header must match lock count
-m = readme.match(/All (\d+) skills/)
-check.call(m && m[1].to_i == skills.size, "README.md claims '#{m && m[1]} skills' but skills-lock.json has #{skills.size}")
+# README catalog: the intro must be count-free ("All skills") so adding a
+# skill never rewrites the cached README prefix; completeness is enforced
+# by the table scan below.
+check.call(readme.include?("All skills"), "README.md catalog intro must state 'All skills' (count-free), not a hardcoded count")
 
 # README catalog table must list every locked skill (and nothing extra)
 table = readme.scan(/^\| `([a-z0-9-]+)` \|/).flatten.uniq.sort

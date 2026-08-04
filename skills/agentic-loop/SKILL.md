@@ -47,8 +47,8 @@ description: Universal pattern for autonomous agent workflow - the core observe 
 
 ---
 
-## Monozen-Specific Rules (Agentic Loop Extension)
-Load the `monozen-portfolio` skill before touching that project. It owns all theme lifecycle, WebGL safety, CSS load order, and pre-deploy audit contracts. Run its `security-guard-universal.sh` before commit/deploy in real repos: blocks IDs, secrets, fingerprints, legacy assets, unsigned commits.
+## Monozen Projects
+Load the `monozen-portfolio` skill before touching that project; it owns theme/WebGL/CSS contracts, the pre-deploy audit, and the `security-guard-universal.sh` commit gate.
 
 ## Invocation
 

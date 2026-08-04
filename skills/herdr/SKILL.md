@@ -30,7 +30,7 @@ Each crew pane runs one `agentic-loop`; the captain syncs with `herdr agent wait
 
 The `kunchenguid/firstmate` agent distro ships this pattern: you talk to one first-mate agent that runs the crew - spawning crewmates in visible panes with clean treehouse worktrees, supervising, returning PRs/merges/reports. Pool worktrees with `treehouse` (see `git-worktree`).
 
-## CLI Reference (v0.8.0, verified)
+## CLI Reference (verified against installed herdr)
 
 ```
 herdr                          launch or attach to the session

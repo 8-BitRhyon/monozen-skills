@@ -70,9 +70,7 @@ git show <commit>:Website/assets/js/boot.js | head -200
 
 ## Compaction Over Growth (token economics)
 
-Near budget? Compact, don't grow: summarize history into a compact handoff (decisions, unresolved bugs, key state, next step); sub-agents return distilled 1-2k summaries, never raw transcripts; drop old tool results. Keep the prefix byte-stable for provider caches (Anthropic 90% cheaper reads).
-
-*Evidence: Anthropic context-editing eval cut tokens 84% on a 100-turn workload while completing workflows that previously failed.*
+Near budget? Compact, don't grow: summarize history into a compact handoff (decisions, unresolved bugs, key state, next step); sub-agents return distilled 1-2k summaries, never raw transcripts; drop old tool results. Keep the prefix byte-stable for provider caches (cache doctrine lives in AGENTS.md).
 
 ---
 
@@ -106,13 +104,3 @@ Load when:
 - Switching project areas
 - Debugging "mysterious" behavior
 - Onboarding to new codebase
-
----
-
-## Evolution
-
-| Version | Change |
-|---------|--------|
-| v1.0 | 4-layer model |
-| v1.1 | Added token budget + parallel gathering |
-| v1.2 | Added history layer + kilo_local_recall |
