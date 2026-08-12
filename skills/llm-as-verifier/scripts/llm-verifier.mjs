@@ -456,8 +456,8 @@ async function runRank(rubric, opts) {
   // Step 4: selection - argmax w_i / c_i (count normalization removes the
   // bias that pivots participate in more comparisons).
   const ranked = candidates
-    .map((x, i) => ({ label: x.label, wins: round(w[i]), count: c[i], score: c[i] ? round(w[i] / c[i]) : 0 }))
-    .sort((x, y) => (y.score - x.score) || x.label.localeCompare(y.label))
+    .map((x, i) => ({ index: i, label: x.label, wins: round(w[i]), count: c[i], score: c[i] ? round(w[i] / c[i]) : 0 }))
+    .sort((x, y) => (y.score - x.score) || (y.index - x.index))
   return {
     strategy: 'probabilistic-pivot-tournament',
     poolSize: n,

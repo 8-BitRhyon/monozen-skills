@@ -62,6 +62,7 @@ When this agent (or the captain) spawns subagents:
   2. `npm test`
   3. `npm run manifest` (and the lock file must be in sync)
   4. `npm run verify` (token-free llm-as-verifier self-check)
+  5. `npm run test:verifier` (llm-as-verifier functional tests against a mock logprob endpoint)
 - `scripts/install-hooks.sh` installs the shift-left pre-commit hook, which runs validate + test + smoke + manifest sync locally before every commit.
 - Genesis: `CLAUDE.md` is a symlink to this file so Claude Code and other consumers read the same canonical instructions.
 

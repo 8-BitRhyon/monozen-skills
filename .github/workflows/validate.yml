@@ -38,6 +38,8 @@ jobs:
         run: bash scripts/smoke-test.sh
       - name: Run LLM-as-Verifier reference self-check
         run: node skills/llm-as-verifier/scripts/llm-verifier.mjs --self-check
+      - name: Run LLM-as-Verifier functional tests (mock logprob endpoint)
+        run: npm run test:verifier
       - name: Verify Manifest Synchronization
         run: |
           npm run manifest

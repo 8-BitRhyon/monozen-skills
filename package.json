@@ -10,7 +10,8 @@
     "test": "bash scripts/test.sh",
     "smoke": "bash scripts/smoke-test.sh",
     "verify": "node skills/llm-as-verifier/scripts/llm-verifier.mjs --self-check",
-    "check": "bash scripts/validate.sh && bash scripts/test.sh && bash scripts/smoke-test.sh && npm run verify && bash scripts/manifest.sh && git diff --exit-code skills-lock.json"
+    "check": "bash scripts/validate.sh && bash scripts/test.sh && bash scripts/smoke-test.sh && npm run verify && npm run test:verifier && bash scripts/manifest.sh && git diff --exit-code skills-lock.json",
+    "test:verifier": "node scripts/verifier-functional-test.mjs"
   },
   "keywords": [
     "monozen",
