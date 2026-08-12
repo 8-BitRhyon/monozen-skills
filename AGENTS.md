@@ -61,6 +61,8 @@ When this agent (or the captain) spawns subagents:
   1. `npm run validate`
   2. `npm test`
   3. `npm run manifest` (and the lock file must be in sync)
+  4. `npm run verify` (token-free llm-as-verifier self-check)
+  5. `npm run test:verifier` (llm-as-verifier functional tests against a mock logprob endpoint)
 - `scripts/install-hooks.sh` installs the shift-left pre-commit hook, which runs validate + test + smoke + manifest sync locally before every commit.
 - Genesis: `CLAUDE.md` is a symlink to this file so Claude Code and other consumers read the same canonical instructions.
 
@@ -95,6 +97,7 @@ Pattern borrowed from the Kun Chen framework: surface intentional choices so age
 - `CLAUDE.md` is a symlink to `AGENTS.md` so one canonical file drives every harness.
 - The universal security guard (in `monozen-portfolio/`) is a commit/deploy gate run in real repos, not the installable pre-commit hook (which runs `validate` + `test` + manifest sync).
 - The pre-commit gate never scans "unread" files; agents must read before writing, and the guard only blocks committed state. The hook's `manifest.sh` regen can write to `skills-lock.json`, so the hook runs it before the diff check.
+- Verifier scoring is opt-in and never blocks CI: only the token-free `llm-as-verifier --self-check` runs in the gate. Live scoring needs an API key and stays outside CI.
 
 ## Maintaining this file
 
