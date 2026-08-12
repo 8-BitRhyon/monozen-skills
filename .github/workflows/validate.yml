@@ -36,6 +36,8 @@ jobs:
         run: npm test
       - name: Run Consumer Smoke Test
         run: bash scripts/smoke-test.sh
+      - name: Run LLM-as-Verifier reference self-check
+        run: node skills/llm-as-verifier/scripts/llm-verifier.mjs --self-check
       - name: Verify Manifest Synchronization
         run: |
           npm run manifest

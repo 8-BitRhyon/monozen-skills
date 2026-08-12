@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 36 skills
+### `~/.agents/skills/` - 37 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -37,6 +37,7 @@ git-worktree            # Isolated git worktrees (parallel agents)
 herdr                   # herdr terminal multiplexer control skill
 improve                 # Read-only codebase audit + improvement plans
 journal-abbrev          # Journal name abbreviation lookup
+llm-as-verifier         # Probabilistic fine-grained LLM verification (Stanford + NVIDIA)
 monozen-portfolio        # Consolidated Monozen 5-panel SPA + theme contracts
 new-project             # Project bootstrap: scaffold + constitution + CI
 paper-fetch             # Paper PDF download via Unpaywall | Kroki
@@ -150,7 +151,7 @@ Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> sk
 // Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills"   // 1st priority (36 skills, canonical monozen skills shadow namesakes)
+    "~/.agents/skills"   // 1st priority (37 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```
@@ -173,7 +174,7 @@ Installation per consumer is handled by `scripts/install.sh`:
 To add a new skill that appears in every consumer's directory:
 
 1. Create the skill folder `skills/<name>/SKILL.md` with `name` + `description` frontmatter (name must equal the folder name).
-2. Run `npm run manifest` to regenerate `skills-lock.json`, then `npm run validate && npm test`.
+2. Run `npm run manifest` to regenerate `skills-lock.json`, then `npm run validate && npm test && npm run verify`.
 3. Commit the skill and the lock file together (the pre-commit hook enforces lock sync).
 4. Consumers pick it up on next `npx skills add 8-BitRhyon/monozen-skills`.
 

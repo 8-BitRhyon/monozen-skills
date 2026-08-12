@@ -64,6 +64,15 @@
       "skillPath": "skills/herdr/SKILL.md",
       "computedHash": "f7be6d541aad5fe083d222d6afde2b62726d3d2c252658d373a10d0ca5126ed9"
     },
+    "llm-as-verifier": {
+      "name": "llm-as-verifier",
+      "description": "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifier paper (arXiv:2607.05391): continuous scores from expectation over scoring-token logits, criteria decomposition, repeated evaluation, pivot-tournament ranking, and task-progress tracking. Load when evaluating open-ended output, choosing the best of N candidates, or grading work that deterministic assertions cannot judge.",
+      "tokenEstimate": 860,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/llm-as-verifier/SKILL.md",
+      "computedHash": "a74f040611cca8e82da5a686e07a9e1183edfd9f5212060369991440c6b24822"
+    },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
       "description": "Consolidated Monozen portfolio skill: dual-theme (Sun/Moon) lifecycle contracts, 5-panel SPA architecture, CSS specificity load order, WebGL context safety, nav capsule behavior, and pre-deploy audit protocol. Load when working on any file under the Monozen portfolio project.",
@@ -139,11 +148,11 @@
     "test-driven-dev": {
       "name": "test-driven-dev",
       "description": "Universal test-driven development protocol for any language or stack: write failing test first (red), minimal implementation (green), refactor, verify with real runtime evidence. Load when implementing any new feature, fixing a bug, or when a repo has no test-first discipline.",
-      "tokenEstimate": 637,
+      "tokenEstimate": 776,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/test-driven-dev/SKILL.md",
-      "computedHash": "e35f2188391edc58fba6a684a152542365fb4ee64b6fc0961bf72be49a6a683b"
+      "computedHash": "043b3dc0208ce2c4964a4f04ceb2927d7eacabb4130967d382a3cea6701abd9e"
     }
   }
 }

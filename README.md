@@ -46,6 +46,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 |---|---|
 | `new-project` | Bootstrap any project: scaffold, AGENTS.md, .gitignore, CI, first commit |
 | `test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
+| `llm-as-verifier` | Probabilistic fine-grained LLM verification (Stanford + NVIDIA paper): criteria decomposition, repeated eval, pivot-tournament ranking |
 | `code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
 | `pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
 | `agentic-loop` | Universal observe -> plan -> act -> verify cycle |
@@ -92,7 +93,7 @@ Skills flow from canonical authoring in this repo through validation, then are d
 
 ## Validation Pipeline
 
-Every change passes, in order: `npm run validate` (frontmatter, em dashes, machine paths, lock integrity, internal links, FEDERATION counts), `npm test` (self-tests for every contract violation), and `npm run manifest` + lock-sync. Contributors need node (tests) and Ruby/Psych (validator). The pre-commit hook runs the same gate locally (`bash scripts/install-hooks.sh`); CI adds SHA-pinned actions and the gitleaks secrets scan (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
+Every change passes, in order: `npm run validate` (frontmatter, em dashes, machine paths, lock integrity, internal links, FEDERATION counts), `npm test` (self-tests for every contract violation), and `npm run manifest` + lock-sync. Contributors need node (tests) and Ruby/Psych (validator). `npm run verify` runs the token-free self-check of the `llm-as-verifier` reference CLI; live verifier scoring is opt-in and never blocks CI. The pre-commit hook runs the same gate locally (`bash scripts/install-hooks.sh`); CI adds SHA-pinned actions and the gitleaks secrets scan (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
 
 ---
 
