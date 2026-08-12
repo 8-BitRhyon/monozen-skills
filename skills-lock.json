@@ -67,11 +67,11 @@
     "llm-as-verifier": {
       "name": "llm-as-verifier",
       "description": "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifier paper (arXiv:2607.05391): continuous scores from expectation over scoring-token logits, score granularity, repeated evaluation, criteria decomposition, and the probabilistic pivot tournament for candidate ranking. Load when evaluating open-ended output, choosing the best of N candidates, or grading work that deterministic assertions cannot judge.",
-      "tokenEstimate": 919,
+      "tokenEstimate": 987,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/llm-as-verifier/SKILL.md",
-      "computedHash": "d5d488a2b1f6d17678e37a759dc006f6b5a19ea2b7cad7658c78d6c9f5823cf7"
+      "computedHash": "d0d35b6fcdd35994c8fdccaa267c15537f1a121d7640a4a39d6a4b21fb0c42b9"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",

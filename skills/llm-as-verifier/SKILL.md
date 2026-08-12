@@ -5,7 +5,7 @@ description: "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifie
 
 # LLM-as-a-Verifier (Universal)
 
-> **Scope:** Judge open-ended output with calibrated continuous scores instead of discrete pass/fail verdicts. Paper: arXiv:2607.05391. Official repo: https://github.com/llm-as-a-verifier/llm-as-verifier (pip install llm-verifier). Reference CLI: `scripts/llm-verifier.mjs` (zero deps, OpenAI-compatible endpoint).
+> **Scope:** Judge open-ended output with calibrated continuous scores instead of discrete pass/fail verdicts. Paper: arXiv:2607.05391. Official repo: https://github.com/llm-as-a-verifier/llm-as-verifier (pip install llm-verifier). Claude Code plugin: https://github.com/llm-as-a-verifier/TurboAgent (pip install turbo-agent). Reference CLI: `scripts/llm-verifier.mjs` (zero deps, OpenAI-compatible endpoint).
 
 ## Core Mechanism
 
@@ -26,7 +26,7 @@ then normalize to [0,1] by the linear map (R - phi_min) / (phi_max - phi_min). T
 1. **Decompose** the task into weighted criteria in `templates/rubric.json` (max ~5; weights sum to 1).
 2. **Score** each candidate per criterion with `scripts/llm-verifier.mjs score` (logprob expectation over scale tokens). Never read a single token as the verdict.
 3. **Repeat** K times (default 8); record mean and spread per criterion.
-4. **Rank** candidate pools with `rank` (probabilistic pivot tournament, paper Fig. 6): ring pass -> pivot selection -> pivot rounds -> argmax w/c. Cost O(Nk) instead of O(N^2).
+4. **Rank** candidate pools with `rank` (probabilistic pivot tournament, paper Fig. 6): ring pass -> pivot selection -> pivot rounds -> argmax w/c. Cost O(Nk) instead of O(N^2). TurboAgent adds a majority-voting shortcut: when a majority of candidates are identical, it skips the tournament.
 5. **Track progress** with `progress`: per-step scores (the paper measures value-order correlation) reveal drift so hopeless paths are abandoned early.
 
 ## Pairwise Preference (Eq. 3.2)
@@ -37,7 +37,7 @@ Comparisons derive preference from the reward difference via the Bradley-Terry m
 
 - Verifier scores are for open-ended output only. Keep deterministic assertions for assertable behavior (see `test-driven-dev`).
 - Freeze rubric + token scheme; log rubric hash and model id with every result.
-- Only the token-free `--self-check` runs in CI (`npm run verify`). Models without logprob access need a two-stage workaround (paper appendix B.6); the paper uses Gemini 2.5 Flash (20 top logprobs) via Vertex/vLLM.
+- Only the token-free `--self-check` runs in CI (`npm run verify`). Models without logprob access need a two-stage workaround (paper appendix B.6); the paper uses Gemini 2.5 Flash (20 top logprobs) via Vertex/vLLM. TurboAgent ships K=1 per pair for latency (paper default K=8).
 
 ## Templates and Tooling
 
