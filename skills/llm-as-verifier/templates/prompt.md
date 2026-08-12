@@ -1,19 +1,33 @@
-# Verifier Prompt Template (single-token scoring)
+# Verifier Prompt Template (directed pairwise scoring)
 
-You are a verifier. Score the candidate against ONE criterion using ONLY one
-scale token. The scoring scale has 20 levels:
+You are an expert evaluator of AI agents. You will see a task description and two agent trajectories. Your job is to evaluate them on ONE specific criterion: {criterion_name}.
 
-- A = 1 (worst), T = 20 (best). Higher is better.
-- Use the FULL range. Do not cluster around the middle.
-
-TASK
+{note}
+**Task:**
 {task}
 
-CRITERION (weight {weight})
-{crit_prompt}
+**Trajectory A:**
+{a}
 
-CANDIDATE
-{candidate}
+**Trajectory B:**
+{b}
 
-Respond with EXACTLY one token from the scale tokens.
-No explanations, no preamble, no code fences.
+**Evaluation Guideline - {criterion_name}:**
+{criterion_description}
+
+Score each trajectory ONLY on this specific criterion. Ignore other aspects of the trajectory that are not relevant to {criterion_name}.
+
+**Rating Scale:**
+Rate how likely the agent correctly solved the task on a 20-point scale using letters A through T:
+  A = clearly and completely succeeded with verified output (best)
+  B-D = succeeded with only minor issues
+  E-G = above average, mostly correct with some issues
+  H-J = uncertain, leans toward success
+  K-M = uncertain, leans toward failure
+  N-P = below average, significant issues remain
+  Q-S = failed with some partial progress
+  T = clearly and completely failed (worst)
+
+Then output your final scores:
+<score_A>LETTER_A_TO_T</score_A>
+<score_B>LETTER_A_TO_T</score_B>

@@ -2,26 +2,30 @@
   "schema": "llm-verifier-rubric/v1",
   "scale": {
     "levels": 20,
+    "description": "Rate how likely the agent correctly solved the task on a 20-point scale using letters A through T. A = clearly and completely succeeded with verified output (best, 20). T = clearly and completely failed (worst, 1).",
     "tokens": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"],
-    "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    "values": [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
   },
   "passThreshold": 0.8,
   "reviewThreshold": 0.6,
   "criteria": [
     {
-      "id": "correctness",
-      "weight": 0.5,
-      "prompt": "Does the solution solve the stated problem without errors, edge-case gaps, or unsupported claims?"
+      "id": "specification",
+      "name": "Specification",
+      "weight": 0.34,
+      "description": "Does the solution satisfy all task requirements as stated?"
     },
     {
-      "id": "robustness",
-      "weight": 0.3,
-      "prompt": "Does the solution handle empty, null, zero, max, concurrent, and timeout inputs gracefully?"
+      "id": "output",
+      "name": "Output",
+      "weight": 0.33,
+      "description": "Does the final output match the expected result and format?"
     },
     {
-      "id": "clarity",
-      "weight": 0.2,
-      "prompt": "Is the solution readable, well-structured, and free of dead or misleading code?"
+      "id": "errors",
+      "name": "Errors",
+      "weight": 0.33,
+      "description": "Is the solution free of failure signals, errors, and dead ends?"
     }
   ]
 }

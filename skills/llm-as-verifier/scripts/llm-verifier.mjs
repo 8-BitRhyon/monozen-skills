@@ -1,33 +1,41 @@
 #!/usr/bin/env node
 /**
- * llm-verifier.mjs - Reference implementation of the LLM-as-a-Verifier
- * framework from the Stanford + NVIDIA paper, arXiv:2607.05391.
+ * llm-verifier.mjs - Zero-dep Node reference implementation of the
+ * LLM-as-a-Verifier framework (arXiv:2607.05391, Stanford + NVIDIA) matching
+ * the semantics of the official Python package `pip install llm-verifier`
+ * (github.com/llm-as-a-verifier/llm-as-verifier).
  *
- * Core idea: standard LM judges emit ONE discrete score token, collapsing the
- * scoring distribution and inflating ties. This tool instead requests the
- * token distribution (logprobs) over a fixed fine-grained scale and computes
- * the EXPECTATION over the scale tokens, yielding continuous scores that
- * separate good from bad solutions.
+ * Grounded in the actual implementation:
+ *   fine_grained_reward.py - letter scale A..T (A = 20 best, T = 1 worst),
+ *     logprob-expectation reward R = (1/CK) sum_c sum_k sum_g p(v_g) phi(v_g),
+ *     normalized to [0,1]; directed pairwise prompts with <score_A>/<score_B>.
+ *   pivot_tournament.py    - Probabilistic Pivot Tournament: ring pass over a
+ *     seeded random Hamiltonian cycle, pivot selection by ring-pass w/c,
+ *     pivot rounds (non-pivot vs pivot + pivot vs pivot), argmax w/c.
+ *   progress.py            - progress scale A = 0% .. T = 100% (inverted),
+ *     prefix-only scoring per step (ProgressTracker pattern).
  *
- * Scaling axes (the paper):
- *   G - score granularity (20 levels, tokens A..T)
- *   C - criteria decomposition (weighted rubric)
- *   K - repeated evaluation (average over K runs, report spread)
+ * Preference between two candidates is the Bradley-Terry model (Eq. 3.2):
+ *   P(a > b) = 1 / (1 + exp(-(R_a - R_b)))
  *
  * Modes:
- *   --self-check   Token-free: validates rubric + prompt template, exits 0/1.
- *   score          Score one candidate against a rubric (live API calls).
- *   rank           Pivot tournament over a candidate pool (live API calls).
- *   progress       Per-step scores to track agent task progress (live API).
+ *   --self-check   Token-free: validates rubric + templates, exits 0/1.
+ *   score          Fine-grained reward of ONE candidate (per-criterion, K
+ *                  repeats). Convenience extension; the package itself only
+ *                  scores directed pairs.
+ *   compare        Directed pairwise rewards (R_a, R_b) for one pair, like
+ *                  llm_verifier.compare().
+ *   rank           Best-of-N via PPT, like llm_verifier.select().
+ *   progress       Per-step progress curve (prefix-only), like ProgressTracker.
  *
- * Env:
- *   LLM_VERIFIER_URL     OpenAI-compatible chat completions endpoint.
- *   LLM_VERIFIER_MODEL   Verifier model id.
- *   LLM_VERIFIER_API_KEY API key (required only for live modes).
- *
- * Zero runtime dependencies (Node >= 18 for global fetch). Deterministic by
- * default: fixed rubric, fixed token scheme, temperature 0. Live modes never
- * run in CI; only --self-check is wired into the gate (npm run verify).
+ * Env (same conventions as the package):
+ *   OPENAI_BASE_URL   OpenAI-compatible endpoint (vLLM/SGLang/OpenAI);
+ *                     default http://localhost:8000/v1
+ *   OPENAI_API_KEY    default "EMPTY" (local vLLM accepts any key)
+ *   LLM_VERIFIER_URL / LLM_VERIFIER_MODEL / LLM_VERIFIER_API_KEY  overrides
+ * Default model: gemini-2.5-flash (the paper's verifier). Live modes require
+ * a server that exposes token-level logprobs (top_logprobs). Only --self-check
+ * is wired into CI (`npm run verify`); it never calls an API.
  */
 
 import { readFileSync, readdirSync, writeFileSync, statSync, existsSync } from 'node:fs'
@@ -39,9 +47,12 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 const SKILL_DIR = join(HERE, '..')
 const DEFAULT_RUBRIC = join(SKILL_DIR, 'templates', 'rubric.json')
 const PROMPT_TEMPLATE = join(SKILL_DIR, 'templates', 'prompt.md')
+const OUTPUT_MARKER = 'Then output your final scores:'
+const GRANULARITY = 20
 
-const ENV_URL = process.env.LLM_VERIFIER_URL || 'https://api.openai.com/v1/chat/completions'
-const ENV_MODEL = process.env.LLM_VERIFIER_MODEL || 'gpt-4o-mini'
+const ENV_MODEL = process.env.LLM_VERIFIER_MODEL || 'gemini-2.5-flash'
+const ENV_URL = process.env.LLM_VERIFIER_URL || process.env.OPENAI_BASE_URL || 'http://localhost:8000/v1'
+const ENV_KEY = process.env.LLM_VERIFIER_API_KEY || process.env.OPENAI_API_KEY || 'EMPTY'
 
 // ---------------------------------------------------------------------------
 // CLI
@@ -53,37 +64,43 @@ llm-verifier.mjs - reference LLM-as-a-Verifier CLI (arXiv:2607.05391)
 
 Usage:
   node llm-verifier.mjs --self-check [--rubric <path>] [--verbose]
-  node llm-verifier.mjs score --candidate <path|-> [--rubric <path>] [--task <text>] [--k N] [--out <path>] [--model M]
-  node llm-verifier.mjs rank --candidates <dir|file,file> [--rubric <path>] [--task <text>] [--k N] [--pivots P] [--out <path>]
+  node llm-verifier.mjs score   --candidate <path|-> [--rubric <path>] [--task <text>] [--note <text>] [--k N] [--out <path>]
+  node llm-verifier.mjs compare --candidates <dir|file,file> (exactly 2) [--rubric <path>] [--task <text>] [--note <text>] [--k N] [--out <path>]
+  node llm-verifier.mjs rank    --candidates <dir|file,file> [--rubric <path>] [--task <text>] [--note <text>] [--k N] [--pivots P] [--seed S] [--out <path>]
   node llm-verifier.mjs progress --steps <dir> [--rubric <path>] [--task <text>] [--k N] [--out <path>]
 
-Env: LLM_VERIFIER_URL, LLM_VERIFIER_MODEL, LLM_VERIFIER_API_KEY
+Options: --model M --url U --key K --timeout MS --verbose
+Env: OPENAI_BASE_URL (default http://localhost:8000/v1), OPENAI_API_KEY (default EMPTY);
+     LLM_VERIFIER_URL / LLM_VERIFIER_MODEL / LLM_VERIFIER_API_KEY override.
+Defaults: model gemini-2.5-flash, K=8, pivots=2, seed=0.
 `)
 }
 
 function parseArgs(argv) {
-  const VALUE_FLAGS = new Set(['--k', '--pivots', '--rubric', '--candidate', '--candidates', '--steps', '--task', '--out', '--model', '--url', '--key', '--timeout'])
+  const VALUE_FLAGS = new Set(['--k', '--pivots', '--seed', '--rubric', '--candidate', '--candidates', '--steps', '--task', '--note', '--out', '--model', '--url', '--key', '--timeout'])
   const opts = {
-    k: 3,
-    pivots: 0,
+    k: 8,
+    pivots: 2,
+    seed: 0,
     rubric: '',
     candidate: '',
     candidates: '',
     steps: '',
     task: '',
+    note: '',
     out: '',
     timeout: 0,
     verbose: false,
     model: ENV_MODEL,
     url: ENV_URL,
-    key: process.env.LLM_VERIFIER_API_KEY || ''
+    key: ENV_KEY
   }
   const mode = []
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
     if (a === '--self-check') {
       mode.push('self-check')
-    } else if (a === 'score' || a === 'rank' || a === 'progress') {
+    } else if (a === 'score' || a === 'compare' || a === 'rank' || a === 'progress') {
       mode.push(a)
     } else if (a.startsWith('--')) {
       const eq = a.indexOf('=')
@@ -97,13 +114,15 @@ function parseArgs(argv) {
           break
         case '--pivots':
           opts.pivots = parseInt(v, 10)
-          if (!Number.isInteger(opts.pivots) || opts.pivots < 0) { console.error('[llm-verifier] --pivots must be a non-negative integer'); process.exit(2) }
+          if (!Number.isInteger(opts.pivots) || opts.pivots < 1) { console.error('[llm-verifier] --pivots must be a positive integer'); process.exit(2) }
           break
+        case '--seed': opts.seed = parseInt(v, 10) || 0; break
         case '--rubric': opts.rubric = v; break
         case '--candidate': opts.candidate = v; break
         case '--candidates': opts.candidates = v; break
         case '--steps': opts.steps = v; break
         case '--task': opts.task = v; break
+        case '--note': opts.note = v; break
         case '--out': opts.out = v; break
         case '--model': opts.model = v; break
         case '--url': opts.url = v; break
@@ -123,10 +142,10 @@ function parseArgs(argv) {
 }
 
 // ---------------------------------------------------------------------------
-// Rubric + prompt
+// Rubric + scales
 // ---------------------------------------------------------------------------
 
-function validateRubric(raw, path) {
+function validateRubric(raw) {
   let r
   try {
     r = JSON.parse(raw)
@@ -144,7 +163,8 @@ function validateRubric(raw, path) {
   } else {
     if (criteria.length > 5) errors.push('keep criteria <= 5 to limit prompt complexity')
     for (const c of criteria) {
-      if (!c.id || !c.prompt) errors.push('each criterion needs id and prompt')
+      if (!c.id && !c.name) errors.push('each criterion needs an id or name')
+      if (!c.description && !c.prompt) errors.push('each criterion needs a description or prompt')
       if (typeof c.weight !== 'number') errors.push('each criterion needs a numeric weight')
     }
     const w = criteria.reduce((s, c) => s + (Number(c.weight) || 0), 0)
@@ -161,84 +181,130 @@ function readRubric(path) {
   } catch {
     throw new Error('rubric not readable: ' + path)
   }
-  return validateRubric(raw, path)
+  return validateRubric(raw)
 }
 
 function buildScaleMap(scale) {
-  const map = new Map()
-  for (let i = 0; i < scale.tokens.length; i++) map.set(scale.tokens[i], Number(scale.values[i]))
-  const vals = [...map.values()]
-  return {
-    tokens: [...map.keys()],
-    values: vals,
-    min: Math.min(...vals),
-    max: Math.max(...vals)
-  }
+  // A..T with phi(v) values (20..1 by default); case-insensitive token match.
+  const byToken = new Map()
+  for (let i = 0; i < scale.tokens.length; i++) byToken.set(String(scale.tokens[i]).toUpperCase(), Number(scale.values[i]))
+  const vals = [...byToken.values()]
+  return { byToken, min: Math.min(...vals), max: Math.max(...vals) }
 }
+
+// Progress scale is INVERTED relative to the reward scale: A = 0% progress,
+// T = 100% progress (matches llm_verifier.progress.LETTER_TO_VALUE).
+function progressScaleMap() {
+  const byToken = new Map()
+  const letters = 'ABCDEFGHIJKLMNOPQRST'
+  for (let i = 0; i < GRANULARITY; i++) byToken.set(letters[i], i / (GRANULARITY - 1))
+  return { byToken, min: 0, max: 1 }
+}
+
+// ---------------------------------------------------------------------------
+// Prompts (mirror llm_verifier.prompts / fine_grained_reward.build_prompt)
+// ---------------------------------------------------------------------------
 
 let cachedTemplate = null
-function compilePrompt(rubric, crit, task, candidate) {
+function getTemplate() {
   if (cachedTemplate === null) cachedTemplate = readFileSync(PROMPT_TEMPLATE, 'utf8')
   return cachedTemplate
-    .replace('{task}', task || '(no task provided)')
-    .replace('{weight}', String(crit.weight))
-    .replace('{crit_prompt}', crit.prompt)
-    .replace('{candidate}', candidate)
 }
 
-function pairPrompt(task, crit, left, right) {
-  // Pairwise comparison for pivot tournament: one token, L or R.
-  // The caller alternates left/right placement per criterion to cancel
-  // positional bias, mirroring the paper's random ring pass.
+function fillTemplateHead(task, crit, a, b, note) {
+  const tpl = getTemplate()
+  const idx = tpl.indexOf(OUTPUT_MARKER)
+  const head = idx >= 0 ? tpl.slice(0, idx + OUTPUT_MARKER.length) : tpl
+  const name = crit.name || crit.id || ''
+  const description = crit.description || crit.prompt || ''
+  return head
+    .replace('{criterion_name}', name)
+    .replace('{criterion_name}', name)
+    .replace('{note}', note || '')
+    .replace('{task}', task || '(no task provided)')
+    .replace('{a}', a)
+    .replace('{b}', b)
+    .replace('{criterion_description}', description)
+}
+
+// Directed slot prompt: ends right before the requested tag so the single
+// completion token is the score letter (max_tokens=1, logprobs).
+function buildSlotPrompt(task, crit, a, b, slot, note) {
+  return fillTemplateHead(task, crit, a, b, note) + '\n<score_' + slot + '>'
+}
+
+// Single-trajectory variant (score mode): trajectory A only, <score_A> tag.
+function buildSinglePrompt(task, crit, candidate, note) {
+  return fillTemplateHead(task, crit, candidate, '(no second trajectory in this prompt)', note) + '\n<score_A>'
+}
+
+// Progress prompt (mirrors llm_verifier.progress.build_progress_prompt, one
+// checkpoint): trusts observed output, not the agent's narration.
+function buildProgressPrompt(task, steps) {
+  const numbered = steps.map((s, i) => '=== Agent Step ' + (i + 1) + ' ===\n' + s).join('\n\n')
   return [
-    'You are a verifier. Compare the two candidates against ONE criterion.',
-    'Respond with EXACTLY one token: L if the LEFT candidate is better,',
-    'R if the RIGHT candidate is better.',
+    'You are a strict, skeptical evaluator of agent task attempts. Trust observed output - NOT the agent\'s narration.',
     '',
-    'TASK',
+    '**Task instruction:**',
     task || '(no task provided)',
     '',
-    'CRITERION',
-    crit.prompt,
+    '**Agent trajectory (' + steps.length + ' agent steps; each step is one action with its observed output):**',
+    numbered,
     '',
-    'LEFT CANDIDATE',
-    left,
+    'You will score the trajectory at 1 CHECKPOINT. The score measures exactly ONE thing:',
+    '  "Given everything the agent has done up to and including this step, would the agent\'s CURRENT state actually satisfy the task\'s hidden grader?"',
     '',
-    'RIGHT CANDIDATE',
-    right
+    'Use the 20-letter A..T progress scale:',
+    '  A = certainly NO progress yet, or a clearly wrong path',
+    '  H-M = uncertain, a plausible solution is taking shape',
+    '  T = essentially certain the task is complete (verified output matches)',
+    '',
+    'CRITICAL CALIBRATION: effort, exploration, step count, and confident narration are NOT progress.',
+    '',
+    'Output EXACTLY one line:',
+    '<c1>LETTER</c1>',
+    '',
+    'where LETTER is a single letter from A to T.'
   ].join('\n')
 }
 
 // ---------------------------------------------------------------------------
-// Probabilistic fine-grained scoring (expectation over scoring-token logits)
+// Verifier calls: OpenAI-compatible chat completions with token logprobs
 // ---------------------------------------------------------------------------
 
 async function callVerifier(prompt, opts, topN) {
-  if (!opts.key) {
-    throw new Error('LLM_VERIFIER_API_KEY is required for live scoring; --self-check is the token-free mode')
-  }
   const timeoutMs = opts.timeout > 0 ? opts.timeout : Number(process.env.LLM_VERIFIER_TIMEOUT) || 60000
   const ac = new AbortController()
   const timer = setTimeout(() => ac.abort(), timeoutMs)
-  try {
+  const baseBody = {
+    model: opts.model,
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: 1,
+    temperature: 1.0,
+    logprobs: true,
+    top_logprobs: Math.min(20, topN)
+  }
+  const post = async (body) => {
     const res = await fetch(opts.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + opts.key },
-      body: JSON.stringify({
-        model: opts.model,
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 1,
-        temperature: 0,
-        logprobs: true,
-        top_logprobs: Math.min(20, topN)
-      }),
+      body: JSON.stringify(body),
       signal: ac.signal
     })
     if (!res.ok) {
-      const body = await res.text().catch(() => '')
-      throw new Error('verifier API error ' + res.status + ': ' + body.slice(0, 300))
+      const bodyText = await res.text().catch(() => '')
+      throw new Error('verifier API error ' + res.status + ': ' + bodyText.slice(0, 300))
     }
     return res.json()
+  }
+  try {
+    // vLLM/SGLang: skip hybrid thinking so the score tag comes fast; the
+    // package tries this first and falls back if unsupported.
+    try {
+      return await post({ ...baseBody, chat_template_kwargs: { enable_thinking: false } })
+    } catch {
+      return await post(baseBody)
+    }
   } catch (e) {
     if (e && e.name === 'AbortError') throw new Error('verifier API timed out after ' + timeoutMs + 'ms')
     throw e
@@ -247,11 +313,13 @@ async function callVerifier(prompt, opts, topN) {
   }
 }
 
+// Expected score at the tag position: expectation over the scale-token
+// distribution from top_logprobs, normalized to [0,1]. Mirrors
+// fine_grained_reward.extract_score: strip token whitespace / leading '>'
+// (BPE merges like '>B'), match scale letters case-insensitively, keep the
+// max probability per value, then E[v] with linear normalization. Returns
+// null when no scale token is visible (caller falls back to 0.5).
 function expectationFromLogprobs(choice, scaleMap) {
-  // OpenAI-compatible logprobs shapes:
-  //   A) choices[0].logprobs.content[0].top_logprobs = [{token, logprob}] (chat)
-  //   B) choices[0].logprobs.top_logprobs[0] (legacy completions)
-  //   C) choices[0].logprobs[0].top_logprobs (completions n=1)
   const lp = choice && choice.logprobs
   let list = null
   if (lp && Array.isArray(lp.content) && lp.content[0] && Array.isArray(lp.content[0].top_logprobs)) {
@@ -261,52 +329,171 @@ function expectationFromLogprobs(choice, scaleMap) {
   } else if (Array.isArray(lp) && lp[0] && Array.isArray(lp[0].top_logprobs)) {
     list = lp[0].top_logprobs
   }
-  const visible = {}
-  if (list) for (const t of list) visible[t.token] = t.logprob
-
-  // Expectation over the scale tokens present in the visible distribution.
-  const parts = []
-  for (const tok of scaleMap.tokens) {
-    const lpVal = visible[tok]
-    if (lpVal !== undefined) parts.push({ token: tok, value: scaleMap.values[scaleMap.tokens.indexOf(tok)], logprob: lpVal })
+  if (!list) return null
+  const byValue = new Map()
+  for (const t of list) {
+    let s = String(t.token || '').replace(/^>+/, '').trim()
+    if (!s) continue
+    const c = s[0].toUpperCase()
+    if (scaleMap.byToken.has(c)) {
+      const value = scaleMap.byToken.get(c)
+      const p = Math.exp(t.logprob)
+      byValue.set(value, Math.max(byValue.get(value) || 0, p))
+    }
   }
-  if (!parts.length) {
-    throw new Error('verifier did not emit scale tokens (top_logprobs unavailable); check backend logprobs support')
-  }
-  const z = parts.reduce((s, p) => s + Math.exp(p.logprob), 0)
-  let score = 0
-  for (const p of parts) score += (Math.exp(p.logprob) / z) * p.value
-  const norm = scaleMap.max - scaleMap.min || 1
-  return { score, normalized: (score - scaleMap.min) / norm }
+  if (!byValue.size) return null
+  const total = [...byValue.values()].reduce((s, p) => s + p, 0)
+  let expected = 0
+  for (const [v, p] of byValue) expected += v * p
+  expected /= total
+  const span = scaleMap.max - scaleMap.min || 1
+  return { score: expected, normalized: (expected - scaleMap.min) / span }
 }
 
-function decide(rubric, composite) {
-  if (composite >= (rubric.passThreshold ?? 0.8)) return 'pass'
-  if (composite >= (rubric.reviewThreshold ?? 0.6)) return 'review'
-  return 'fail'
-}
+// ---------------------------------------------------------------------------
+// Scoring: directed pairwise rewards (R_a, R_b), K repeats per criterion
+// ---------------------------------------------------------------------------
 
-async function scoreOneCriterion(rubric, crit, task, candidate, opts, scaleMap) {
-  const prompt = compilePrompt(rubric, crit, task, candidate)
-  const data = await callVerifier(prompt, opts, scaleMap.tokens.length)
+async function slotScore(rubric, crit, task, a, b, slot, opts, scaleMap, note) {
+  const prompt = buildSlotPrompt(task, crit, a, b, slot, note)
+  const data = await callVerifier(prompt, opts, scaleMap.byToken.size)
   const choice = data.choices && data.choices[0]
   if (!choice) throw new Error('verifier response has no choices')
-  return expectationFromLogprobs(choice, scaleMap)
+  const r = expectationFromLogprobs(choice, scaleMap)
+  return r ? r.normalized : 0.5
 }
 
-async function scoreCandidate(rubric, task, candidate, opts) {
+// Directed comparison: candidate a is shown in slot A, b in slot B, for every
+// criterion and repeat; rewards are averaged (llm_verifier.compare). The ring
+// pass in `rank` is what cancels slot bias, not this call.
+async function comparePair(rubric, task, aText, bText, opts) {
+  const scaleMap = buildScaleMap(rubric.scale)
+  let sa = 0, sb = 0, n = 0
+  for (const crit of rubric.criteria) {
+    for (let r = 0; r < opts.k; r++) {
+      sa += await slotScore(rubric, crit, task, aText, bText, 'A', opts, scaleMap, opts.note)
+      sb += await slotScore(rubric, crit, task, aText, bText, 'B', opts, scaleMap, opts.note)
+      n++
+    }
+  }
+  return { ra: sa / n, rb: sb / n }
+}
+
+// Bradley-Terry preference from the reward difference (paper Eq. 3.2).
+function bradleyTerry(ra, rb) {
+  return 1 / (1 + Math.exp(-(ra - rb)))
+}
+
+// ---------------------------------------------------------------------------
+// Probabilistic Pivot Tournament (mirror llm_verifier.pivot_tournament)
+// ---------------------------------------------------------------------------
+
+function mulberry32(seed) {
+  let a = seed >>> 0
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function ringPairs(n, rng) {
+  // Directed adjacent pairs of a random Hamiltonian cycle: every candidate
+  // appears once in slot A and once in slot B, canceling positional bias.
+  if (n <= 1) return []
+  const perm = [...Array(n).keys()]
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1))
+    ;[perm[i], perm[j]] = [perm[j], perm[i]]
+  }
+  return perm.map((x, i) => [x, perm[(i + 1) % n]])
+}
+
+async function runRank(rubric, opts) {
+  const candidates = loadCandidates(opts.candidates)
+  const n = candidates.length
+  if (n === 1) {
+    return { strategy: 'probabilistic-pivot-tournament', poolSize: 1, pivotCount: 1, pivots: [candidates[0].label], pairCount: 0, ranked: [{ label: candidates[0].label, wins: 0, count: 0, score: 1 }] }
+  }
+  const rng = mulberry32(opts.seed)
+  const ring = ringPairs(n, rng)
+  const k = Math.min(Math.max(1, opts.pivots), n)
+  const w = Array(n).fill(0)
+  const c = Array(n).fill(0)
+
+  // Step 1: ring pass.
+  for (const [a, b] of ring) {
+    const { ra, rb } = await comparePair(rubric, opts.task, candidates[a].text, candidates[b].text, opts)
+    const p = bradleyTerry(ra, rb)
+    w[a] += p; c[a]++
+    w[b] += 1 - p; c[b]++
+  }
+
+  // Step 2: pivots = empirical leaders by ring-pass mean preference w/c.
+  const order = [...Array(n).keys()].sort((i, j) => ((w[j] / c[j] || 0) - (w[i] / c[i] || 0)) || (i - j))
+  const pivots = order.slice(0, k)
+  const pivotSet = new Set(pivots)
+
+  // Step 3: pivot rounds - non-pivot (slot A) vs pivot (slot B), and pivot vs
+  // pivot (lower index in slot A). Aggregated into the same w, c.
+  const prPairs = []
+  for (let i = 0; i < n; i++) {
+    if (pivotSet.has(i)) continue
+    for (const p of pivots) prPairs.push([i, p])
+  }
+  const sortedPivots = [...pivots].sort((a, b) => a - b)
+  for (let i = 0; i < sortedPivots.length; i++) {
+    for (let j = i + 1; j < sortedPivots.length; j++) prPairs.push([sortedPivots[i], sortedPivots[j]])
+  }
+  for (const [a, b] of prPairs) {
+    const { ra, rb } = await comparePair(rubric, opts.task, candidates[a].text, candidates[b].text, opts)
+    const p = bradleyTerry(ra, rb)
+    w[a] += p; c[a]++
+    w[b] += 1 - p; c[b]++
+  }
+
+  // Step 4: selection - argmax w_i / c_i (count normalization removes the
+  // bias that pivots participate in more comparisons).
+  const ranked = candidates
+    .map((x, i) => ({ label: x.label, wins: round(w[i]), count: c[i], score: c[i] ? round(w[i] / c[i]) : 0 }))
+    .sort((x, y) => (y.score - x.score) || x.label.localeCompare(y.label))
+  return {
+    strategy: 'probabilistic-pivot-tournament',
+    poolSize: n,
+    pivotCount: pivots.length,
+    pivots: pivots.map((i) => candidates[i].label),
+    pairCount: ring.length + prPairs.length,
+    ranked
+  }
+}
+
+async function runCompare(rubric, opts) {
+  const list = loadCandidates(opts.candidates)
+  if (list.length !== 2) throw new Error('compare requires exactly 2 candidates (dir with 2 files, or file,file)')
+  const { ra, rb } = await comparePair(rubric, opts.task, list[0].text, list[1].text, opts)
+  return { a: list[0].label, b: list[1].label, ra: round(ra), rb: round(rb), preference: round(bradleyTerry(ra, rb)) }
+}
+
+async function runScore(rubric, opts) {
+  if (!opts.candidate) throw new Error('score requires --candidate <path|->')
+  const text = opts.candidate === '-' ? readFileSync(0, 'utf8') : readFileSync(opts.candidate, 'utf8')
   const scaleMap = buildScaleMap(rubric.scale)
   const perCriterion = []
   let composite = 0
   for (const crit of rubric.criteria) {
     const runs = []
     for (let r = 0; r < opts.k; r++) {
-      const { normalized } = await scoreOneCriterion(rubric, crit, task, candidate, opts, scaleMap)
-      runs.push(normalized)
+      const prompt = buildSinglePrompt(opts.task, crit, text, opts.note)
+      const data = await callVerifier(prompt, opts, scaleMap.byToken.size)
+      const choice = data.choices && data.choices[0]
+      if (!choice) throw new Error('verifier response has no choices')
+      const norm = expectationFromLogprobs(choice, scaleMap)
+      runs.push(norm ? norm.normalized : 0.5)
     }
     const mean = runs.reduce((s, v) => s + v, 0) / runs.length
     const spread = runs.length > 1 ? Math.sqrt(runs.reduce((s, v) => s + (v - mean) ** 2, 0) / (runs.length - 1)) : 0
-    perCriterion.push({ id: crit.id, weight: crit.weight, mean: round(mean), spread: round(spread), runs: runs.map(round) })
+    perCriterion.push({ id: crit.id || crit.name, weight: crit.weight, mean: round(mean), spread: round(spread), runs: runs.map(round) })
     composite += crit.weight * mean
   }
   return {
@@ -317,31 +504,42 @@ async function scoreCandidate(rubric, task, candidate, opts) {
 }
 
 // ---------------------------------------------------------------------------
-// Pivot tournament ranking (cost-efficient, O(N x sqrt(N)) pairwise)
+// Progress tracking (mirror llm_verifier.progress.ProgressTracker): one call
+// per step per repeat, prefix-only, progress scale A = 0% .. T = 100%.
 // ---------------------------------------------------------------------------
 
-async function comparePair(rubric, task, left, right, opts) {
-  // Weighted P(candidate beats pivot) across ALL criteria, so the pairwise
-  // stage ranks on the same basis as the pivot composite. Left/right placement
-  // alternates per criterion to cancel positional bias.
-  const map = { tokens: ['L', 'R'], values: [1, 0], min: 0, max: 1 }
-  let total = 0
-  for (let i = 0; i < rubric.criteria.length; i++) {
-    const crit = rubric.criteria[i]
-    const candidateLeft = i % 2 === 0
-    const prompt = pairPrompt(task, crit, candidateLeft ? left : right, candidateLeft ? right : left)
-    const data = await callVerifier(prompt, opts, 2)
-    const choice = data.choices && data.choices[0]
-    if (!choice) throw new Error('verifier response has no choices')
-    const pLeft = expectationFromLogprobs(choice, map).score
-    total += crit.weight * (candidateLeft ? pLeft : 1 - pLeft)
+async function runProgress(rubric, opts) {
+  const steps = loadCandidates(opts.steps)
+  const scaleMap = progressScaleMap()
+  const prefix = []
+  const rows = []
+  for (const s of steps) {
+    prefix.push(s.text)
+    const prompt = buildProgressPrompt(opts.task, prefix)
+    let total = 0
+    for (let r = 0; r < opts.k; r++) {
+      const data = await callVerifier(prompt, opts, 20)
+      const choice = data.choices && data.choices[0]
+      if (!choice) throw new Error('verifier response has no choices')
+      const norm = expectationFromLogprobs(choice, scaleMap)
+      total += norm ? norm.normalized : 0.5
+    }
+    rows.push({ step: s.label, progress: round(total / opts.k) })
   }
-  return total
+  const trend = rows.length > 1 && rows.every((r, i) => i === 0 || r.progress >= rows[i - 1].progress) ? 'rising' : 'mixed-or-falling'
+  const abandon = rows.find((r) => r.progress < 0.05)
+  return { steps: rows, trend, suggestedAbandonPoint: abandon ? abandon.step : null }
+}
+
+function decide(rubric, composite) {
+  if (composite >= (rubric.passThreshold ?? 0.8)) return 'pass'
+  if (composite >= (rubric.reviewThreshold ?? 0.6)) return 'review'
+  return 'fail'
 }
 
 function loadCandidates(spec) {
   const out = []
-  if (!spec) throw new Error('--candidates <dir|file,file> is required')
+  if (!spec) throw new Error('--candidates <dir|file,file> or --steps <dir> is required')
   if (existsSync(spec) && statSync(spec).isDirectory()) {
     const files = readdirSync(spec).filter((f) => /\.(txt|md|jsonl|out|log)$/i.test(f)).sort()
     for (const f of files) out.push({ label: f, text: readFileSync(join(spec, f), 'utf8') })
@@ -354,50 +552,6 @@ function loadCandidates(spec) {
   }
   if (!out.length) throw new Error('no candidates found in ' + spec)
   return out
-}
-
-async function runRank(rubric, opts) {
-  const labels = loadCandidates(opts.candidates)
-  const N = labels.length
-  const pivotCount = opts.pivots > 0 ? opts.pivots : Math.max(1, Math.ceil(Math.sqrt(N)))
-  const sampleSize = Math.min(N, Math.max(2, Math.ceil(2 * Math.sqrt(N))))
-  const sample = labels.slice(0, sampleSize)
-  const scored = []
-  for (const s of sample) {
-    scored.push({ label: s.label, text: s.text, result: await scoreCandidate(rubric, opts.task, s.text, opts) })
-  }
-  scored.sort((a, b) => b.result.composite - a.result.composite)
-  const pivots = scored.slice(0, Math.min(pivotCount, scored.length))
-  const pivotLabels = new Set(pivots.map((p) => p.label))
-  const rest = labels.filter((c) => !pivotLabels.has(c.label))
-  const restScores = []
-  for (const c of rest) {
-    let wins = 0
-    for (const p of pivots) wins += await comparePair(rubric, opts.task, c.text, p.text, opts)
-    restScores.push({ label: c.label, winScore: round(wins / Math.max(1, pivots.length)) })
-  }
-  restScores.sort((a, b) => b.winScore - a.winScore)
-  return {
-    strategy: 'pivot-tournament',
-    poolSize: N,
-    pivots: pivots.map((p) => ({ label: p.label, composite: p.result.composite, decision: p.result.decision })),
-    ranked: [
-      ...pivots.map((p) => ({ label: p.label, composite: p.result.composite, decision: p.result.decision })),
-      ...restScores
-    ]
-  }
-}
-
-async function runProgress(rubric, opts) {
-  const steps = loadCandidates(opts.steps)
-  const rows = []
-  for (const s of steps) {
-    const result = await scoreCandidate(rubric, opts.task, s.text, opts)
-    rows.push({ step: s.label, composite: result.composite, decision: result.decision })
-  }
-  const abandon = rows.find((r) => r.decision === 'fail')
-  const trend = rows.length > 1 && rows.every((r, i) => i === 0 || r.composite >= rows[i - 1].composite) ? 'rising' : 'mixed-or-falling'
-  return { steps: rows, trend, suggestedAbandonPoint: abandon ? abandon.step : null }
 }
 
 // ---------------------------------------------------------------------------
@@ -420,6 +574,8 @@ function selfCheck(opts) {
     try {
       rubric = readRubric(rubricPath)
       ok(true, 'rubric parses and schema is valid')
+      const scale = buildScaleMap(rubric.scale)
+      ok(scale.byToken.get('A') > scale.byToken.get('T'), 'scale is ordered A (best) > T (worst)')
     } catch (e) {
       ok(false, 'rubric invalid: ' + e.message)
     }
@@ -427,15 +583,19 @@ function selfCheck(opts) {
   ok(existsSync(PROMPT_TEMPLATE), 'prompt template exists: ' + PROMPT_TEMPLATE)
   if (existsSync(PROMPT_TEMPLATE)) {
     const tpl = readFileSync(PROMPT_TEMPLATE, 'utf8')
-    for (const ph of ['{task}', '{candidate}', '{crit_prompt}', '{weight}']) {
+    for (const ph of ['{task}', '{a}', '{b}', '{note}', '{criterion_name}', '{criterion_description}']) {
       ok(tpl.includes(ph), 'prompt template has placeholder ' + ph)
     }
+    ok(tpl.includes(OUTPUT_MARKER), 'prompt template has output marker')
+    ok(tpl.includes('<score_A>') && tpl.includes('<score_B>'), 'prompt template has score_A and score_B tags')
   }
   if (rubric) {
     const hash = createHash('sha256').update(readFileSync(rubricPath, 'utf8')).digest('hex')
     console.log('  [info] rubric sha256: ' + hash.slice(0, 16))
     if (opts.verbose) {
-      console.log('  [info] compiled prompt preview:\n' + compilePrompt(rubric, rubric.criteria[0], 'example task', 'example candidate').slice(0, 500))
+      const crit = rubric.criteria[0]
+      console.log('  [info] slot prompt preview:\n' + buildSlotPrompt('example task', crit, 'candidate A', 'candidate B', 'A', 'example note').slice(0, 700))
+      console.log('  [info] progress prompt preview:\n' + buildProgressPrompt('example task', ['step 1', 'step 2']).slice(0, 700))
     }
   }
   if (fails.length) {
@@ -466,15 +626,15 @@ async function main() {
   }
   const rubricPath = opts.rubric || DEFAULT_RUBRIC
   const rubricRaw = readFileSync(rubricPath, 'utf8')
-  const rubric = validateRubric(rubricRaw, rubricPath)
+  const rubric = validateRubric(rubricRaw)
   const rubricHash = createHash('sha256').update(rubricRaw).digest('hex').slice(0, 16)
   let result
-  if (mode.includes('score')) {
-    if (!opts.candidate) throw new Error('score requires --candidate <path|->')
-    const text = opts.candidate === '-' ? readFileSync(0, 'utf8') : readFileSync(opts.candidate, 'utf8')
-    result = await scoreCandidate(rubric, opts.task, text, opts)
-  } else if (mode.includes('rank')) {
+  if (mode.includes('rank')) {
     result = await runRank(rubric, opts)
+  } else if (mode.includes('compare')) {
+    result = await runCompare(rubric, opts)
+  } else if (mode.includes('score')) {
+    result = await runScore(rubric, opts)
   } else if (mode.includes('progress')) {
     result = await runProgress(rubric, opts)
   } else {
