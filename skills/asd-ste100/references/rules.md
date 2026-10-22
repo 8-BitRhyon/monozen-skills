@@ -11,16 +11,16 @@ This document provides complete specification details, approved vocabulary repla
 - Never use en dashes under any circumstance.
 - **Replacements**:
   - **Introductions and Definitions**: Use a colon (`:`).
-    - Non-STE: `The daemon manages agents — background worker processes.`
+    - Non-STE: `The daemon manages agents  -  background worker processes.`
     - STE: `The daemon manages agents: background worker processes.`
   - **Parenthetical Details**: Use parentheses `(...)`.
-    - Non-STE: `The tiling manager — configured with spring physics — runs on macOS.`
+    - Non-STE: `The tiling manager  -  configured with spring physics  -  runs on macOS.`
     - STE: `The tiling manager (configured with spring physics) runs on macOS.`
   - **Secondary Thoughts**: Split into separate sentences.
-    - Non-STE: `Run setup.sh — it installs the service.`
+    - Non-STE: `Run setup.sh  -  it installs the service.`
     - STE: `Run setup.sh. The script installs the service.`
   - **Ranges**: Use `to` or `through`.
-    - Non-STE: `Layers 1–153; 35%–100%`
+    - Non-STE: `Layers 1-153; 35%-100%`
     - STE: `Layers 1 through 153; 35% to 100%`
   - **Compound Modifiers**: Use a standard ASCII hyphen (`-`).
 

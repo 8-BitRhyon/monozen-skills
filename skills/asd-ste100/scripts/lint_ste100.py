@@ -2,7 +2,7 @@
 """
 ASD-STE100 Simplified Technical English Linter.
 Validates Markdown and documentation files against ASD-STE100 rules:
-1. Zero em dashes (—) and en dashes (–).
+1. Zero em dashes (\u2014) and en dashes (\u2013).
 2. Descriptive sentences <= 25 words.
 3. Procedural / list sentences <= 20 words.
 4. No semicolons (;).
@@ -64,10 +64,10 @@ def check_file(file_path):
         prose_line = re.sub(r"`[^`]+`", "CODE", line)
 
         # Check 1: Em dashes and en dashes in prose
-        if "—" in prose_line:
-            violations.append((line_num, "PUNCTUATION", "Contains em dash (—). Replace with colon, parentheses, or separate sentence."))
-        if "–" in prose_line:
-            violations.append((line_num, "PUNCTUATION", "Contains en dash (–). Replace with hyphen, 'to', or 'through'."))
+        if "\u2014" in prose_line:
+            violations.append((line_num, "PUNCTUATION", "Contains em dash (\u2014). Replace with colon, parentheses, or separate sentence."))
+        if "\u2013" in prose_line:
+            violations.append((line_num, "PUNCTUATION", "Contains en dash (\u2013). Replace with hyphen, 'to', or 'through'."))
 
         # Check 2: Semicolons in prose
         if ";" in prose_line and not re.search(r"&[a-zA-Z0-9#]+;", prose_line):
