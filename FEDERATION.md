@@ -15,12 +15,13 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 37 skills
+### `~/.agents/skills/` - 38 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
 ```
 agentic-loop            # Universal observe -> plan -> act -> verify cycle
+asd-ste100              # ASD-STE100 technical English with zero em dashes
 asta-skill              # Semantic Scholar corpus queries
 axi                     # AXI-style CLI design skill
 bangumi-frames          # Anime frame extraction from Bilibili
@@ -151,7 +152,7 @@ Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> sk
 // Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills"   // 1st priority (37 skills, canonical monozen skills shadow namesakes)
+    "~/.agents/skills"   // 1st priority (38 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```
