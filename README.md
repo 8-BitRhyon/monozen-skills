@@ -62,6 +62,9 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `production-web-audit` | Universal pre-deployment security, performance, CSP audit |
 | `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
 | `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
+| `no-mistakes` | Automated AI validation pipelines and zero-slop PR creation via local git proxy |
+| `backpass` | Gradient descent for agent memory and instructions from real session transcripts |
+| `firstmate` | Captain-and-crew orchestration distro protocol: hierarchy, bearings, and DoD |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 

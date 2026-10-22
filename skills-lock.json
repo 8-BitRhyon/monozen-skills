@@ -22,11 +22,20 @@
     "axi": {
       "name": "axi",
       "description": "Build and use agent-ergonomic CLI wrappers (AXI style) instead of MCP: TOON output, minimal schemas, truncation hints, total counts, empty states, structured errors, exit codes 0/1/2, and next-step hints. Load when wrapping a CLI for agents or choosing a tool interface.",
-      "tokenEstimate": 784,
+      "tokenEstimate": 877,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
-      "computedHash": "08948800d2e502ffba00fad639fdf51b56dccfbdb6eaf086ad57e758af511fa7"
+      "computedHash": "1a8195b4c65d137a400c33f8a38ae96bb1ecaad33d858123012e32b7112ccd28"
+    },
+    "backpass": {
+      "name": "backpass",
+      "description": "Gradient descent for agent memory and instructions. Evaluates real agent session transcripts across harnesses, computes failure patterns, and proposes evidence-backed edits to AGENTS.md, CLAUDE.md, and skills under a strict token budget. Load when updating agent rules, pruning context drift, or auditing session failures.",
+      "tokenEstimate": 627,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backpass/SKILL.md",
+      "computedHash": "3e75e2b6a03689d83ccf8fc85d7ee962fda589400d75122b439881ac2e1f0376"
     },
     "code-review": {
       "name": "code-review",
@@ -45,6 +54,15 @@
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
       "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
+    },
+    "firstmate": {
+      "name": "firstmate",
+      "description": "Captain-and-crew orchestration distro protocol. Governs the hierarchy between the human Captain, First Mate (lead orchestrator), persistent Second Mates (department managers), and disposable Crewmates (task executors). Covers session lifecycle (/ahoy, /bearings), Definition of Done (ship-landing), and stall recovery. Load when coordinating multi-agent fleets or supervising parallel crewmates.",
+      "tokenEstimate": 981,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/firstmate/SKILL.md",
+      "computedHash": "c45df5dbb9ca9068997ef51f250b15d2ddd2fb1cd0558a0626c53a257e436801"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -100,6 +118,15 @@
       "skillPath": "skills/new-project/SKILL.md",
       "computedHash": "17901735777f90d381504c67fffb540c40b879819e2cc9d58e0e79a78d323f70"
     },
+    "no-mistakes": {
+      "name": "no-mistakes",
+      "description": "Run automated AI-driven validation pipelines and zero-slop PR creation through the no-mistakes local git proxy gate. Load when preparing to push branches, opening clean PRs, running pre-landing audits, or operating the no-mistakes TUI and headless AXI interface.",
+      "tokenEstimate": 636,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/no-mistakes/SKILL.md",
+      "computedHash": "0f452e73bf724d45f12c26be6a5ed6d28a395c5a8f8fafd791fb9dc53a618ff2"
+    },
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
@@ -112,11 +139,11 @@
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 911,
+      "tokenEstimate": 628,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "cb5fdc106f82b87a1fa3d5e9e326139d768589dba572fa3696cc2e33899c909b"
+      "computedHash": "7091c67bc33eb5c08cb14e9ee014ed982c047d7831ddbf448d905b97fd47a7d3"
     },
     "production-web-audit": {
       "name": "production-web-audit",

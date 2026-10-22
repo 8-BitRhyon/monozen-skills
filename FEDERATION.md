@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 38 skills
+### `~/.agents/skills/` - 41 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -24,6 +24,7 @@ agentic-loop            # Universal observe -> plan -> act -> verify cycle
 asd-ste100              # ASD-STE100 technical English with zero em dashes
 asta-skill              # Semantic Scholar corpus queries
 axi                     # AXI-style CLI design skill
+backpass                # Gradient descent for agent memory
 bangumi-frames          # Anime frame extraction from Bilibili
 chrome-devtools-axi     # AXI-wrapped browser automation
 code-review             # Five-dimension review protocol (universal)
@@ -32,6 +33,7 @@ creating-mermaid-diagrams  # Mermaid diagram generation + Kroki export
 drawio-skill            # draw.io diagram XML + export
 excalidraw              # Excalidraw diagram generation + export
 find-skills             # Agent skill discovery & suggestions
+firstmate               # Captain-and-crew orchestration distro protocol
 gh-axi                  # AXI-wrapped GitHub CLI (gh)
 git-workflow            # Git commit signing + hygiene skill
 git-worktree            # Isolated git worktrees (parallel agents)
@@ -41,6 +43,7 @@ journal-abbrev          # Journal name abbreviation lookup
 llm-as-verifier         # Probabilistic fine-grained LLM verification (Stanford + NVIDIA)
 monozen-portfolio        # Consolidated Monozen 5-panel SPA + theme contracts
 new-project             # Project bootstrap: scaffold + constitution + CI
+no-mistakes             # Automated AI validation pipelines and PR gateway
 paper-fetch             # Paper PDF download via Unpaywall | Kroki
 pi-agent                # Pi agent runtime, extensions, settings
 pi-cli-runtime           # Pi-companion runtime contract
@@ -152,7 +155,7 @@ Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> sk
 // Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
 "skills": {
   "paths": [
-    "~/.agents/skills"   // 1st priority (38 skills, canonical monozen skills shadow namesakes)
+    "~/.agents/skills"   // 1st priority (41 skills, canonical monozen skills shadow namesakes)
   ]
 }
 ```
