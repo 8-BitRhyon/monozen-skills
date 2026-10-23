@@ -122,7 +122,7 @@ mutate_broken_link() {
 }
 
 mutate_federation_count_drift() {
-  node -e 'const fs=require("fs");const p="FEDERATION.md";let t=fs.readFileSync(p,"utf8");t=t.replace(/(\d+) skills, canonical/, (m,n)=>`${Number(n)+1} skills, canonical`);fs.writeFileSync(p,t)'
+  node -e 'const fs=require("fs");const p="FEDERATION.md";let t=fs.readFileSync(p,"utf8");t=t.replace(/(### `~\/\.agents\/skills\/`\s*-\s*)(\d+)( skills)/, function(m,a,n,b){return a+(Number(n)+1)+b});fs.writeFileSync(p,t)'
 }
 
 mutate_missing_asset() {
@@ -192,7 +192,7 @@ run_test "unregistered skill folder is rejected" 1 "missing from manifest" -- mu
 run_test "orphan lock entry is rejected" 1 "Orphan" -- mutate_orphan_lock_entry
 run_test "stale computedHash is rejected" 1 "stale" -- mutate_stale_hash
 run_test "broken internal link is rejected" 1 "Broken link" -- mutate_broken_link
-run_test "FEDERATION count comment drift is rejected" 1 "disagree" -- mutate_federation_count_drift
+run_test "FEDERATION count header drift is rejected" 1 "claims" -- mutate_federation_count_drift
 run_test "missing asset reference is rejected" 1 "Broken link" -- mutate_missing_asset
 run_test "missing skills-lock.json is rejected" 1 "does not exist" -- mutate_no_lock_file
 run_test "invalid workflow YAML is rejected" 1 "Invalid YAML syntax" -- mutate_invalid_workflow_yaml
@@ -226,14 +226,16 @@ fi
   fi
 
   # description-only lock edit is invisible to validate.sh (hash unchanged)
-  # but the manifest regen + diff gate must catch it
+  # but the manifest regen must restore the canonical lock. Compare against a
+  # snapshot instead of git so uncommitted work does not make this test fail.
+  cp skills-lock.json "${FIXTURE_DIR}/lock-canonical.json"
   node -e 'const fs=require("fs");const f=require("./skills-lock.json");const k=Object.keys(f.skills)[0];f.skills[k].description="tampered description";fs.writeFileSync("skills-lock.json",JSON.stringify(f,null,2)+"\n")'
-  if git diff --exit-code skills-lock.json >/dev/null 2>&1; then
+  if cmp -s skills-lock.json "${FIXTURE_DIR}/lock-canonical.json"; then
     echo "[TEST FAIL] tampered description produced no lock diff (validate gate is blind to it)"
     FAIL=$((FAIL + 1))
   else
     bash scripts/manifest.sh >/dev/null
-    if git diff --exit-code skills-lock.json >/dev/null 2>&1; then
+    if cmp -s skills-lock.json "${FIXTURE_DIR}/lock-canonical.json"; then
       echo "[TEST PASS] lock description drift is caught by manifest regen"
       PASS=$((PASS + 1))
     else
@@ -241,7 +243,7 @@ fi
       FAIL=$((FAIL + 1))
     fi
   fi
-  git checkout -- skills-lock.json
+  cp "${FIXTURE_DIR}/lock-canonical.json" skills-lock.json
 
   # new valid skill folder gets registered with a real hash
   mkdir -p skills/z-register
