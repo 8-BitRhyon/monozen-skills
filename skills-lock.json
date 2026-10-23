@@ -82,6 +82,24 @@
       "skillPath": "skills/git-worktree/SKILL.md",
       "computedHash": "a7ba6bc0920a531310a906e2cb1e0915dc7ed44c7af899cdbea6005923e31e4b"
     },
+    "grill-me": {
+      "name": "grill-me",
+      "description": "A relentless interview to sharpen a plan or design.",
+      "tokenEstimate": 84,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/grill-me/SKILL.md",
+      "computedHash": "e0e984c846aadd3ad98140a32501ed84b7bd01f7eaa903016eb72b17771053fc"
+    },
+    "grilling": {
+      "name": "grilling",
+      "description": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.",
+      "tokenEstimate": 547,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/grilling/SKILL.md",
+      "computedHash": "76f6263a514e268008f66d0d84eb0c64dbbdd61f49791ab6d5ecb570b6a5865c"
+    },
     "herdr": {
       "name": "herdr",
       "description": "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace.",

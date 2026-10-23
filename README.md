@@ -65,6 +65,8 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `no-mistakes` | Automated AI validation pipelines and zero-slop PR creation via local git proxy |
 | `backpass` | Gradient descent for agent memory and instructions from real session transcripts |
 | `firstmate` | Captain-and-crew orchestration distro protocol: hierarchy, bearings, and DoD |
+| `grill-me` | Relentless interview to sharpen a plan or design |
+| `grilling` | Design-tree interview rounds with recommended answers |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 
@@ -114,3 +116,5 @@ Every change passes, in order: `npm run validate` (frontmatter, em dashes, machi
 ## License
 
 MIT. Authored by [8-BitRhyon](https://github.com/8-BitRhyon).
+
+Third-party notices: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
