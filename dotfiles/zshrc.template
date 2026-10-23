@@ -5,7 +5,9 @@ export EDITOR=nvim
 [[ -f ~/.secrets.zsh ]] && source ~/.secrets.zsh
 
 # --- Auto-start Tmux ---
-if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
+# Skip Herdr panes: they export HERDR_ENV=1 with TMUX unset, and attaching
+# tmux there hides the pane and makes backend auto-detection pick tmux.
+if [[ -o interactive ]] && [[ -z "$TMUX" ]] && [[ -z "$HERDR_ENV" ]]; then
   /opt/homebrew/bin/tmux attach -t main || /opt/homebrew/bin/tmux new -s main
 fi
 
@@ -22,16 +24,19 @@ alias fd="fd --hidden -E .git"
 eval "$(zoxide init zsh)"
 
 # --- Toolchain: FZF ---
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# FZF + fd/rg: fast file/dir search and content grep with live preview
+# Export options BEFORE sourcing the integration: `fzf --zsh` parses
+# FZF_DEFAULT_OPTS, and a malformed inherited value would fail before this
+# file's export takes effect.
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border --info=inline \
-  --preview "bat --color=always --style=numbers {} 2>/dev/null || eza --tree --level=1 --color=always --icons=auto {}" \
+export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border --info=inline
+  --preview "bat --color=always --style=numbers {} 2>/dev/null || eza --tree --level=1 --color=always --icons=auto {}"
   --preview-window=right:50%:wrap'
 export FZF_CTRL_R_OPTS='--preview "echo {}" --preview-window=down:3:hidden:wrap'
+
+# FZF + fd/rg: fast file/dir search and content grep with live preview
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # --- Toolchain: Yazi (cd into dir on quit) ---
 function yy() {

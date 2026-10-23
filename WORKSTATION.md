@@ -162,11 +162,15 @@ separates them.
 malformed single command → `failed to launch the requested command`. Do not
 launch tmux via Ghostty `command`. Auto-start from `~/.zshrc`:
 ```sh
-if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
+if [[ -o interactive ]] && [[ -z "$TMUX" ]] && [[ -z "$HERDR_ENV" ]]; then
   /opt/homebrew/bin/tmux attach -t main || /opt/homebrew/bin/tmux new -s main
 fi
 ```
 (Absolute path required  -  GUI-launched Ghostty does not resolve Homebrew PATH.)
+The `HERDR_ENV` guard is required. A Herdr pane exports `HERDR_ENV=1` with
+`TMUX` unset, so an unguarded block turns every Herdr pane into a tmux client:
+the agent disappears behind the tmux UI, and any backend auto-detection that
+checks `$TMUX` first selects tmux instead of Herdr.
 
 ### 5. Fullscreen transparency
 `background-blur = "macos-glass-regular"` renders opaque in fullscreen.
@@ -181,6 +185,10 @@ fullscreen, which kills transparency.
 
 ### 6. fzf required by `tmux-sessionx`
 Install: `brew install fzf`. Session picker: `Ctrl-A o`.
+Export `FZF_DEFAULT_OPTS` before `source ~/.fzf.zsh`, and do not continue the
+quoted value with trailing backslashes. `fzf --zsh` parses that value at
+startup; a malformed one fails with `$FZF_DEFAULT_OPTS: unknown option` and
+silently skips the keybindings.
 
 ### 7. API keys
 Keys stored in `~/.secrets.zsh` (`chmod 600`), sourced by `.zshrc`. Never
