@@ -1,68 +1,72 @@
 ---
 name: herdr
-description: "Operate the Herdr terminal multiplexer for multi-agent orchestration: workspaces/tabs/panes, agent states (idle/working/blocked/done), native agent-state integrations, socket API, daemon persistence, and the captain-crew pattern. Load when running multiple agents in one workspace or supervising a crew from a captain pane."
+description: "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace."
 ---
 
 # Herdr Multiplexing
 
-> **Scope:** Herdr is an agent-aware terminal multiplexer (session backend beside tmux). It detects agent states (`idle`, `working`, `blocked`, `done`, `unknown`), runs as a persistent daemon, and exposes a JSON socket API + CLI.
+Herdr is an agent-aware terminal multiplexer beside tmux. It detects `idle`, `working`, `blocked`, `done`, and `unknown` states, runs a persistent daemon, and exposes a CLI and JSON socket API. The installed binary is authoritative: run `herdr <command> --help`.
 
 ## Core Concepts
 
-- **Workspaces -> tabs -> panes**: a pane runs one process (shell, agent, server). Compact ids: workspace `1`, tab `1:2`, pane `1-3`. Re-read ids after close/split; they are not durable.
-- **Agent states**: `idle`, `working`, `blocked` (needs human), `done` (finished, unviewed), `unknown`.
-- **Daemon**: the server holds PTY sessions independently; closing the client or dropping SSH does not kill panes (`herdr status`, `server stop`).
-- **Control**: CLI over a local unix socket. `herdr api snapshot` dumps live state; `api schema` writes the API schema.
+- **Named sessions**: each server is a session (`default` unless selected). Pass `--session <name>` or set `HERDR_SESSION`; otherwise commands use inherited context. Client and server versions can differ; `herdr status --json` reports both.
+- **Workspaces -> tabs -> panes**: IDs are session-scoped (`w3`, `w3:t1`, `w3:p1`). Re-read them after close, split, or restart.
+- **States**: a registration is a hint, not proof. Confirm with `pane process-info` before trusting or relaunching.
+- **Daemon**: closing the client or losing SSH does not kill panes. `server stop` does.
 
-## Captain (First Mate) Pattern
+## Environment and Nesting
 
-One conductor pane owns the task; it spawns isolated crew panes, supervises, and reports:
+Panes receive `HERDR_ENV=1`, `HERDR_PANE_ID`, `HERDR_SESSION`, and `HERDR_SOCKET_PATH`.
 
-1. Decompose into independent units (see `task-decomposition`).
-2. For each unit spawn a crew pane in a clean worktree (see `git-worktree`).
-3. Keep the captain pane free: delegate by default, escalate only decisions.
-4. Poll state, not prose: `agent list` for states, `pane read` for output deltas.
-5. Collect results, then release worktrees + close panes. Never leave stale crew.
+A tmux started inside a Herdr pane sets `$TMUX` for its children. Backend auto-detection that checks `$TMUX` first then selects tmux and hides the agent. Guard shell auto-start with `[[ -z "$HERDR_ENV" ]]`; never start tmux inside a Herdr pane.
 
-Each crew pane runs one `agentic-loop`; the captain syncs with `herdr agent wait <id> --until done`.
-
-### Prefer the firstmate distro for crew runs
-
-The `kunchenguid/firstmate` agent distro ships this pattern: you talk to one first-mate agent that runs the crew - spawning crewmates in visible panes with clean treehouse worktrees, supervising, returning PRs/merges/reports. Pool worktrees with `treehouse` (see `git-worktree`).
-
-## CLI Reference (verified against installed herdr)
+## CLI
 
 ```
-herdr                          launch or attach to the session
-herdr pane list|current|read <id>   panes + states, output
-herdr pane split <id> --direction right|down [--no-focus]
-herdr pane run <id> "<cmd>"    send command + Enter
-herdr pane send-text|send-keys <id> text|Enter
-herdr pane focus/rename/close <id>
-herdr tab create [--label]; focus/rename/close <tabid>
-herdr workspace create --cwd <path> [--label]; focus/rename/close
-herdr agent list|get           agents + states
-herdr agent prompt <id> "<task>" [--wait --until done --timeout MS]
+herdr status [--json] [--session <name>]
+herdr session list [--json]
+herdr workspace list|get|create --cwd <path> [--label] [--env K=V] [--no-focus]|focus|rename|close
+herdr tab list|create --workspace <id> [--label]|get|focus|rename|close
+herdr pane list|get|current|process-info|read <id> [--lines N] [--format text|ansi]
+herdr pane run <id> "<command>"
+herdr pane send-text|send-keys <id> <text|Enter|Escape|C-c>
+herdr pane split <id> --direction right|down [--no-focus]|focus|rename|close
+herdr agent list|get <id>
+herdr agent prompt <id> "<task>" [--wait [--until done] [--timeout MS]]
 herdr agent wait <id> --until done [--until blocked ...]
 herdr integration install <pi|claude|codex|opencode|kilo|...>
-herdr integration status     per-agent hook state
-herdr worktree create --branch feat/x   worktree-scoped workspace
+herdr integration status
 herdr api snapshot|schema
 ```
 
 ## Status Integrations
 
-- `herdr integration install <agent>` installs a native agent-state hook (Pi extension, Claude/Codex hook, Kilo plugin) so herdr tracks real states, not scraped buffers; `integration status` lists per-agent install state. For Pi it writes `~/.pi/agent/extensions/herdr-agent-state.ts` (see `pi-agent`).
-- Focus-Notify: toast when an agent blocks or finishes; click jumps to the pane.
-- `herdr worktree create` scopes a workspace to a fresh git worktree (see `git-worktree`).
+`herdr integration install <agent>` installs a native state hook (Pi extension, Claude/Codex hook, Kilo plugin); `integration status` lists them. Focus Notify toasts on block or finish.
+
+## Restart and Husks
+
+- A server restart preserves workspace, tab, pane, and label IDs; harness processes and registrations do not survive.
+- A restored tab with no live agent is a husk. `agent get` can show a stale registration after the harness exits.
+- Confirm with `pane process-info`: a foreground of only shells means the agent is gone. Relaunch it; do not trust the registration.
+- Do not replace a tab before the old pane is confirmed dead; the last tab can take its workspace with it.
+- Restarting the daemon kills every pane. Do it only with the user's consent.
+
+## Captain (First Mate) Pattern
+
+1. Decompose into independent units (see `task-decomposition`).
+2. Spawn each crew pane in a clean worktree (see `git-worktree`).
+3. Keep the captain free: delegate by default, escalate only decisions.
+4. Poll `agent list` for state and `pane read` for output deltas.
+5. Release worktrees and close panes when done.
+
+Prefer the `kunchenguid/firstmate` distro: it runs the crew in visible panes with treehouse worktrees and needs Herdr protocol 14+ (see `firstmate`).
 
 ## Verification
-- `herdr agent list` shows correct states after a spawn; `agent wait --until done` returns on finish.
-- `herdr integration status` shows your harness hook installed; killing a pane leaves no orphans.
+
+- `pane list` and `agent list` show the expected topology and states.
+- `pane process-info` proves the harness is live.
+- `integration status` shows the hook installed.
 
 ## Invocation
 
-Load when:
-- Running multiple agents in one workspace or supervising a crew from a captain pane
-- User asks "spawn an agent", "split pane", "supervise the crew", "herdr"
-- Orchestrating parallel work via the first-mate pattern
+Load when supervising multiple agents, spawning or splitting panes, or running the first-mate pattern.

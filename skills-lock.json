@@ -57,12 +57,12 @@
     },
     "firstmate": {
       "name": "firstmate",
-      "description": "Captain-and-crew orchestration distro protocol. Governs the hierarchy between the human Captain, First Mate (lead orchestrator), persistent Second Mates (department managers), and disposable Crewmates (task executors). Covers session lifecycle (/ahoy, /bearings), Definition of Done (ship-landing), and stall recovery. Load when coordinating multi-agent fleets or supervising parallel crewmates.",
-      "tokenEstimate": 981,
+      "description": "Captain-and-crew orchestration distro: Captain, First Mate, Second Mates, and Crewmates; lifecycle (/ahoy, /bearings), backend selection (Herdr, tmux, Rex, cmux, Zellij, Orca, Paseo), Definition of Done, and stall or restart recovery. Load when coordinating agent fleets.",
+      "tokenEstimate": 998,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/firstmate/SKILL.md",
-      "computedHash": "c45df5dbb9ca9068997ef51f250b15d2ddd2fb1cd0558a0626c53a257e436801"
+      "computedHash": "4ae7dd5990beb7a355913851d216aaec2c994a4e8b572d632f701b965193eba5"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -84,12 +84,12 @@
     },
     "herdr": {
       "name": "herdr",
-      "description": "Operate the Herdr terminal multiplexer for multi-agent orchestration: workspaces/tabs/panes, agent states (idle/working/blocked/done), native agent-state integrations, socket API, daemon persistence, and the captain-crew pattern. Load when running multiple agents in one workspace or supervising a crew from a captain pane.",
-      "tokenEstimate": 989,
+      "description": "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace.",
+      "tokenEstimate": 972,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "f7be6d541aad5fe083d222d6afde2b62726d3d2c252658d373a10d0ca5126ed9"
+      "computedHash": "ee436e6ec9d4dcd9214091a3bb393d4f059ec2e4ea7b91b834aaf26a24f97787"
     },
     "llm-as-verifier": {
       "name": "llm-as-verifier",
