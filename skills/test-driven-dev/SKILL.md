@@ -38,6 +38,16 @@ description: "Universal test-driven development protocol for any language or sta
 - New behavior has a test that fails without the implementation: `git stash` the implementation, run test, confirm red, unstash.
 - Runtime check: `chrome-devtools-axi` console zero errors (web), or curl/CLI assertion (API/service).
 
+## LLM-Graded Verification (Open-Ended Output)
+
+Deterministic assertions are the default and the minimum bar. When behavior is
+open-ended (generated code, plans, writing, candidate selection), grade it with
+the `llm-as-verifier` skill instead of fake binary assertions: continuous scores
+from expectation over scoring-token logits, criteria decomposition, repeated
+evaluation, and pivot-tournament ranking (arXiv:2607.05391). Only its token-free
+`--self-check` runs in CI (`npm run verify`); record the rubric hash and model id
+with every graded result.
+
 ## Invocation
 
 Load when:

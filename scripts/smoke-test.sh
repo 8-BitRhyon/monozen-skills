@@ -4,6 +4,8 @@
 # scaffold is runnable: required templates exist, AGENTS.md is a valid agent
 # contract, validate.yml parses and is SHA-pinned, .gitignore is non-empty.
 # Zero LLM, zero tokens, ~1s. Runs in CI.
+# Also proves the llm-as-verifier reference CLI is runnable via its token-free
+# self-check.
 #
 # Usage: bash scripts/smoke-test.sh
 
@@ -60,6 +62,9 @@ check "$([ -s "${TMP}/.gitignore" ] && echo ok || echo no)" ".gitignore non-empt
 check "$(grep -q '^.env' "${TMP}/.gitignore" && echo ok || echo no)" ".gitignore covers .env"
 
 echo ""
+echo "=== [smoke] llm-as-verifier reference ==="
+check "$(node "${REPO_DIR}/skills/llm-as-verifier/scripts/llm-verifier.mjs" --self-check >/dev/null 2>&1 && echo ok || echo no)" "llm-verifier.mjs --self-check exits 0 (token-free)"
+
 if [ "${FAIL}" -eq 0 ]; then
   echo "=== [smoke] PASS: scaffold is runnable ==="
   exit 0
