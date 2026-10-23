@@ -15,52 +15,51 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 41 skills
+### `~/.agents/skills/` - 40 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
 ```
-agentic-loop            # Universal observe -> plan -> act -> verify cycle
-asd-ste100              # ASD-STE100 technical English with zero em dashes
-asta-skill              # Semantic Scholar corpus queries
-axi                     # AXI-style CLI design skill
-backpass                # Gradient descent for agent memory
-bangumi-frames          # Anime frame extraction from Bilibili
-chrome-devtools-axi     # AXI-wrapped browser automation
-code-review             # Five-dimension review protocol (universal)
-context-engineering       # Context window, token budget, session memory
-creating-mermaid-diagrams  # Mermaid diagram generation + Kroki export
-drawio-skill            # draw.io diagram XML + export
-excalidraw              # Excalidraw diagram generation + export
-find-skills             # Agent skill discovery & suggestions
-firstmate               # Captain-and-crew orchestration distro protocol
-gh-axi                  # AXI-wrapped GitHub CLI (gh)
-git-workflow            # Git commit signing + hygiene skill
-git-worktree            # Isolated git worktrees (parallel agents)
-herdr                   # herdr terminal multiplexer control skill
-improve                 # Read-only codebase audit + improvement plans
-journal-abbrev          # Journal name abbreviation lookup
-llm-as-verifier         # Probabilistic fine-grained LLM verification (Stanford + NVIDIA)
-monozen-portfolio        # Consolidated Monozen 5-panel SPA + theme contracts
-new-project             # Project bootstrap: scaffold + constitution + CI
-no-mistakes             # Automated AI validation pipelines and PR gateway
-paper-fetch             # Paper PDF download via Unpaywall | Kroki
-pi-agent                # Pi agent runtime, extensions, settings
-pi-cli-runtime           # Pi-companion runtime contract
-pi-prompting            # Pi prompt composition guidance
-pi-result-handling      # Pi output presentation
-plantuml-skill          # PlantUML diagram generation + Kroki export
-pr-workflow             # Branch -> PR -> checks -> merge -> cleanup
-production-web-audit      # Pre-deployment security, perf, CSP audit
-prompt-engineering-loop    # Lean prompt refinement loop
-quota-axi               # Local provider quota windows
-semanticscholar-skill   # Semantic Scholar API search
-skill-authoring           # Meta-skill: author runnable OSS skills
-task-decomposition      # Task decomposition skill
-tasks-axi                 # Markdown-native backlog manager (captain)
-test-driven-dev         # Universal TDD: red -> green -> refactor
-tldraw-skill            # tldraw diagram JSON + export
-video-podcast-maker      # Video generation skill
+agentic-loop             # Observe -> plan -> act -> verify loop
+agents-sdk               # Cloudflare Agents SDK
+asd-ste100               # Simplified Technical English with zero em dashes
+axi                      # Agent-ergonomic CLI design (TOON)
+backpass                 # Gradient descent for agent memory
+chrome-devtools-axi      # AXI-wrapped browser automation
+cloudflare               # Cloudflare platform
+cloudflare-email-service # Cloudflare email sending and routing
+cloudflare-one           # Cloudflare One Zero Trust and SASE
+cloudflare-one-migrations # Cloudflare One migration planning
+code-review              # Five-dimension review protocol
+context-engineering      # Context window and session memory
+durable-objects          # Cloudflare Durable Objects
+find-skills              # Agent skill discovery
+firstmate                # Captain-and-crew orchestration
+gh-axi                   # AXI-wrapped GitHub CLI
+git-workflow             # Commit signing and branch hygiene
+git-worktree             # Isolated worktrees for parallel agents
+grill-me                 # Relentless plan and design interview
+grilling                 # Design-tree interview rounds
+herdr                    # Herdr multiplexer control
+lavish                   # Reviewable HTML artifacts
+llm-as-verifier          # Probabilistic LLM verification
+monozen-portfolio        # Monozen portfolio contracts
+new-project              # Project bootstrap
+no-mistakes              # AI validation and PR gateway
+pi-agent                 # Pi runtime and extensions
+pr-workflow              # Pull request lifecycle
+production-web-audit     # Pre-deployment web audit
+prompt-engineering-loop  # Prompt refinement loop
+quota-axi                # Provider quota windows
+sandbox-sdk              # Cloudflare sandbox SDK
+skill-authoring          # Skill authoring meta-skill
+task-decomposition       # Atomic task breakdown
+tasks-axi                # Markdown backlog manager
+test-driven-dev          # Red -> green -> refactor -> verify
+turnstile-spin           # Cloudflare Turnstile setup
+web-perf                 # Web performance auditing
+workers-best-practices   # Cloudflare Workers best practices
+wrangler                 # Cloudflare Workers CLI
 ```
 
 ### `~/.commandcode/skills/`  -  12 skills
@@ -138,7 +137,7 @@ design          # Design partner for frontend interfaces
 
 | CLI | Resolves skills from | Shell substrate | Entry point |
 |---|---|---|---|
-| **Pi** | `~/.pi/agent/settings.json` -> `skills.paths` (`~/.agents/skills/`) | herdr (panes, sessions) | Global settings.json + AGENTS.md |
+| **Pi** | `~/.pi/agent/settings.json` `skills` array (default also discovers `~/.agents/skills/`) | herdr (panes, sessions) | Global settings.json + AGENTS.md |
 | **Claude Code** | `~/.agents/skills/` + `AGENTS.md` at project root | herdr (panes, sessions) | Project-level AGENTS.md lists monozen-skills |
 | **OpenCode** | `~/.agents/skills/` + `AGENTS.md` | herdr | AGENTS.md at project root |
 | **Codex** | `~/.agents/skills/` + `AGENTS.md` | herdr | AGENTS.md at project root |
@@ -149,15 +148,13 @@ design          # Design partner for frontend interfaces
 
 ## Load Order
 
-Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json -> skills.paths`, Cursor's plugin paths, Gemini's plugin dirs). When multiple directories contain skills with the same name, the **first path wins** (the repo's canonical `skills/` are federated into the earliest priority path so they shadow any external namesakes).
+Skills are resolved from directory lists per CLI (e.g. Pi's `settings.json` `skills` string array, Cursor's plugin paths, Gemini's plugin dirs). When multiple directories contain skills with the same name, the **first path wins** (the repo's canonical `skills/` are federated into the earliest priority path so they shadow any external namesakes).
 
 ```jsonc
-// Pi: ~/.pi/agent/settings.json -> skills.paths (primary consumer)
-"skills": {
-  "paths": [
-    "~/.agents/skills"   // 1st priority (41 skills, canonical monozen skills shadow namesakes)
-  ]
-}
+// Pi: ~/.pi/agent/settings.json `skills` array (also auto-discovers ~/.agents/skills)
+"skills": [
+  "~/.agents/skills"   // 1st priority (the directory this repo's install script targets)
+]
 ```
 
 ---
