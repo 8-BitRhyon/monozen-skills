@@ -34,6 +34,10 @@ issues[2]{number,title,state}:
 ## Usage (prefer wrappers over raw CLIs)
 - GitHub: `npx -y gh-axi` (issue/PR/workflow/release/view, precomputed checks)
 - Browser: `npx -y chrome-devtools-axi` (combined operations, query filtering)
+- Quota: `npx -y quota-axi` (inspect token quota windows and rate limits before launching fleets)
+- Tasks: `npx -y tasks-axi` (markdown-native task backlog manager for the captain)
+- Presentation: `npx -y lavish-axi` (HTML-as-markdown visual rendering and interactive review UI)
+- Authoring SDK: `@kunchenguid/axi-sdk-js` for building AXI CLIs with native TOON serializers
 - Other domains: `aws-axi`, `docker-axi`, `pg-axi`, `sqlite-axi`, `npm-axi`, etc.
 - `gitWorktree`/`pi-worktree` wrappers for worktrees (see `git-worktree` skill).
 

@@ -5,55 +5,39 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 
 # Pull Request Workflow (Universal)
 
-> **Scope:** The complete path from feature branch to merged change, in any GitHub repository, with or without branch protection. Codifies the sequence so agents never improvise the git dance.
+> **Scope:** The complete path from feature branch to merged change in any GitHub repository.
 
-## Branch
+## Branch & Commit
 
-- One branch per logical change: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`, `docs/<slug>`.
-- Base off latest main: `git fetch origin && git switch -c feat/slug origin/main`.
-- Never commit directly to `main`; always work through a branch (required when main is protected).
-
-## Commit
-
-- Conventional commits, one logical change per commit: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `ci:`.
-- Sign commits per `git-workflow` (SSH). Never co-author an agent.
+- One branch per logical change: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`.
+- Base off latest main: `git fetch origin && git switch -c feat/slug origin/main`. Never commit directly to protected main.
+- Conventional commits, signed via `git-workflow` (SSH): `feat:`, `fix:`, `refactor:`, `test:`, `ci:`.
 
 ## Open PR
 
-Use the AXI wrapper (`gh-axi`) for token-efficient output - never raw `gh` (AGENTS.md AXI doctrine):
+### 1. Automated Gateway: no-mistakes (Preferred)
+```bash
+git push no-mistakes feat/slug
+```
+The `no-mistakes` proxy runs multi-pass AI validation in a disposable worktree, auto-fixes issues, forwards to origin, and opens the clean PR automatically. Headless agents drive this via `no-mistakes axi`.
 
+### 2. Manual AXI CLI
 ```bash
 npx -y gh-axi pr create --base main --head feat/slug \
   --title "feat: one-line summary" \
   --body "## What\n## Why\n## How verified"
 ```
 
-PR body must state: what changed, why, and the verification evidence (tests, runtime checks).
+## Checks & Review
 
-## Iterate
+- Wait for CI: `npx -y gh-axi pr checks <n>` (or `gh pr checks <n> --watch`).
+- **Independent review gate (mandatory):** Review the diff in a separate session (clean worktree or pane). Load `code-review`, evaluate the five dimensions, tag blocker/should/nit. Fix blockers before merge.
 
-- Push fixups: `git push`. Force-push only your own feature branch with `--force-with-lease`.
-- Rebase on main before merge: `git fetch origin && git rebase origin/main` (keeps history linear).
-- If checks fail, fix locally, rerun the gate, push again. Never merge red.
+## Merge & Cleanup
 
-## Checks + Review
-
-- Wait for CI: re-run `npx -y gh-axi pr checks <n>` until all checks pass (validate + secrets jobs in this repo); gh-axi has no `--watch` flag, or use `gh pr checks <n> --watch` for live polling.
-- **Independent review gate (mandatory, non-negotiable):** before merge, run a fresh-context review of the diff via a separate review agent/session - never review your own work in the session that wrote it. Load the `code-review` skill in a clean context (new worktree or new pane), apply the five dimensions, tag findings blocker/should/nit.
-- Blockers must be fixed; shoulds tracked or fixed. No merge with open blockers.
-- Required status checks must pass before merge on protected branches.
-
-## Merge
-
-- Protected main: `npx -y gh-axi pr merge <n> --merge --delete-branch` (or squash for one-commit-per-change repos).
-- Unprotected: fast-forward merge after local gate: `git checkout main && git pull --ff-only && git merge --ff-only feat/slug`.
-- Confirm merge: `git log --oneline -3` shows the merge + feature commit; remote reflects it.
-
-## Cleanup
-
-- Delete the branch locally: `git branch -d feat/slug` (merged) or `git push origin --delete feat/slug`.
-- Release worktrees back to the pool: `treehouse return` (or `git worktree remove`).
-- Verify clean: `git status` clean, `git worktree list` shows only the base tree.
+- Protected main: `npx -y gh-axi pr merge <n> --merge --delete-branch` (or squash).
+- Unprotected: `git checkout main && git pull --ff-only && git merge --ff-only feat/slug`.
+- Cleanup: delete local branch (`git branch -d feat/slug`), release worktrees (`treehouse return`). Verify `git status` clean.
 
 ## Rules
 

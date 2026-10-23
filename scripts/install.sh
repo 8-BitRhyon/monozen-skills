@@ -129,6 +129,7 @@ install_skills() {
   run npx -y skills add kunchenguid/chrome-devtools-axi --skill chrome-devtools-axi -g --yes && step_ok "chrome-devtools-axi" || step_fail "chrome-devtools-axi"
   run npx -y skills add kunchenguid/tasks-axi --skill tasks-axi -g --yes && step_ok "tasks-axi" || step_fail "tasks-axi"
   run npx -y skills add kunchenguid/quota-axi --skill quota-axi -g --yes && step_ok "quota-axi" || step_fail "quota-axi"
+  run npx -y skills add kunchenguid/lavish-axi --skill lavish -g --yes && step_ok "lavish" || step_fail "lavish"
   run npx -y skills add vercel-labs/skills --skill find-skills -g --yes && step_ok "find-skills" || step_fail "find-skills"
 }
 
