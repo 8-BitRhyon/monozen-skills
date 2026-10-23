@@ -10,6 +10,15 @@
       "skillPath": "skills/agentic-loop/SKILL.md",
       "computedHash": "28c588f52b17c21ce462ee4562a751c0431be066ec0dd44025cb527b56d46b44"
     },
+    "asd-ste100": {
+      "name": "asd-ste100",
+      "description": "Enforce ASD-STE100 (Simplified Technical English) specification rules for all technical documentation, Markdown files, and code comments with zero em dashes.",
+      "tokenEstimate": 815,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/asd-ste100/SKILL.md",
+      "computedHash": "c074029d6cccaabee295179aec1aee26b7614a1876a301a2a658662ee545358d"
+    },
     "axi": {
       "name": "axi",
       "description": "Build and use agent-ergonomic CLI wrappers (AXI style) instead of MCP: TOON output, minimal schemas, truncation hints, total counts, empty states, structured errors, exit codes 0/1/2, and next-step hints. Load when wrapping a CLI for agents or choosing a tool interface.",

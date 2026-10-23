@@ -61,6 +61,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `git-workflow` | Commit signing (SSH), branch hygiene, history purge |
 | `production-web-audit` | Universal pre-deployment security, performance, CSP audit |
 | `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
+| `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 
