@@ -1,13 +1,9 @@
 ---
 name: production-web-audit
-description: "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production."
+description: "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, layout and pointer-space checks, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production."
 ---
 
 # Production Web Audit Skill
-
-## Overview
-
-A universal, multi-axis audit protocol for web applications before shipping to production. Works across any framework or stack (React, Next.js, Vue, Svelte, Vite, Vanilla JS, Node).
 
 ---
 
@@ -33,23 +29,21 @@ A universal, multi-axis audit protocol for web applications before shipping to p
 - [ ] **Dead Code Removal**: Remove all obsolete API endpoints, unused third-party scripts, orphaned flags, and vestigial fallback branches.
 - [ ] **Clean Console**: Zero uncaught exceptions, unhandled promise rejections, or stray debug loggers in production builds.
 
+### 5. Layout and Pointer Contract
+- [ ] **Full-height sections**: At the bottom, the section fills the viewport (`100dvh` or `100svh`), including flow stages and overlays.
+- [ ] **Flow geometry**: A stage moved to flow keeps its width, alignment, and gap. Check inherited `align-items`, `flex-wrap`, and `gap`.
+- [ ] **Pointer spaces**: Client, container, stage, and canvas coordinates are converted explicitly. Hover effects land under the pointer.
+- [ ] **Release assets**: The Service Worker cache and asset query change with the release.
+
+See [layout-contract.md](references/layout-contract.md).
+
 ---
 
 ## Universal Verification Protocol
 
-Execute in 3 sequential steps:
-
-1. **Automated test gate:** `npm test` - all suites pass.
-2. **Production build:** `npm run build` - compilation and bundling zero errors.
-3. **Runtime audit via `chrome-devtools-axi`:**
-```bash
-python3 -m http.server 8788 --directory . &
-npx -y chrome-devtools-axi open http://localhost:8788
-npx -y chrome-devtools-axi console     # zero console errors
-npx -y chrome-devtools-axi eval "() => document.title"
-npx -y chrome-devtools-axi stop
-```
-*Requirement: zero console errors, clean network traces, verified DOM state.*
+1. Run the test gate and production build.
+2. Audit the running app with `chrome-devtools-axi`: open, console, eval, stop. Require zero console errors and verified DOM state.
+3. Run [layout-contract.md](references/layout-contract.md) for layout or pointer changes.
 
 ## Invocation
 
