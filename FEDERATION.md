@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 40 skills
+### `~/.agents/skills/` - 43 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -26,6 +26,7 @@ asd-ste100               # Simplified Technical English with zero em dashes
 axi                      # Agent-ergonomic CLI design (TOON)
 backpass                 # Gradient descent for agent memory
 chrome-devtools-axi      # AXI-wrapped browser automation
+ci-gate-recovery         # Recovery for blocked required checks and protected branches
 cloudflare               # Cloudflare platform
 cloudflare-email-service # Cloudflare email sending and routing
 cloudflare-one           # Cloudflare One Zero Trust and SASE
@@ -33,6 +34,7 @@ cloudflare-one-migrations # Cloudflare One migration planning
 code-review              # Five-dimension review protocol
 context-engineering      # Context window and session memory
 durable-objects          # Cloudflare Durable Objects
+failure-to-regression    # Bug -> failing check -> root cause -> durable gate
 find-skills              # Agent skill discovery
 firstmate                # Captain-and-crew orchestration
 gh-axi                   # AXI-wrapped GitHub CLI
@@ -49,6 +51,7 @@ no-mistakes              # AI validation and PR gateway
 pi-agent                 # Pi runtime and extensions
 pr-workflow              # Pull request lifecycle
 production-web-audit     # Pre-deployment web audit
+project-constitution     # Existing-repo AGENTS.md and feature map
 prompt-engineering-loop  # Prompt refinement loop
 quota-axi                # Provider quota windows
 sandbox-sdk              # Cloudflare sandbox SDK

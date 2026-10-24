@@ -45,10 +45,13 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | Skill | Role |
 |---|---|
 | `new-project` | Bootstrap any project: scaffold, AGENTS.md, .gitignore, CI, first commit |
+| `project-constitution` | Existing-repo AGENTS.md plus a behavior-level verification feature map |
 | `test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
+| `failure-to-regression` | Bug or incident -> failing check -> root-cause fix -> durable gate and ledger |
 | `llm-as-verifier` | Probabilistic fine-grained LLM verification (Stanford + NVIDIA paper): criteria decomposition, repeated eval, pivot-tournament ranking |
 | `code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
 | `pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
+| `ci-gate-recovery` | Recover blocked merges, check timeouts, stacked PRs, and protection bypass with restore |
 | `agentic-loop` | Universal observe -> plan -> act -> verify cycle |
 | `task-decomposition` | Breaks complex requests into atomic, testable units |
 | `context-engineering` | Optimizes context window, token budget, session memory |
@@ -59,7 +62,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `herdr` | Herdr multiplexer: panes, states, captain-and-crew (firstmate) orchestration |
 | `git-worktree` | Isolated git worktrees (treehouse pool, pi-worktree), merge back, cleanup |
 | `git-workflow` | Commit signing (SSH), branch hygiene, history purge |
-| `production-web-audit` | Universal pre-deployment security, performance, CSP audit |
+| `production-web-audit` | Pre-deployment security, layout and pointer, CSP, performance, and runtime audit |
 | `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
 | `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
 | `no-mistakes` | Automated AI validation pipelines and zero-slop PR creation via local git proxy |

@@ -37,6 +37,15 @@
       "skillPath": "skills/backpass/SKILL.md",
       "computedHash": "3e75e2b6a03689d83ccf8fc85d7ee962fda589400d75122b439881ac2e1f0376"
     },
+    "ci-gate-recovery": {
+      "name": "ci-gate-recovery",
+      "description": "Recover a blocked merge when a required check, external review, or protected-branch rule fails or times out. Covers retry, split, temporary bypass with restore, stacked PRs, and an audit trail. Load when a required check blocks a merge or branch protection rejects a push.",
+      "tokenEstimate": 889,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ci-gate-recovery/SKILL.md",
+      "computedHash": "c4760e9e877deef476caf7ce1f2a3d5f78f4c78c7ee08767cb0efcb0cdc4085e"
+    },
     "code-review": {
       "name": "code-review",
       "description": "Universal code review protocol for any language and any repository: five review dimensions (correctness, readability, architecture, security, performance), severity triage (blocker/should/nit), and PR review workflow. Load when reviewing a diff, PR, or branch before merge.",
@@ -54,6 +63,15 @@
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
       "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
+    },
+    "failure-to-regression": {
+      "name": "failure-to-regression",
+      "description": "Turn a bug, incident, review finding, or recurring agent mistake into an executable regression proof, a root-cause fix, and a durable gate. Load when fixing a defect, closing an incident, or correcting behavior that has failed before.",
+      "tokenEstimate": 828,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/failure-to-regression/SKILL.md",
+      "computedHash": "208b3fb807f87469721d2fbf2019949855568dfc9b4f982961493a2a350a416f"
     },
     "firstmate": {
       "name": "firstmate",
@@ -165,12 +183,21 @@
     },
     "production-web-audit": {
       "name": "production-web-audit",
-      "description": "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.",
-      "tokenEstimate": 957,
+      "description": "Universal pre-deployment and release audit protocol for web applications: covers security headers & CSP, event/memory leak prevention, accessibility & reduced-motion compliance, Service Worker cache invalidation, layout and pointer-space checks, automated test gates, and Chrome DevTools runtime validation. Use before deploying any web application to production.",
+      "tokenEstimate": 994,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/production-web-audit/SKILL.md",
-      "computedHash": "dd28c1fe5001d99e4fcf2e43c748af8d4205f12b710e44c98fcc0835f598fad2"
+      "computedHash": "705db6a80f6bc7e27834988f33a1eccf0db148ae5b29b5288d94d823346758f5"
+    },
+    "project-constitution": {
+      "name": "project-constitution",
+      "description": "Create or repair a project-local AGENTS.md and behavior-level verification map for an existing repository. Captures real commands, boundaries, invariants, verification ladder, deploy path, and known pitfalls so a fresh agent can work without rediscovery. Load when onboarding an existing repo or when commands and invariants are undocumented.",
+      "tokenEstimate": 894,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/project-constitution/SKILL.md",
+      "computedHash": "77b10b79da32b6295a9e35bfffb39d3fd680efad909542a4d17a9a243b14bfb9"
     },
     "prompt-engineering-loop": {
       "name": "prompt-engineering-loop",
