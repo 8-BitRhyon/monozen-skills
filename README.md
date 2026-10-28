@@ -55,9 +55,9 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `task-decomposition` | Breaks complex requests into atomic, testable units |
 | `context-engineering` | Context budget, compaction, handoff artifacts, subagent rules |
 | `skill-authoring` | Meta-skill for authoring clean, runnable skill modules |
-| `axi` | Design token-efficient AXI CLIs (TOON output) instead of MCP payloads |
+| `axi` | Agent eXperience Interface: TOON CLIs, errors, ambient context, next steps |
 | `pi-agent` | Pi runtime config: extensions, settings.json, models.json |
-| `herdr` | Herdr multiplexer: panes, states, captain-and-crew (firstmate) orchestration |
+| `herdr` | Herdr multiplexer: panes, agent states, hooks, husk recovery |
 | `git-worktree` | Isolated git worktrees (treehouse pool, pi-worktree), merge back, cleanup |
 | `git-workflow` | Commit signing (SSH), branch hygiene, history purge |
 | `production-web-audit` | Pre-deployment security, layout and pointer, CSP, performance, and runtime audit |

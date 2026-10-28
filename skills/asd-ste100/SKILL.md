@@ -7,6 +7,8 @@ description: Enforce ASD-STE100 (Simplified Technical English) specification rul
 
 > **Scope:** Enforce ASD-STE100 rules for all technical documentation, Markdown files (README, architecture guides, changelogs, development plans, specs, ADRs), and code comments.
 
+Requires: `python3` for the linter.
+
 ---
 
 ## Non-Negotiable Rules

@@ -7,6 +7,8 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 
 > **Scope:** The complete path from feature branch to merged change in any GitHub repository.
 
+Requires: `git`; `gh-axi` or `gh`. Optional: `no-mistakes` gateway.
+
 ## Branch & Commit
 
 - One branch per logical change: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`.

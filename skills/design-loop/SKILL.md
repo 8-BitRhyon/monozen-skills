@@ -7,6 +7,8 @@ description: Runs a design iteration loop with cheap divergent variants, blind r
 
 > Diverge cheap, choose with a rubric, build for feel, annotate what is wrong, fix only that. Log every round in `DESIGN_LOG.md`.
 
+Requires: `node` 18+ for the annotation collector.
+
 ## Contract
 
 - Input: `DESIGN_BRIEF.md` or a named section, plus a running app.

@@ -22,7 +22,7 @@ The primary skill directory. Installed by `npx skills add` and consumed by Pi, C
 ```
 agents-sdk               # Cloudflare Agents SDK
 asd-ste100               # Simplified Technical English with zero em dashes
-axi                      # Agent-ergonomic CLI design (TOON)
+axi                      # Agent eXperience Interface (TOON CLIs)
 chrome-devtools-axi      # AXI-wrapped browser automation
 ci-gate-recovery         # Recovery for blocked required checks and protected branches
 cloudflare               # Cloudflare platform
@@ -42,7 +42,7 @@ git-worktree             # Isolated worktrees for parallel agents
 grill-me                 # Relentless plan and design interview
 grilling                 # Design-tree interview rounds
 hackathon-project-optimizer # Demo-first hackathon scope, spec lock, parallel worktrees, judging
-herdr                    # Herdr multiplexer control
+herdr                    # Herdr panes, states, recovery
 lavish                   # Reviewable HTML artifacts
 llm-as-verifier          # Probabilistic LLM verification
 monozen-portfolio        # Monozen portfolio contracts

@@ -46,14 +46,13 @@ No code before `SPEC.md`. Ask 3-5 pointed questions per round until ambiguity is
 - Integrate at demo boundaries, not at the end. A merged happy path beats five perfect branches.
 - Budget: 2-3 hours spec, 5-6 hours parallel build, 1 hour manual polish.
 
-## 5. Anti-Slop UI Audit
+## 5. UI And Motion
 
-Banned: purple-blue gradients, unstyled component defaults, metric walls, text-heavy heroes.
+Run `design-loop` for variants, annotation rounds, and the anti-slop audit. Keep the demo path at feel fidelity.
 
-- The primary demo action owns most of the viewport's visual weight.
-- Check hierarchy at desktop, then phone.
-- Motion only for state change: 120-240 ms, purposeful. Skeleton to content, press feedback, list reorder. No ambient animation.
-- With DOM annotations, change the cited component tree only. Do not restyle the page.
+- The primary demo action owns most of the viewport.
+- Motion only for state change, 120-240 ms. No ambient animation.
+- With DOM annotations, change only the cited component tree.
 
 ## 6. Demo Proof
 

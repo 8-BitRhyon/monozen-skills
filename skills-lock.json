@@ -4,20 +4,20 @@
     "asd-ste100": {
       "name": "asd-ste100",
       "description": "Enforce ASD-STE100 (Simplified Technical English) specification rules for all technical documentation, Markdown files, and code comments with zero em dashes.",
-      "tokenEstimate": 815,
+      "tokenEstimate": 824,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/asd-ste100/SKILL.md",
-      "computedHash": "c074029d6cccaabee295179aec1aee26b7614a1876a301a2a658662ee545358d"
+      "computedHash": "faaf5caf49e3a60cfa165d1863b05516d4f5456e0409abc8e37d930dfb832f8d"
     },
     "axi": {
       "name": "axi",
-      "description": "Build and use agent-ergonomic CLI wrappers (AXI style) instead of MCP: TOON output, minimal schemas, truncation hints, total counts, empty states, structured errors, exit codes 0/1/2, and next-step hints. Load when wrapping a CLI for agents or choosing a tool interface.",
-      "tokenEstimate": 877,
+      "description": "Designs agent-facing CLIs with the Agent eXperience Interface: TOON output, minimal schemas, truncation, aggregates, structured errors, ambient context, and contextual next steps. Use when building, wrapping, or reviewing a CLI that agents call.",
+      "tokenEstimate": 883,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
-      "computedHash": "1a8195b4c65d137a400c33f8a38ae96bb1ecaad33d858123012e32b7112ccd28"
+      "computedHash": "59790c5e724d8d84d184a4ef4028ea215bfa592b650f784000d2a992c2616a17"
     },
     "ci-gate-recovery": {
       "name": "ci-gate-recovery",
@@ -49,11 +49,11 @@
     "design-loop": {
       "name": "design-loop",
       "description": "Runs a design iteration loop with cheap divergent variants, blind rubric critique, build at feel fidelity, click-to-annotate feedback on localhost, and targeted fixes. Use when a UI misses the mark or needs repeated visual iteration.",
-      "tokenEstimate": 860,
+      "tokenEstimate": 873,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/design-loop/SKILL.md",
-      "computedHash": "1f7a82bbcef9f4afd0f2753f6cd6cff6c24738a6659e4e0a954badbaf3725710"
+      "computedHash": "dcabd5e9486a471097c330687dcf21a8772e5a54da7aefc67cb46fb9c23b832f"
     },
     "design-research": {
       "name": "design-research",
@@ -84,12 +84,12 @@
     },
     "git-worktree": {
       "name": "git-worktree",
-      "description": "Create, use, and clean up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse pooled worktrees, pi-worktree wrapper, per-task isolation, merge back, and cleanup discipline. Load before spawning parallel subagents or parallelizing work.",
-      "tokenEstimate": 970,
+      "description": "Creates, leases, and cleans up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse 3.x pools, pi-worktree, merge back, and cleanup. Use before spawning parallel subagents or parallelizing work.",
+      "tokenEstimate": 803,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-worktree/SKILL.md",
-      "computedHash": "a7ba6bc0920a531310a906e2cb1e0915dc7ed44c7af899cdbea6005923e31e4b"
+      "computedHash": "99c6f388d9fff4d9fce926a4c76919f09645fd988d93cc02d9bcb9013f70bbc6"
     },
     "grill-me": {
       "name": "grill-me",
@@ -112,29 +112,29 @@
     "hackathon-project-optimizer": {
       "name": "hackathon-project-optimizer",
       "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
-      "tokenEstimate": 980,
+      "tokenEstimate": 947,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
-      "computedHash": "216bb2f59c33397547243fd4ef797909dda5312f6b4899672e9540b5bffc0ed2"
+      "computedHash": "27e24cdb551121cfe7f145ad5915ae61b72762c2f8d1e5631e2461eaff955322"
     },
     "herdr": {
       "name": "herdr",
-      "description": "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace.",
-      "tokenEstimate": 973,
+      "description": "Operates the Herdr terminal multiplexer (0.9+): sessions, workspaces, tabs, panes, agent states, hooks, socket API, restart and husk recovery, and the captain pattern. Use when supervising multiple agents in one workspace.",
+      "tokenEstimate": 862,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "3365818b1745f86f35a5714cb4f326b197772f045e6f6a06055d7f2e87836cd7"
+      "computedHash": "03bc52de2ac708634053c76193913b52b835ccae01ff715084b9e3b5c169f105"
     },
     "llm-as-verifier": {
       "name": "llm-as-verifier",
       "description": "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifier paper (arXiv:2607.05391): continuous scores from expectation over scoring-token logits, score granularity, repeated evaluation, criteria decomposition, and the probabilistic pivot tournament for candidate ranking. Load when evaluating open-ended output, choosing the best of N candidates, or grading work that deterministic assertions cannot judge.",
-      "tokenEstimate": 987,
+      "tokenEstimate": 999,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/llm-as-verifier/SKILL.md",
-      "computedHash": "d0d35b6fcdd35994c8fdccaa267c15537f1a121d7640a4a39d6a4b21fb0c42b9"
+      "computedHash": "cd1392cc70d8658d514002653f0637002b60a764bf58f3f34821b3785af845d2"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
@@ -157,20 +157,20 @@
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
-      "tokenEstimate": 892,
+      "tokenEstimate": 907,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
-      "computedHash": "154560577af5d3717102dff2ca5b9a589719bdbdd60b813a93a58decf546030e"
+      "computedHash": "2db1a00bc7d9448c1f0b6d3b5ed84e757c0d25b0e830382a6abfdffa18d2a7d1"
     },
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 632,
+      "tokenEstimate": 649,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "a93be059b491fb40d24ff66fa4bb762341454c65c9ec1869e38e2937f96b6994"
+      "computedHash": "fa87d564d067423ad0cad554056f71a19c86311a7c1237d88c2b0245ecd54570"
     },
     "production-web-audit": {
       "name": "production-web-audit",
