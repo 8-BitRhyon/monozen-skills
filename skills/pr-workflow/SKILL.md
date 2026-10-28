@@ -19,7 +19,7 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 ```bash
 git push no-mistakes feat/slug
 ```
-The `no-mistakes` proxy runs multi-pass AI validation in a disposable worktree, auto-fixes issues, forwards to origin, and opens the clean PR automatically. Headless agents drive this via `no-mistakes axi`.
+The proxy validates in a disposable worktree, auto-fixes mechanical issues, forwards to origin, and opens the PR. Setup, finding classes, and headless usage: [no-mistakes.md](references/no-mistakes.md).
 
 ### 2. Manual AXI CLI
 ```bash

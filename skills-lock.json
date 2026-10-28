@@ -1,15 +1,6 @@
 {
   "version": 1,
   "skills": {
-    "agentic-loop": {
-      "name": "agentic-loop",
-      "description": "Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.",
-      "tokenEstimate": 908,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": "28c588f52b17c21ce462ee4562a751c0431be066ec0dd44025cb527b56d46b44"
-    },
     "asd-ste100": {
       "name": "asd-ste100",
       "description": "Enforce ASD-STE100 (Simplified Technical English) specification rules for all technical documentation, Markdown files, and code comments with zero em dashes.",
@@ -27,15 +18,6 @@
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
       "computedHash": "1a8195b4c65d137a400c33f8a38ae96bb1ecaad33d858123012e32b7112ccd28"
-    },
-    "backpass": {
-      "name": "backpass",
-      "description": "Gradient descent for agent memory and instructions. Evaluates real agent session transcripts across harnesses, computes failure patterns, and proposes evidence-backed edits to AGENTS.md, CLAUDE.md, and skills under a strict token budget. Load when updating agent rules, pruning context drift, or auditing session failures.",
-      "tokenEstimate": 627,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/backpass/SKILL.md",
-      "computedHash": "3e75e2b6a03689d83ccf8fc85d7ee962fda589400d75122b439881ac2e1f0376"
     },
     "ci-gate-recovery": {
       "name": "ci-gate-recovery",
@@ -64,6 +46,24 @@
       "skillPath": "skills/context-engineering/SKILL.md",
       "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
     },
+    "design-loop": {
+      "name": "design-loop",
+      "description": "Runs a design iteration loop with cheap divergent variants, blind rubric critique, build at feel fidelity, click-to-annotate feedback on localhost, and targeted fixes. Use when a UI misses the mark or needs repeated visual iteration.",
+      "tokenEstimate": 860,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-loop/SKILL.md",
+      "computedHash": "1f7a82bbcef9f4afd0f2753f6cd6cff6c24738a6659e4e0a954badbaf3725710"
+    },
+    "design-research": {
+      "name": "design-research",
+      "description": "Turns a design decision into evidence with curated references, competitor teardowns, UX findings, testable requirements, and three concept directions in DESIGN_BRIEF.md. Use before a redesign or when the direction is unclear.",
+      "tokenEstimate": 641,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-research/SKILL.md",
+      "computedHash": "2396ead2fc26d6d55acd08fc6143d6179525f00fd2b178f6469b6a7a286825ef"
+    },
     "failure-to-regression": {
       "name": "failure-to-regression",
       "description": "Turn a bug, incident, review finding, or recurring agent mistake into an executable regression proof, a root-cause fix, and a durable gate. Load when fixing a defect, closing an incident, or correcting behavior that has failed before.",
@@ -72,15 +72,6 @@
       "sourceType": "github",
       "skillPath": "skills/failure-to-regression/SKILL.md",
       "computedHash": "208b3fb807f87469721d2fbf2019949855568dfc9b4f982961493a2a350a416f"
-    },
-    "firstmate": {
-      "name": "firstmate",
-      "description": "Captain-and-crew orchestration distro: Captain, First Mate, Second Mates, and Crewmates; lifecycle (/ahoy, /bearings), backend selection (Herdr, tmux, Rex, cmux, Zellij, Orca, Paseo), Definition of Done, and stall or restart recovery. Load when coordinating agent fleets.",
-      "tokenEstimate": 998,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/firstmate/SKILL.md",
-      "computedHash": "4ae7dd5990beb7a355913851d216aaec2c994a4e8b572d632f701b965193eba5"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -118,14 +109,23 @@
       "skillPath": "skills/grilling/SKILL.md",
       "computedHash": "76f6263a514e268008f66d0d84eb0c64dbbdd61f49791ab6d5ecb570b6a5865c"
     },
+    "hackathon-project-optimizer": {
+      "name": "hackathon-project-optimizer",
+      "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
+      "tokenEstimate": 980,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
+      "computedHash": "216bb2f59c33397547243fd4ef797909dda5312f6b4899672e9540b5bffc0ed2"
+    },
     "herdr": {
       "name": "herdr",
       "description": "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace.",
-      "tokenEstimate": 972,
+      "tokenEstimate": 973,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "ee436e6ec9d4dcd9214091a3bb393d4f059ec2e4ea7b91b834aaf26a24f97787"
+      "computedHash": "3365818b1745f86f35a5714cb4f326b197772f045e6f6a06055d7f2e87836cd7"
     },
     "llm-as-verifier": {
       "name": "llm-as-verifier",
@@ -148,20 +148,11 @@
     "new-project": {
       "name": "new-project",
       "description": "Bootstrap any new software project from zero: repo creation, scaffold, constitution files (AGENTS.md, design.md, README.md), .gitignore, CI, signing, and first commit. Load whenever starting a new project or repository from scratch, for any language or stack.",
-      "tokenEstimate": 683,
+      "tokenEstimate": 679,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/new-project/SKILL.md",
-      "computedHash": "17901735777f90d381504c67fffb540c40b879819e2cc9d58e0e79a78d323f70"
-    },
-    "no-mistakes": {
-      "name": "no-mistakes",
-      "description": "Run automated AI-driven validation pipelines and zero-slop PR creation through the no-mistakes local git proxy gate. Load when preparing to push branches, opening clean PRs, running pre-landing audits, or operating the no-mistakes TUI and headless AXI interface.",
-      "tokenEstimate": 636,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/no-mistakes/SKILL.md",
-      "computedHash": "0f452e73bf724d45f12c26be6a5ed6d28a395c5a8f8fafd791fb9dc53a618ff2"
+      "computedHash": "1843fc0c91a72312b0b90ebaeb6b9cfa7cc96dbc7e4dc649c43c47142eaf8dba"
     },
     "pi-agent": {
       "name": "pi-agent",
@@ -175,11 +166,11 @@
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 628,
+      "tokenEstimate": 627,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "7091c67bc33eb5c08cb14e9ee014ed982c047d7831ddbf448d905b97fd47a7d3"
+      "computedHash": "b9628a49061db6015bd4ecc2bb5af2c4b619c6a6aff2e0d0efd5a127125104b0"
     },
     "production-web-audit": {
       "name": "production-web-audit",
@@ -199,32 +190,23 @@
       "skillPath": "skills/project-constitution/SKILL.md",
       "computedHash": "77b10b79da32b6295a9e35bfffb39d3fd680efad909542a4d17a9a243b14bfb9"
     },
-    "prompt-engineering-loop": {
-      "name": "prompt-engineering-loop",
-      "description": "Lean iterative prompt refinement protocol - ELI10 structuring, clarifying questions, working examples, adversarial pressure testing, and verification-ladder stopping criteria for AI agent instructions.",
-      "tokenEstimate": 656,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/prompt-engineering-loop/SKILL.md",
-      "computedHash": "3342a6a0fd87b231e4792ed33453fad74e6e772642df4e268ef48d404d306573"
-    },
     "skill-authoring": {
       "name": "skill-authoring",
-      "description": "Meta-skill for authoring clean, runnable agent skill modules with frontmatter metadata, structured protocols, and zero em dashes.",
-      "tokenEstimate": 758,
+      "description": "Authors and audits agent skills with eval-first design, third-person trigger descriptions, progressive disclosure, and executable verification. Use when creating a skill, rewriting a bloated skill, or auditing skill quality.",
+      "tokenEstimate": 932,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
-      "computedHash": "9141c2068d0b85d0d1460e1787b76d5041ad3d866a9f99e87a44a3a14e5927b5"
+      "computedHash": "00a9086f1a71a57352008164e6482b790d642eefd45e1ff36d503fef285ef9b5"
     },
     "task-decomposition": {
       "name": "task-decomposition",
-      "description": "Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.",
-      "tokenEstimate": 909,
+      "description": "Breaks complex engineering requests into ordered, independent, testable tasks with a PLAN.md artifact, acceptance criteria, and a verification command per task. Use when a request spans more than three files or two concepts.",
+      "tokenEstimate": 525,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": "9e23126e47e5ecd15469db53741c59f47e2ab4f9ab56b68ee18aea31eab4081e"
+      "computedHash": "dccd124d0c3606529ebed7429d57ae9d2830d6ee3bbac3f02e3892c06e04a018"
     },
     "test-driven-dev": {
       "name": "test-driven-dev",

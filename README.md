@@ -52,10 +52,8 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
 | `pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
 | `ci-gate-recovery` | Recover blocked merges, check timeouts, stacked PRs, and protection bypass with restore |
-| `agentic-loop` | Universal observe -> plan -> act -> verify cycle |
 | `task-decomposition` | Breaks complex requests into atomic, testable units |
 | `context-engineering` | Optimizes context window, token budget, session memory |
-| `prompt-engineering-loop` | Lean iterative prompt refinement and adversarial pressure testing |
 | `skill-authoring` | Meta-skill for authoring clean, runnable skill modules |
 | `axi` | Design token-efficient AXI CLIs (TOON output) instead of MCP payloads |
 | `pi-agent` | Pi runtime config: extensions, settings.json, models.json |
@@ -65,11 +63,11 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `production-web-audit` | Pre-deployment security, layout and pointer, CSP, performance, and runtime audit |
 | `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
 | `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
-| `no-mistakes` | Automated AI validation pipelines and zero-slop PR creation via local git proxy |
-| `backpass` | Gradient descent for agent memory and instructions from real session transcripts |
-| `firstmate` | Captain-and-crew orchestration distro protocol: hierarchy, bearings, and DoD |
 | `grill-me` | Relentless interview to sharpen a plan or design |
 | `grilling` | Design-tree interview rounds with recommended answers |
+| `design-research` | Evidence-driven design brief: references, competitors, UX findings, directions |
+| `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
+| `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 
@@ -77,12 +75,12 @@ Agents match a skill by its `name` and `description` frontmatter; the one-line r
 
 ## Operating Model
 
-One captain agent per task on an isolated git worktree (pooled via `treehouse`), supervised from a herdr pane; independent units go to subagents in their own worktrees, and every worktree returns to the pool when done. The full protocol is the canonical operating model in [AGENTS.md](AGENTS.md#harness-agnostic-operating-model); the captain-and-crew distro is `firstmate` (see Environment below).
+One captain agent per task on an isolated git worktree (pooled via `treehouse`), supervised from a herdr pane; independent units go to subagents in their own worktrees, and every worktree returns to the pool when done. The full protocol is the canonical operating model in [AGENTS.md](AGENTS.md#harness-agnostic-operating-model); the captain-and-crew distro is the external `firstmate` tool (see Environment below).
 
 ## How Skills Are Processed
 
 ```
-idea -> new-project -> test-driven-dev + agentic-loop -> code-review
+idea -> new-project -> task-decomposition -> test-driven-dev -> code-review
      -> pre-commit gate (validate -> test -> smoke -> manifest)
      -> pr-workflow -> CI (validate + secrets) -> merge -> production-web-audit
 ```
@@ -102,7 +100,7 @@ Skills flow from canonical authoring in this repo through validation, then are d
 
 ## Validation Pipeline
 
-Every change passes, in order: `npm run validate` (frontmatter, em dashes, machine paths, lock integrity, internal links, FEDERATION counts), `npm test` (self-tests for every contract violation), and `npm run manifest` + lock-sync. Contributors need node (tests) and Ruby/Psych (validator). `npm run verify` runs the token-free self-check of the `llm-as-verifier` reference CLI; live verifier scoring is opt-in and never blocks CI. The pre-commit hook runs the same gate locally (`bash scripts/install-hooks.sh`); CI adds SHA-pinned actions and the gitleaks secrets scan (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
+Every change passes, in order: `npm run validate` (frontmatter, em dashes, machine paths, lock integrity, internal links, FEDERATION counts, eval schemas), `npm test` (self-tests for every contract violation), and `npm run manifest` + lock-sync. Contributors need node (tests) and Ruby/Psych (validator). `npm run verify` runs the token-free self-check of the `llm-as-verifier` reference CLI; live verifier scoring is opt-in and never blocks CI. The pre-commit hook runs the same gate locally (`bash scripts/install-hooks.sh`); CI adds SHA-pinned actions and the gitleaks secrets scan (see [FEDERATION.md](FEDERATION.md#cicd-security-sha-pinned-github-actions)).
 
 ---
 

@@ -59,7 +59,7 @@ herdr api snapshot|schema
 4. Poll `agent list` for state and `pane read` for output deltas.
 5. Release worktrees and close panes when done.
 
-Prefer the `kunchenguid/firstmate` distro: it runs the crew in visible panes with treehouse worktrees and needs Herdr protocol 14+ (see `firstmate`).
+Prefer the `kunchenguid/firstmate` distro: it runs the crew in visible panes with treehouse worktrees and needs Herdr protocol 14+ (see WORKSTATION.md).
 
 ## Verification
 
