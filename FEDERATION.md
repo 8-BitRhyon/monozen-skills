@@ -29,8 +29,8 @@ cloudflare               # Cloudflare platform
 cloudflare-email-service # Cloudflare email sending and routing
 cloudflare-one           # Cloudflare One Zero Trust and SASE
 cloudflare-one-migrations # Cloudflare One migration planning
-code-review              # Five-dimension review protocol
-context-engineering      # Context window and session memory
+code-review              # Fresh-context diff review
+context-engineering      # Context budget, compaction, handoff
 design-loop              # Click-to-annotate design iteration loop
 design-research          # Evidence-driven design briefs and directions
 durable-objects          # Cloudflare Durable Objects

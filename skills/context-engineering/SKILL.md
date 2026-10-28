@@ -1,106 +1,89 @@
 ---
 name: context-engineering
-description: Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.
+description: "Manages agent context as a budget: what to load, what to drop, when to compact, and how to hand off. Use when a session grows long, an agent loses state, or context files need pruning."
 ---
 
-# Context Engineering Skill
+# Context Engineering
 
-> **Scope:** Universal patterns for loading, structuring, and maintaining the right context for any agentic task. Prevents "I didn't know that file existed" and "I assumed X but it was Y".
+> Context is a budget, not a library. Load the smallest set that changes the next action. Compact before the window forces you to.
 
----
+## Evidence
 
-## Context Layers (Load in Order)
+- Context rot: accuracy falls as input grows, even on verbatim tasks. Focused prompts beat full histories.
+- Repository context files rarely improve success and add about 20% cost. Instructions are followed; overviews are not useful.
+- Context editing plus memory cut tokens by 84% on a 100-turn run while improving results.
 
-### Layer 0: Project Constitution (Always)
-- `AGENTS.md` / `CLAUDE.md`  -  agent instructions, rules, pitfalls
-- `design.md` / `ARCHITECTURE.md`  -  system design, invariants
-- `README.md`  -  project purpose, quickstart
-- **Rule:** Read these FIRST. They define what "correct" means.
+Load non-standard invariants, not a tour of the repo.
 
-### Layer 1: Code Map (Per Task)
-```bash
-glob **/*.js && glob **/*.test.js          # structure
-grep -r "theme-changed" --include="*.js"   # relevant area
-codebase_search "theme toggle boot guard"
-```
-**Output:** File list + line numbers + 3-line context snippets.
+## Load Order
 
-### Layer 2: Deep Reads (Targeted)
-```bash
-# Read only what matters
-read Website/assets/js/boot.js:1480:1500
-read Website/globe-module.js:970:1020
-```
-**Rule:** Read with purpose  -  "find the theme toggle handler", not "read boot.js".
+1. **Contract.** `AGENTS.md` for commands, invariants, and pitfalls. Skip repo overviews the model can infer from code.
+2. **Task slice.** The files to edit, their nearest tests, and one caller. Not the whole tree.
+3. **Runtime baseline.** The current behavior, captured with a command, test, or browser check.
+4. **History.** Only when blocked: `git log` on the touched file, prior attempts, open issues.
 
-### Layer 3: Runtime Reality (Verification)
-```bash
-# Chrome DevTools for live state (see the axi skill for the full CLI surface:
-# open <url> | snapshot | eval <js> | console)
-npx -y chrome-devtools-axi open https://rhyon.dev
-npx -y chrome-devtools-axi eval "window.__bootFinished"
-npx -y chrome-devtools-axi snapshot --selector '#threeGlobeContainer'
-```
-**Rule:** Tests lie. Browser tells truth.
+Stop when the next action is clear. More reading is not progress.
 
-### Layer 4: History (When Stuck)
-```bash
-# Local session recall
-kilo_local_recall search --query "theme toggle guard"
-kilo_local_recall read --sessionID <id>
+## Budget Rules
 
-# Git history
-git log --oneline -20 -- Website/assets/js/boot.js
-git show <commit>:Website/assets/js/boot.js | head -200
+- Keep the prefix byte-stable. No timestamps or volatile state in headers.
+- Load references on demand, one level deep.
+- Prefer targeted reads over bulk dumps. If you read 20 files and edited none, narrow the task.
+- Drop superseded tool output before adding new context.
+- When a fact is stable, write it to the contract. Do not re-derive it each session.
+
+## Compaction And Handoff
+
+Compact into a state document, not a narrative:
+
+```markdown
+# Handoff
+- Goal:
+- Decisions and why:
+- Constraints:
+- Touched paths:
+- Failed attempts:
+- Open bugs:
+- Next action:
+- Verify with:
 ```
 
----
+Rules:
 
-## Context Budget Management
+- Keep restorable pointers: URL, not page; path, not document; commit, not diff.
+- Keep the last 5 files and the decisions that constrain them.
+- Drop raw tool output and superseded attempts.
+- Write the handoff to a file so the next session can load it without the transcript.
 
-| Layer | Token Cost | When to Load |
-|-------|------------|--------------|
-| Constitution | ~2k | **Always** (session start) |
-| Code Map | ~1k | Per task area |
-| Deep Reads | ~500/file | Only files you'll edit |
-| Runtime | ~1k | Verification phase |
-| History | ~2k | Only when blocked |
+## Subagents
 
-**Technique:** Use `Task` agents for parallel context gathering  -  one reads constitution, another searches code, another checks tests.
+- Use subagents for read-only breadth, isolated exploration, and verification.
+- One writer. The captain owns edits; parallel writers need isolated worktrees and a merge owner.
+- Return a 1-2k summary plus a durable path. Never return a transcript.
 
-## Compaction Over Growth (token economics)
+## Verification
 
-Near budget? Compact, don't grow: summarize history into a compact handoff (decisions, unresolved bugs, key state, next step); sub-agents return distilled 1-2k summaries, never raw transcripts; drop old tool results. Keep the prefix byte-stable for provider caches (cache doctrine lives in AGENTS.md).
-
----
+- A fresh session can state the commands, invariants, and next action from the handoff.
+- Replaying the handoff reproduces the verification result.
+- The context contains no tool names or paths that no longer exist.
 
 ## Anti-Patterns
 
-| Anti-Pattern | Symptom | Fix |
-|--------------|---------|-----|
-| **Assumption-driven** | "It probably works like X" | Read the file |
-| **Context overflow** | 50 files read, none edited | Code map → targeted reads |
-| **Stale context** | Fix works locally, breaks prod | Runtime verification mandatory |
-| **History amnesia** | Re-solving solved problem | `kilo_local_recall` first |
-| **Single-source** | Only tests, no browser | Layer 3 mandatory |
+- File-tree tours and architecture prose the code already shows.
+- A giant `AGENTS.md` that repeats the README.
+- Re-reading the same files every session.
+- "Just in case" context that competes with the task.
+- Compaction that drops decisions and keeps chatter.
 
----
+## Ownership
 
-## Context Checklist (Per Task)
-
-- [ ] Constitution read (AGENTS.md, design.md)
-- [ ] Code map: affected files identified
-- [ ] Deep reads: every file to be edited
-- [ ] Test patterns: existing tests in area read
-- [ ] Runtime baseline: current behavior captured
-- [ ] History check: similar fixes attempted?
-
----
+`project-constitution` creates the contract. This skill decides what to load from it and when to compact.
 
 ## Invocation
 
 Load when:
-- Starting any non-trivial task
-- Switching project areas
-- Debugging "mysterious" behavior
-- Onboarding to new codebase
+
+- A session is long, slow, or losing state.
+- An agent repeats work or forgets a decision.
+- `AGENTS.md` or a handoff needs pruning.
+- You are about to dispatch subagents.

@@ -49,11 +49,11 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `test-driven-dev` | Universal TDD: red -> green -> refactor -> runtime proof |
 | `failure-to-regression` | Bug or incident -> failing check -> root-cause fix -> durable gate and ledger |
 | `llm-as-verifier` | Probabilistic fine-grained LLM verification (Stanford + NVIDIA paper): criteria decomposition, repeated eval, pivot-tournament ranking |
-| `code-review` | Five-dimension review (correctness, readability, architecture, security, perf) |
+| `code-review` | Fresh-context diff review: spec, correctness, security, test proof |
 | `pr-workflow` | Branch -> PR -> CI checks -> review -> merge -> cleanup |
 | `ci-gate-recovery` | Recover blocked merges, check timeouts, stacked PRs, and protection bypass with restore |
 | `task-decomposition` | Breaks complex requests into atomic, testable units |
-| `context-engineering` | Optimizes context window, token budget, session memory |
+| `context-engineering` | Context budget, compaction, handoff artifacts, subagent rules |
 | `skill-authoring` | Meta-skill for authoring clean, runnable skill modules |
 | `axi` | Design token-efficient AXI CLIs (TOON output) instead of MCP payloads |
 | `pi-agent` | Pi runtime config: extensions, settings.json, models.json |

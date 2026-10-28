@@ -30,21 +30,21 @@
     },
     "code-review": {
       "name": "code-review",
-      "description": "Universal code review protocol for any language and any repository: five review dimensions (correctness, readability, architecture, security, performance), severity triage (blocker/should/nit), and PR review workflow. Load when reviewing a diff, PR, or branch before merge.",
-      "tokenEstimate": 728,
+      "description": "Reviews a diff in a fresh context: spec compliance first, then correctness, security, and test proof, with style explicitly out of scope. Use when reviewing a PR, a branch, or a pre-merge diff.",
+      "tokenEstimate": 812,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/code-review/SKILL.md",
-      "computedHash": "50961fda31d25a310ba1350a561c7ca3492b9649dcba0044b0877f8488ea5f9e"
+      "computedHash": "c436a0a439efa9defbf1223af54f25f26b318d74651cdf2a6f501d8fcb01f170"
     },
     "context-engineering": {
       "name": "context-engineering",
-      "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
-      "tokenEstimate": 916,
+      "description": "Manages agent context as a budget: what to load, what to drop, when to compact, and how to hand off. Use when a session grows long, an agent loses state, or context files need pruning.",
+      "tokenEstimate": 815,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
+      "computedHash": "0ab6f298dea9dcdd5c97323823be80ec86991e02e51472e0c2a15139e0466762"
     },
     "design-loop": {
       "name": "design-loop",
@@ -166,11 +166,11 @@
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 627,
+      "tokenEstimate": 632,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "b9628a49061db6015bd4ecc2bb5af2c4b619c6a6aff2e0d0efd5a127125104b0"
+      "computedHash": "a93be059b491fb40d24ff66fa4bb762341454c65c9ec1869e38e2937f96b6994"
     },
     "production-web-audit": {
       "name": "production-web-audit",

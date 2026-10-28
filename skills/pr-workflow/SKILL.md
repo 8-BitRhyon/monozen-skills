@@ -31,7 +31,7 @@ npx -y gh-axi pr create --base main --head feat/slug \
 ## Checks & Review
 
 - Wait for CI: `npx -y gh-axi pr checks <n>` (or `gh pr checks <n> --watch`).
-- **Independent review gate (mandatory):** Review the diff in a separate session (clean worktree or pane). Load `code-review`, evaluate the five dimensions, tag blocker/should/nit. Fix blockers before merge.
+- **Independent review gate (mandatory):** Review the diff in a separate session (clean worktree or pane). Load `code-review`: spec compliance first, then correctness and security, style out of scope. Fix blockers before merge.
 
 ## Merge & Cleanup
 
