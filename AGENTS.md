@@ -76,6 +76,7 @@ When this agent (or the captain) spawns subagents:
 | Workstation terminal/multiplexer stack | `WORKSTATION.md` |
 | Engineering philosophy (Moon/Sun, evidence over hope) | `PHILOSOPHY.md` |
 | Skill definitions and runnable protocols | `skills/<name>/SKILL.md` |
+| Execution harness and state contract | `harness/README.md` |
 
 Guides and diagrams explain purpose and link to the owner above instead of restating their content. When a fact moves, update the owner and repoint links; never keep two live copies.
 
