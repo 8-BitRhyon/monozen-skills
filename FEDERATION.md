@@ -68,7 +68,7 @@ workers-best-practices   # Cloudflare Workers best practices
 wrangler                 # Cloudflare Workers CLI
 ```
 
-### `~/.commandcode/skills/`  -  12 skills
+### `~/.commandcode/skills/`  -  14 skills
 
 Command Code's skill directory. A subset of monozen skills plus AXI tools and Cloudflare SDK skills core to the workflow.
 
@@ -85,6 +85,8 @@ herdr                       # herdr terminal multiplexer control
 sandbox-sdk                # Cloudflare sandbox SDK
 turnstile-spin             # Cloudflare Turnstile setup
 web-perf                   # Web performance auditing
+workers-best-practices     # Cloudflare Workers best practices
+wrangler                   # Cloudflare Workers CLI
 ```
 
 ### `~/.gemini/config/skills/`  -  11 skills
