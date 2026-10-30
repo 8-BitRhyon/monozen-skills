@@ -69,3 +69,4 @@ Load when:
 - You feel "where do I start?"
 - Previous work had missed steps or rework.
 - Planning a multi-session effort.
+- The scope is still ambiguous: run `alpha-loop` first.

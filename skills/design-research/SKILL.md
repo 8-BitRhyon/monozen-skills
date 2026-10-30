@@ -36,6 +36,7 @@ description: Turns a design decision into evidence with curated references, comp
 - Rank by severity x confidence / effort. Write "won't fix" reasons for the rest.
 - Propose 3 directions. Each: thesis, reference anchor, layout idea, and the risk it takes.
 - If the problem or technical feasibility is unproven, run [usefulness-gate](../usefulness-gate/SKILL.md) before visual directions.
+- If the bet or advantage is still unclear, run [alpha-loop](../alpha-loop/SKILL.md) first.
 
 ## 4. Stop Rules
 

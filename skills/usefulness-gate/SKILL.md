@@ -13,7 +13,7 @@ description: "Tests whether a product is worth building and whether users get va
 - Output: `USEFULNESS.md` with evidence, one spike result, one UX test result, and a decision.
 - Stop: the decision is recorded with a threshold and the evidence that would reverse it.
 
-Run after `design-research` when a brief exists, or before it when the problem itself is unproven.
+Run after `design-research` when a brief exists, or before it when the problem itself is unproven. If the wedge is not chosen yet, run `alpha-loop` first.
 
 ## 1. Problem Evidence
 

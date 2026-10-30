@@ -65,6 +65,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
 | `grill-me` | Relentless interview to sharpen a plan or design |
 | `grilling` | Design-tree interview rounds with recommended answers |
+| `alpha-loop` | Multi-agent ideation: facet scouts, competing theses, cross-judge, one-week wedge |
 | `design-research` | Evidence-driven design brief: references, competitors, UX findings, directions |
 | `usefulness-gate` | Problem evidence, technical spike, UX task test, build or kill |
 | `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
@@ -89,7 +90,7 @@ idea -> new-project -> task-decomposition -> test-driven-dev -> code-review
 Design work has its own gate:
 
 ```
-idea -> design-research -> usefulness-gate -> design-loop -> production-web-audit
+idea -> alpha-loop -> design-research -> usefulness-gate -> design-loop -> production-web-audit
 ```
 
 Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.

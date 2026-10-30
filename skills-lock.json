@@ -1,6 +1,15 @@
 {
   "version": 1,
   "skills": {
+    "alpha-loop": {
+      "name": "alpha-loop",
+      "description": "Runs a multi-agent ideation and scoping loop: facet scouts, competing theses, blind cross-judge, alpha selection, and a one-week wedge with kill criteria. Use when the direction, advantage, or scope is unclear.",
+      "tokenEstimate": 940,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/alpha-loop/SKILL.md",
+      "computedHash": "fad61400b581d87fe3b59cc95d720d0764c11d35d2b949b434b999122f6db371"
+    },
     "asd-ste100": {
       "name": "asd-ste100",
       "description": "Enforce ASD-STE100 (Simplified Technical English) specification rules for all technical documentation, Markdown files, and code comments with zero em dashes.",
@@ -58,11 +67,11 @@
     "design-research": {
       "name": "design-research",
       "description": "Turns a design decision into evidence with curated references, competitor teardowns, UX findings, testable requirements, and three concept directions in DESIGN_BRIEF.md. Use before a redesign or when the direction is unclear.",
-      "tokenEstimate": 674,
+      "tokenEstimate": 697,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/design-research/SKILL.md",
-      "computedHash": "a5a2f349e5af97eef4c790006dc14851a774beebe5496b7ba0e34e1c308c4e09"
+      "computedHash": "50ce0c278d0bc5556982a39e82332c6e30420e7f0dd433d974fc8bef53860562"
     },
     "failure-to-regression": {
       "name": "failure-to-regression",
@@ -202,11 +211,11 @@
     "task-decomposition": {
       "name": "task-decomposition",
       "description": "Breaks complex engineering requests into ordered, independent, testable tasks with a PLAN.md artifact, acceptance criteria, and a verification command per task. Use when a request spans more than three files or two concepts.",
-      "tokenEstimate": 525,
+      "tokenEstimate": 539,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": "dccd124d0c3606529ebed7429d57ae9d2830d6ee3bbac3f02e3892c06e04a018"
+      "computedHash": "6a1b75f784c8facf068c2739e2a1ec5f552125269dd716e705bb945119160ede"
     },
     "test-driven-dev": {
       "name": "test-driven-dev",
@@ -220,11 +229,11 @@
     "usefulness-gate": {
       "name": "usefulness-gate",
       "description": "Tests whether a product is worth building and whether users get value from it: problem evidence, technical spikes, task-based UX tests, and a build, pivot, or kill decision. Use before committing to a direction or after a design brief.",
-      "tokenEstimate": 904,
+      "tokenEstimate": 918,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/usefulness-gate/SKILL.md",
-      "computedHash": "7a979e3675f421dc4c7b64c2f4929dc4ceec4f0e0585cb2c66fb32d0963515b2"
+      "computedHash": "aea9659a664f16e8eb8c4d441f11198df9ee4711437bbaca356e58998a1e9fd4"
     }
   }
 }

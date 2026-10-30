@@ -15,12 +15,13 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 45 skills
+### `~/.agents/skills/` - 46 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
 ```
 agents-sdk               # Cloudflare Agents SDK
+alpha-loop               # Multi-agent ideation and alpha selection
 asd-ste100               # Simplified Technical English with zero em dashes
 axi                      # Agent eXperience Interface (TOON CLIs)
 chrome-devtools-axi      # AXI-wrapped browser automation
