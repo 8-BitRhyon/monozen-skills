@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 44 skills
+### `~/.agents/skills/` - 45 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -61,6 +61,7 @@ test-driven-dev          # Red -> green -> refactor -> verify
 transitions-dev          # Production CSS transitions and micro-interactions
 transitions-polish       # Motion token tuning and refinement
 turnstile-spin           # Cloudflare Turnstile setup
+usefulness-gate          # Problem, spike, UX test, build or kill
 web-perf                 # Web performance auditing
 workers-best-practices   # Cloudflare Workers best practices
 wrangler                 # Cloudflare Workers CLI

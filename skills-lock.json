@@ -49,20 +49,20 @@
     "design-loop": {
       "name": "design-loop",
       "description": "Runs a design iteration loop with cheap divergent variants, blind rubric critique, build at feel fidelity, click-to-annotate feedback on localhost, and targeted fixes. Use when a UI misses the mark or needs repeated visual iteration.",
-      "tokenEstimate": 873,
+      "tokenEstimate": 892,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/design-loop/SKILL.md",
-      "computedHash": "dcabd5e9486a471097c330687dcf21a8772e5a54da7aefc67cb46fb9c23b832f"
+      "computedHash": "826c272330e8496a3b1e0d1427bdb661b8bc6a789c96465b00a2361cf1678f0c"
     },
     "design-research": {
       "name": "design-research",
       "description": "Turns a design decision into evidence with curated references, competitor teardowns, UX findings, testable requirements, and three concept directions in DESIGN_BRIEF.md. Use before a redesign or when the direction is unclear.",
-      "tokenEstimate": 641,
+      "tokenEstimate": 674,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/design-research/SKILL.md",
-      "computedHash": "2396ead2fc26d6d55acd08fc6143d6179525f00fd2b178f6469b6a7a286825ef"
+      "computedHash": "a5a2f349e5af97eef4c790006dc14851a774beebe5496b7ba0e34e1c308c4e09"
     },
     "failure-to-regression": {
       "name": "failure-to-regression",
@@ -216,6 +216,15 @@
       "sourceType": "github",
       "skillPath": "skills/test-driven-dev/SKILL.md",
       "computedHash": "043b3dc0208ce2c4964a4f04ceb2927d7eacabb4130967d382a3cea6701abd9e"
+    },
+    "usefulness-gate": {
+      "name": "usefulness-gate",
+      "description": "Tests whether a product is worth building and whether users get value from it: problem evidence, technical spikes, task-based UX tests, and a build, pivot, or kill decision. Use before committing to a direction or after a design brief.",
+      "tokenEstimate": 904,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/usefulness-gate/SKILL.md",
+      "computedHash": "7a979e3675f421dc4c7b64c2f4929dc4ceec4f0e0585cb2c66fb32d0963515b2"
     }
   }
 }

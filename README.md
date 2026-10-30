@@ -66,6 +66,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `grill-me` | Relentless interview to sharpen a plan or design |
 | `grilling` | Design-tree interview rounds with recommended answers |
 | `design-research` | Evidence-driven design brief: references, competitors, UX findings, directions |
+| `usefulness-gate` | Problem evidence, technical spike, UX task test, build or kill |
 | `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
 | `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
 
@@ -83,6 +84,12 @@ One captain agent per task on an isolated git worktree (pooled via `treehouse`),
 idea -> new-project -> task-decomposition -> test-driven-dev -> code-review
      -> pre-commit gate (validate -> test -> smoke -> manifest)
      -> pr-workflow -> CI (validate + secrets) -> merge -> production-web-audit
+```
+
+Design work has its own gate:
+
+```
+idea -> design-research -> usefulness-gate -> design-loop -> production-web-audit
 ```
 
 Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.

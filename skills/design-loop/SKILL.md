@@ -15,6 +15,8 @@ Requires: `node` 18+ for the annotation collector.
 - Output: chosen direction, resolved annotations, updated `DESIGN_LOG.md`.
 - Stop: zero pending annotations; rubric pass; mobile, keyboard, and reduced-motion checks pass.
 
+If the core job is unproven, run `usefulness-gate` before polishing pixels.
+
 ## 1. Diverge Cheap
 
 - Produce 3 directions, not 20 polished comps. Each has a one-sentence thesis, one reference anchor, and a distinct layout.

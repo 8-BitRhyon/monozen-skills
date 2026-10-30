@@ -35,6 +35,7 @@ description: Turns a design decision into evidence with curated references, comp
 - Turn each job story into a testable requirement: "When X, the system must Y within Z."
 - Rank by severity x confidence / effort. Write "won't fix" reasons for the rest.
 - Propose 3 directions. Each: thesis, reference anchor, layout idea, and the risk it takes.
+- If the problem or technical feasibility is unproven, run [usefulness-gate](../usefulness-gate/SKILL.md) before visual directions.
 
 ## 4. Stop Rules
 

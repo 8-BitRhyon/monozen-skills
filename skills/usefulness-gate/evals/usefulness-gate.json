@@ -1,0 +1,12 @@
+{
+  "skill": "usefulness-gate",
+  "query": "We have a dashboard idea for freelance designers. Should we build it?",
+  "files": ["templates/USEFULNESS.md"],
+  "expected_behavior": [
+    "Separates utility from usability and states the evidence needed for each.",
+    "Ranks assumptions and picks the single riskiest one to test.",
+    "Sets UX thresholds before running a task-based test.",
+    "Records build, pivot, or kill with the evidence that would reverse it."
+  ],
+  "baseline_failure": "Without the skill, the model starts proposing screens and asks the user whether they would use it."
+}
