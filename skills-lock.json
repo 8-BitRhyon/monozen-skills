@@ -1,41 +1,32 @@
 {
   "version": 1,
   "skills": {
-    "agentic-loop": {
-      "name": "agentic-loop",
-      "description": "Universal pattern for autonomous agent workflow - the core observe -> plan -> act -> verify cycle that prevents hallucination, drift, and incomplete work.",
-      "tokenEstimate": 908,
+    "alpha-loop": {
+      "name": "alpha-loop",
+      "description": "Runs a multi-agent ideation and scoping loop: facet scouts, competing theses, blind cross-judge, alpha selection, and a one-week wedge with kill criteria. Use when the direction, advantage, or scope is unclear.",
+      "tokenEstimate": 940,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
-      "skillPath": "skills/agentic-loop/SKILL.md",
-      "computedHash": "28c588f52b17c21ce462ee4562a751c0431be066ec0dd44025cb527b56d46b44"
+      "skillPath": "skills/alpha-loop/SKILL.md",
+      "computedHash": "fad61400b581d87fe3b59cc95d720d0764c11d35d2b949b434b999122f6db371"
     },
     "asd-ste100": {
       "name": "asd-ste100",
       "description": "Enforce ASD-STE100 (Simplified Technical English) specification rules for all technical documentation, Markdown files, and code comments with zero em dashes.",
-      "tokenEstimate": 815,
+      "tokenEstimate": 824,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/asd-ste100/SKILL.md",
-      "computedHash": "c074029d6cccaabee295179aec1aee26b7614a1876a301a2a658662ee545358d"
+      "computedHash": "faaf5caf49e3a60cfa165d1863b05516d4f5456e0409abc8e37d930dfb832f8d"
     },
     "axi": {
       "name": "axi",
-      "description": "Build and use agent-ergonomic CLI wrappers (AXI style) instead of MCP: TOON output, minimal schemas, truncation hints, total counts, empty states, structured errors, exit codes 0/1/2, and next-step hints. Load when wrapping a CLI for agents or choosing a tool interface.",
-      "tokenEstimate": 877,
+      "description": "Designs agent-facing CLIs with the Agent eXperience Interface: TOON output, minimal schemas, truncation, aggregates, structured errors, ambient context, and contextual next steps. Use when building, wrapping, or reviewing a CLI that agents call.",
+      "tokenEstimate": 883,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/axi/SKILL.md",
-      "computedHash": "1a8195b4c65d137a400c33f8a38ae96bb1ecaad33d858123012e32b7112ccd28"
-    },
-    "backpass": {
-      "name": "backpass",
-      "description": "Gradient descent for agent memory and instructions. Evaluates real agent session transcripts across harnesses, computes failure patterns, and proposes evidence-backed edits to AGENTS.md, CLAUDE.md, and skills under a strict token budget. Load when updating agent rules, pruning context drift, or auditing session failures.",
-      "tokenEstimate": 627,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/backpass/SKILL.md",
-      "computedHash": "3e75e2b6a03689d83ccf8fc85d7ee962fda589400d75122b439881ac2e1f0376"
+      "computedHash": "59790c5e724d8d84d184a4ef4028ea215bfa592b650f784000d2a992c2616a17"
     },
     "ci-gate-recovery": {
       "name": "ci-gate-recovery",
@@ -48,21 +39,39 @@
     },
     "code-review": {
       "name": "code-review",
-      "description": "Universal code review protocol for any language and any repository: five review dimensions (correctness, readability, architecture, security, performance), severity triage (blocker/should/nit), and PR review workflow. Load when reviewing a diff, PR, or branch before merge.",
-      "tokenEstimate": 728,
+      "description": "Reviews a diff in a fresh context: spec compliance first, then correctness, security, and test proof, with style explicitly out of scope. Use when reviewing a PR, a branch, or a pre-merge diff.",
+      "tokenEstimate": 812,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/code-review/SKILL.md",
-      "computedHash": "50961fda31d25a310ba1350a561c7ca3492b9649dcba0044b0877f8488ea5f9e"
+      "computedHash": "c436a0a439efa9defbf1223af54f25f26b318d74651cdf2a6f501d8fcb01f170"
     },
     "context-engineering": {
       "name": "context-engineering",
-      "description": "Optimizes agent context window setup, token budget management, file indexing, and session memory across long-running tasks.",
-      "tokenEstimate": 916,
+      "description": "Manages agent context as a budget: what to load, what to drop, when to compact, and how to hand off. Use when a session grows long, an agent loses state, or context files need pruning.",
+      "tokenEstimate": 815,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/context-engineering/SKILL.md",
-      "computedHash": "c771588a412c90b4719c78cda4a502853750f68660761caa0bc42626cb5f42b7"
+      "computedHash": "0ab6f298dea9dcdd5c97323823be80ec86991e02e51472e0c2a15139e0466762"
+    },
+    "design-loop": {
+      "name": "design-loop",
+      "description": "Runs a design iteration loop with cheap divergent variants, blind rubric critique, build at feel fidelity, click-to-annotate feedback on localhost, and targeted fixes. Use when a UI misses the mark or needs repeated visual iteration.",
+      "tokenEstimate": 892,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-loop/SKILL.md",
+      "computedHash": "826c272330e8496a3b1e0d1427bdb661b8bc6a789c96465b00a2361cf1678f0c"
+    },
+    "design-research": {
+      "name": "design-research",
+      "description": "Turns a design decision into evidence with curated references, competitor teardowns, UX findings, testable requirements, and three concept directions in DESIGN_BRIEF.md. Use before a redesign or when the direction is unclear.",
+      "tokenEstimate": 697,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-research/SKILL.md",
+      "computedHash": "50ce0c278d0bc5556982a39e82332c6e30420e7f0dd433d974fc8bef53860562"
     },
     "failure-to-regression": {
       "name": "failure-to-regression",
@@ -72,15 +81,6 @@
       "sourceType": "github",
       "skillPath": "skills/failure-to-regression/SKILL.md",
       "computedHash": "208b3fb807f87469721d2fbf2019949855568dfc9b4f982961493a2a350a416f"
-    },
-    "firstmate": {
-      "name": "firstmate",
-      "description": "Captain-and-crew orchestration distro: Captain, First Mate, Second Mates, and Crewmates; lifecycle (/ahoy, /bearings), backend selection (Herdr, tmux, Rex, cmux, Zellij, Orca, Paseo), Definition of Done, and stall or restart recovery. Load when coordinating agent fleets.",
-      "tokenEstimate": 998,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/firstmate/SKILL.md",
-      "computedHash": "4ae7dd5990beb7a355913851d216aaec2c994a4e8b572d632f701b965193eba5"
     },
     "git-workflow": {
       "name": "git-workflow",
@@ -93,12 +93,12 @@
     },
     "git-worktree": {
       "name": "git-worktree",
-      "description": "Create, use, and clean up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse pooled worktrees, pi-worktree wrapper, per-task isolation, merge back, and cleanup discipline. Load before spawning parallel subagents or parallelizing work.",
-      "tokenEstimate": 970,
+      "description": "Creates, leases, and cleans up isolated git worktrees so parallel agent tasks never share a working tree. Covers git worktree basics, treehouse 3.x pools, pi-worktree, merge back, and cleanup. Use before spawning parallel subagents or parallelizing work.",
+      "tokenEstimate": 803,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/git-worktree/SKILL.md",
-      "computedHash": "a7ba6bc0920a531310a906e2cb1e0915dc7ed44c7af899cdbea6005923e31e4b"
+      "computedHash": "99c6f388d9fff4d9fce926a4c76919f09645fd988d93cc02d9bcb9013f70bbc6"
     },
     "grill-me": {
       "name": "grill-me",
@@ -118,23 +118,32 @@
       "skillPath": "skills/grilling/SKILL.md",
       "computedHash": "76f6263a514e268008f66d0d84eb0c64dbbdd61f49791ab6d5ecb570b6a5865c"
     },
+    "hackathon-project-optimizer": {
+      "name": "hackathon-project-optimizer",
+      "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
+      "tokenEstimate": 947,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
+      "computedHash": "27e24cdb551121cfe7f145ad5915ae61b72762c2f8d1e5631e2461eaff955322"
+    },
     "herdr": {
       "name": "herdr",
-      "description": "Operate the Herdr terminal multiplexer (0.9.x): named sessions, workspaces/tabs/panes, agent states, hooks, socket API, restart and husk behavior, and the captain-crew pattern. Load when running or supervising multiple agents in one workspace.",
-      "tokenEstimate": 972,
+      "description": "Operates the Herdr terminal multiplexer (0.9+): sessions, workspaces, tabs, panes, agent states, hooks, socket API, restart and husk recovery, and the captain pattern. Use when supervising multiple agents in one workspace.",
+      "tokenEstimate": 862,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/herdr/SKILL.md",
-      "computedHash": "ee436e6ec9d4dcd9214091a3bb393d4f059ec2e4ea7b91b834aaf26a24f97787"
+      "computedHash": "03bc52de2ac708634053c76193913b52b835ccae01ff715084b9e3b5c169f105"
     },
     "llm-as-verifier": {
       "name": "llm-as-verifier",
       "description": "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifier paper (arXiv:2607.05391): continuous scores from expectation over scoring-token logits, score granularity, repeated evaluation, criteria decomposition, and the probabilistic pivot tournament for candidate ranking. Load when evaluating open-ended output, choosing the best of N candidates, or grading work that deterministic assertions cannot judge.",
-      "tokenEstimate": 987,
+      "tokenEstimate": 999,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/llm-as-verifier/SKILL.md",
-      "computedHash": "d0d35b6fcdd35994c8fdccaa267c15537f1a121d7640a4a39d6a4b21fb0c42b9"
+      "computedHash": "cd1392cc70d8658d514002653f0637002b60a764bf58f3f34821b3785af845d2"
     },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
@@ -148,38 +157,29 @@
     "new-project": {
       "name": "new-project",
       "description": "Bootstrap any new software project from zero: repo creation, scaffold, constitution files (AGENTS.md, design.md, README.md), .gitignore, CI, signing, and first commit. Load whenever starting a new project or repository from scratch, for any language or stack.",
-      "tokenEstimate": 683,
+      "tokenEstimate": 679,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/new-project/SKILL.md",
-      "computedHash": "17901735777f90d381504c67fffb540c40b879819e2cc9d58e0e79a78d323f70"
-    },
-    "no-mistakes": {
-      "name": "no-mistakes",
-      "description": "Run automated AI-driven validation pipelines and zero-slop PR creation through the no-mistakes local git proxy gate. Load when preparing to push branches, opening clean PRs, running pre-landing audits, or operating the no-mistakes TUI and headless AXI interface.",
-      "tokenEstimate": 636,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/no-mistakes/SKILL.md",
-      "computedHash": "0f452e73bf724d45f12c26be6a5ed6d28a395c5a8f8fafd791fb9dc53a618ff2"
+      "computedHash": "1843fc0c91a72312b0b90ebaeb6b9cfa7cc96dbc7e4dc649c43c47142eaf8dba"
     },
     "pi-agent": {
       "name": "pi-agent",
       "description": "Configure and extend the Pi coding agent: extension API (terminal-title spinner, status), global settings.json, models.json provider overrides, and subscription-auth providers. Load when setting up Pi, writing a Pi extension, or tuning models/settings.",
-      "tokenEstimate": 892,
+      "tokenEstimate": 907,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
-      "computedHash": "154560577af5d3717102dff2ca5b9a589719bdbdd60b813a93a58decf546030e"
+      "computedHash": "2db1a00bc7d9448c1f0b6d3b5ed84e757c0d25b0e830382a6abfdffa18d2a7d1"
     },
     "pr-workflow": {
       "name": "pr-workflow",
       "description": "Universal pull request lifecycle for any GitHub repo: branch strategy, PR creation, CI checks, review gate, merge (including protected branches), and cleanup. Load when opening, reviewing, or merging a PR, or pushing to a protected branch.",
-      "tokenEstimate": 628,
+      "tokenEstimate": 649,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
-      "computedHash": "7091c67bc33eb5c08cb14e9ee014ed982c047d7831ddbf448d905b97fd47a7d3"
+      "computedHash": "fa87d564d067423ad0cad554056f71a19c86311a7c1237d88c2b0245ecd54570"
     },
     "production-web-audit": {
       "name": "production-web-audit",
@@ -199,32 +199,23 @@
       "skillPath": "skills/project-constitution/SKILL.md",
       "computedHash": "77b10b79da32b6295a9e35bfffb39d3fd680efad909542a4d17a9a243b14bfb9"
     },
-    "prompt-engineering-loop": {
-      "name": "prompt-engineering-loop",
-      "description": "Lean iterative prompt refinement protocol - ELI10 structuring, clarifying questions, working examples, adversarial pressure testing, and verification-ladder stopping criteria for AI agent instructions.",
-      "tokenEstimate": 656,
-      "source": "8-BitRhyon/monozen-skills",
-      "sourceType": "github",
-      "skillPath": "skills/prompt-engineering-loop/SKILL.md",
-      "computedHash": "3342a6a0fd87b231e4792ed33453fad74e6e772642df4e268ef48d404d306573"
-    },
     "skill-authoring": {
       "name": "skill-authoring",
-      "description": "Meta-skill for authoring clean, runnable agent skill modules with frontmatter metadata, structured protocols, and zero em dashes.",
-      "tokenEstimate": 758,
+      "description": "Authors and audits agent skills with eval-first design, third-person trigger descriptions, progressive disclosure, and executable verification. Use when creating a skill, rewriting a bloated skill, or auditing skill quality.",
+      "tokenEstimate": 932,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/skill-authoring/SKILL.md",
-      "computedHash": "9141c2068d0b85d0d1460e1787b76d5041ad3d866a9f99e87a44a3a14e5927b5"
+      "computedHash": "00a9086f1a71a57352008164e6482b790d642eefd45e1ff36d503fef285ef9b5"
     },
     "task-decomposition": {
       "name": "task-decomposition",
-      "description": "Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.",
-      "tokenEstimate": 909,
+      "description": "Breaks complex engineering requests into ordered, independent, testable tasks with a PLAN.md artifact, acceptance criteria, and a verification command per task. Use when a request spans more than three files or two concepts.",
+      "tokenEstimate": 539,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/task-decomposition/SKILL.md",
-      "computedHash": "9e23126e47e5ecd15469db53741c59f47e2ab4f9ab56b68ee18aea31eab4081e"
+      "computedHash": "6a1b75f784c8facf068c2739e2a1ec5f552125269dd716e705bb945119160ede"
     },
     "test-driven-dev": {
       "name": "test-driven-dev",
@@ -234,6 +225,15 @@
       "sourceType": "github",
       "skillPath": "skills/test-driven-dev/SKILL.md",
       "computedHash": "043b3dc0208ce2c4964a4f04ceb2927d7eacabb4130967d382a3cea6701abd9e"
+    },
+    "usefulness-gate": {
+      "name": "usefulness-gate",
+      "description": "Tests whether a product is worth building and whether users get value from it: problem evidence, technical spikes, task-based UX tests, and a build, pivot, or kill decision. Use before committing to a direction or after a design brief.",
+      "tokenEstimate": 918,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/usefulness-gate/SKILL.md",
+      "computedHash": "aea9659a664f16e8eb8c4d441f11198df9ee4711437bbaca356e58998a1e9fd4"
     }
   }
 }
