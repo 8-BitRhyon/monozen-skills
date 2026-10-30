@@ -79,6 +79,17 @@ Agents match a skill by its `name` and `description` frontmatter; the one-line r
 
 One captain agent per task on an isolated git worktree (pooled via `treehouse`), supervised from a herdr pane; independent units go to subagents in their own worktrees, and every worktree returns to the pool when done. The full protocol is the canonical operating model in [AGENTS.md](AGENTS.md#harness-agnostic-operating-model); the captain-and-crew distro is the external `firstmate` tool (see Environment below).
 
+## Execution Harness
+
+`/work` is the primary entrypoint. It runs one stateful loop: goal, plan, execute, verify, deliver. State lives in `.work/state.json`; the CLI in [harness/work.mjs](harness/work.mjs) is the only writer. `GOAL.md`, `STATE.md`, and `VERIFY.md` are generated views, and `.work/` is gitignored.
+
+- `work init "<goal>"` establishes the contract.
+- `work verify -- <command>` is the only path to delivery.
+- A failed verify returns to execution with a diagnosis, not a blind retry.
+- `/goal`, `/plan`, and `/teamwork` are explicit operations inside the same state.
+
+See [harness/README.md](harness/README.md) for the CLI, state model, and metrics.
+
 ## How Skills Are Processed
 
 ```

@@ -70,6 +70,10 @@ echo "=== [smoke] design-loop annotation harness ==="
 check "$(node "${REPO_DIR}/skills/design-loop/scripts/collector.mjs" --self-test >/dev/null 2>&1 && echo ok || echo no)" "collector self-test exits 0 (token-free)"
 check "$(grep -q 'overlay.js' "${REPO_DIR}/skills/design-loop/templates/fixture.html" && echo ok || echo no)" "fixture loads the overlay"
 
+echo ""
+echo "=== [smoke] work harness ==="
+check "$(node "${REPO_DIR}/harness/work.mjs" --self-test >/dev/null 2>&1 && echo ok || echo no)" "work harness self-test exits 0 (token-free)"
+
 if [ "${FAIL}" -eq 0 ]; then
   echo "=== [smoke] PASS: scaffold is runnable ==="
   exit 0
