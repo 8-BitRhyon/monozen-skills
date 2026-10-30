@@ -1,11 +1,4 @@
 #!/usr/bin/env node
-// design-loop annotation collector.
-// Zero dependencies. Binds to 127.0.0.1, appends annotations to JSONL,
-// and serves the overlay script for one-line injection.
-//
-// Usage:
-//   node collector.mjs --file .design/annotations.jsonl --port 4748
-//   node collector.mjs --self-test
 
 import { createServer } from "node:http";
 import { appendFile, mkdir, readFile, rename, writeFile } from "node:fs/promises";

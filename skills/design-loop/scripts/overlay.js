@@ -1,10 +1,3 @@
-// design-loop overlay: click an element, write a comment, send it to the
-// local collector. Zero dependencies, shadow DOM, dev-only.
-//
-// Inject with:
-//   const s=document.createElement("script");s.src="http://127.0.0.1:4748/overlay.js";document.head.append(s);
-//
-// Toggle inspect mode with Alt+Shift+A. Escape closes the panel.
 (() => {
   if (window.__designLoopOverlay) return;
   window.__designLoopOverlay = true;
@@ -172,9 +165,7 @@
       if (!response.ok) return;
       const body = await response.json();
       setCount(Array.isArray(body.annotations) ? body.annotations.length : 0);
-    } catch {
-      // Collector is optional until the first save.
-    }
+    } catch {}
   }
 
   function escapeSelector(value) {
