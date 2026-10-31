@@ -1,0 +1,12 @@
+{
+  "skill": "gtm-loop",
+  "query": "Plan a six-week launch for Bantay with a team of two.",
+  "files": ["../../marketing/templates/LAUNCH.md", "../../marketing/templates/GROWTH.md"],
+  "expected_behavior": [
+    "Starts with proof and design partners before traffic.",
+    "Sequences channels and keeps one spike per week.",
+    "Sets activation and retention metrics with stop rules.",
+    "Writes LAUNCH.md and a weekly GROWTH.md loop."
+  ],
+  "baseline_failure": "Without the skill, the model lists Product Hunt, ads, and a waitlist as the launch plan."
+}

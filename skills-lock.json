@@ -118,6 +118,15 @@
       "skillPath": "skills/grilling/SKILL.md",
       "computedHash": "76f6263a514e268008f66d0d84eb0c64dbbdd61f49791ab6d5ecb570b6a5865c"
     },
+    "gtm-loop": {
+      "name": "gtm-loop",
+      "description": "Runs a six-week launch and a weekly growth loop for a technical product: proof assets, channel sequencing, activation, retention, experiments, and stop rules. Use when planning a launch or fixing a growth bottleneck.",
+      "tokenEstimate": 843,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gtm-loop/SKILL.md",
+      "computedHash": "806ab0550536bb6074cf199d7b6cf7cf378923c08f7da069d252c10dd4b44074"
+    },
     "hackathon-project-optimizer": {
       "name": "hackathon-project-optimizer",
       "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
@@ -145,6 +154,15 @@
       "skillPath": "skills/llm-as-verifier/SKILL.md",
       "computedHash": "cd1392cc70d8658d514002653f0637002b60a764bf58f3f34821b3785af845d2"
     },
+    "marketing-copy": {
+      "name": "marketing-copy",
+      "description": "Writes and edits public marketing copy with a voice sample, claim support, and a de-AI pass. Covers landing pages, launch posts, emails, comparisons, and docs-as-marketing. Use when drafting or reviewing public copy.",
+      "tokenEstimate": 734,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/marketing-copy/SKILL.md",
+      "computedHash": "d4d0dff0f94befddb7532cb3c335b0616a743e47586dc37dad332a2208c7c43a"
+    },
     "monozen-portfolio": {
       "name": "monozen-portfolio",
       "description": "Consolidated Monozen portfolio skill: dual-theme (Sun/Moon) lifecycle contracts, 5-panel SPA architecture, CSS specificity load order, WebGL context safety, nav capsule behavior, and pre-deploy audit protocol. Load when working on any file under the Monozen portfolio project.",
@@ -171,6 +189,15 @@
       "sourceType": "github",
       "skillPath": "skills/pi-agent/SKILL.md",
       "computedHash": "2db1a00bc7d9448c1f0b6d3b5ed84e757c0d25b0e830382a6abfdffa18d2a7d1"
+    },
+    "positioning": {
+      "name": "positioning",
+      "description": "Builds a positioning contract for a technical product: switch interviews, real alternatives, proof-backed value, category and enemy, best-fit and anti-customer. Use before a launch, homepage rewrite, or pricing change.",
+      "tokenEstimate": 801,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/positioning/SKILL.md",
+      "computedHash": "380f31336735d2d493cda784d34825e7595b61a13fd1d5e4dbd0ca41e606a9eb"
     },
     "pr-workflow": {
       "name": "pr-workflow",

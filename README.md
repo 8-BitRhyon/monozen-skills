@@ -69,6 +69,9 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `design-research` | Evidence-driven design brief: references, competitors, UX findings, directions |
 | `usefulness-gate` | Problem evidence, technical spike, UX task test, build or kill |
 | `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
+| `positioning` | Positioning contract: switch, alternatives, proof, category, enemy |
+| `gtm-loop` | Six-week launch and weekly growth loop with metrics and stop rules |
+| `marketing-copy` | Voice-matched copy, claim ledger, de-AI pass, docs-as-marketing |
 | `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
@@ -89,6 +92,22 @@ One captain agent per task on an isolated git worktree (pooled via `treehouse`),
 - `/goal`, `/plan`, and `/teamwork` are explicit operations inside the same state.
 
 See [harness/README.md](harness/README.md) for the CLI, state model, and metrics.
+
+## Marketing Pipeline
+
+```
+MARKETING.md -> positioning -> POSITIONING.md -> gtm-loop -> LAUNCH.md -> GROWTH.md
+                                                    |
+                                                    v
+                                              marketing-copy -> COPY.md
+```
+
+- `MARKETING.md` holds the buyer, category, enemy, proof, and voice.
+- `positioning` chooses the category, enemy, alternatives, and claims.
+- `gtm-loop` runs the six-week launch and the weekly growth loop.
+- `marketing-copy` writes with a voice sample, claim ledger, and de-AI pass.
+
+See [marketing/README.md](marketing/README.md) for the cadence and skip list.
 
 ## How Skills Are Processed
 
