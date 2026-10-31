@@ -1,0 +1,12 @@
+{
+  "skill": "positioning",
+  "query": "Position Bantay, a macOS notch control plane for coding agents.",
+  "files": ["../../marketing/templates/MARKETING.md", "../../marketing/templates/POSITIONING.md"],
+  "expected_behavior": [
+    "Reconstructs the buyer switch and lists the real alternatives, including the status quo.",
+    "Attaches a proof artifact to every claimed attribute.",
+    "Chooses one category and one practice-level enemy, or explains why not.",
+    "Writes POSITIONING.md and MARKETING.md with best-fit and anti-customer."
+  ],
+  "baseline_failure": "Without the skill, the model writes a feature list and calls the product AI-powered."
+}

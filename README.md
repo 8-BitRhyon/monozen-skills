@@ -69,6 +69,9 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `design-research` | Evidence-driven design brief: references, competitors, UX findings, directions |
 | `usefulness-gate` | Problem evidence, technical spike, UX task test, build or kill |
 | `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
+| `positioning` | Positioning contract: switch, alternatives, proof, category, enemy |
+| `gtm-loop` | Six-week launch and weekly growth loop with metrics and stop rules |
+| `marketing-copy` | Voice-matched copy, claim ledger, de-AI pass, docs-as-marketing |
 | `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
 | `hackathon-ideation` | Fast idea generation and kill: theme fit, 15-second demo, reachable ground truth |
 | `hackathon-recon` | Winner and rubric audit: evidence pattern, weighted gap map, three moves |
@@ -81,6 +84,21 @@ Agents match a skill by its `name` and `description` frontmatter; the one-line r
 
 One captain agent per task on an isolated git worktree (pooled via `treehouse`), supervised from a herdr pane; independent units go to subagents in their own worktrees, and every worktree returns to the pool when done. The full protocol is the canonical operating model in [AGENTS.md](AGENTS.md#harness-agnostic-operating-model); the captain-and-crew distro is the external `firstmate` tool (see Environment below).
 
+## Marketing Pipeline
+
+```
+MARKETING.md -> positioning -> POSITIONING.md -> gtm-loop -> LAUNCH.md -> GROWTH.md
+                                                    |
+                                                    v
+                                              marketing-copy -> COPY.md
+```
+
+- `MARKETING.md` holds the buyer, category, enemy, proof, and voice.
+- `positioning` chooses the category, enemy, alternatives, and claims.
+- `gtm-loop` runs the six-week launch and the weekly growth loop.
+- `marketing-copy` writes with a voice sample, claim ledger, and de-AI pass.
+
+See [marketing/README.md](marketing/README.md) for the cadence and skip list.
 ## How Skills Are Processed
 
 ```
