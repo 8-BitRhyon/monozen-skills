@@ -1,0 +1,12 @@
+{
+  "skill": "marketing-copy",
+  "query": "Write the Bantay homepage hero and first proof block.",
+  "files": ["../../marketing/templates/COPY.md"],
+  "expected_behavior": [
+    "Reads MARKETING.md and POSITIONING.md before drafting.",
+    "Uses the founder voice sample and names the edit mode.",
+    "Puts a claim ledger beside every metric or comparison.",
+    "Runs a de-AI pass and cuts unsupported claims."
+  ],
+  "baseline_failure": "Without the skill, the model writes a generic AI-powered hero with no proof."
+}
