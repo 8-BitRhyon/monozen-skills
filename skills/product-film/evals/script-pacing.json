@@ -1,0 +1,14 @@
+{
+  "skill": "product-film",
+  "query": "Write a 3-minute spoken script for our product film. The visuals are already built.",
+  "files": ["../templates/storyboard.ts", "../references/film-pipeline.md"],
+  "expected_behavior": [
+    "Reads the repo, claim ledger, landing page, and brand tokens before asking questions.",
+    "Uses a six-beat map with a 20s hook, 25s pain, two 45s demo beats, 30s proof, and 15s vision.",
+    "Keeps the read at 135-145 words per minute and leaves 8-11 seconds of screen time in the demo beats.",
+    "Replaces jargon with plain spoken language and puts numbers on screen where they belong.",
+    "Writes pause marks in the read script and keeps them out of the VO string.",
+    "Confirms the brief and asks only for missing decisions."
+  ],
+  "baseline_failure": "Without the skill, the model writes landing-page copy with uneven density: a packed 20s hook and a 45s demo beat that finishes in half the time."
+}

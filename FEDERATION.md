@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 51 skills
+### `~/.agents/skills/` - 52 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -54,6 +54,7 @@ monozen-portfolio        # Monozen portfolio contracts
 new-project              # Project bootstrap
 pi-agent                 # Pi runtime and extensions
 positioning              # Positioning contract for technical products
+product-film             # Code-driven product film, voiceover, thumbnail, kit
 pr-workflow              # Pull request lifecycle
 production-web-audit     # Pre-deployment web audit
 project-constitution     # Existing-repo AGENTS.md and feature map

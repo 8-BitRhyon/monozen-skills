@@ -139,11 +139,11 @@
     "hackathon-project-optimizer": {
       "name": "hackathon-project-optimizer",
       "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
-      "tokenEstimate": 999,
+      "tokenEstimate": 994,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
-      "computedHash": "a33a43d40cdaf39ecda75c59fb92d1b3193d8aefb4e84cff0aa1fb2dacddd074"
+      "computedHash": "bf27c8e0cbe3a6893e64190c204eea24339dbd86abedfe5cdbf69a5178b6d5fa"
     },
     "hackathon-recon": {
       "name": "hackathon-recon",
@@ -225,6 +225,15 @@
       "sourceType": "github",
       "skillPath": "skills/pr-workflow/SKILL.md",
       "computedHash": "fa87d564d067423ad0cad554056f71a19c86311a7c1237d88c2b0245ecd54570"
+    },
+    "product-film": {
+      "name": "product-film",
+      "description": "Produces a code-driven product film with a spoken script, real product captures, human voiceover alignment, thumbnail, and YouTube submission kit. Use when making a demo video, launch film, hackathon submission video, voiceover mux, or video thumbnail.",
+      "tokenEstimate": 999,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/product-film/SKILL.md",
+      "computedHash": "e9101aca303811da146382c931e0f6a0735dfe795c237208667defa36dc590a1"
     },
     "production-web-audit": {
       "name": "production-web-audit",
