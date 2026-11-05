@@ -1,0 +1,88 @@
+<!doctype html>
+<!--
+  Product-film thumbnail template.
+  Replace every {{TOKEN}}, then render at 1280x720 with Playwright.
+  Keep the headline to one number contrast and one line. Check at 320x180.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0a1014; --cream:#e9ece6; --mint:#9fd8c2; --alarm:#f0837f; --gold:#d6a45e; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; width:1280px; height:720px; overflow:hidden; background:var(--ink); color:var(--cream); }
+  body { font-family:"Manrope",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .thumb {
+    position:relative; width:1280px; height:720px; overflow:hidden;
+    background:
+      radial-gradient(900px 500px at 78% -10%, rgba(159,216,194,.16), transparent 62%),
+      radial-gradient(700px 500px at 8% 110%, rgba(240,131,127,.10), transparent 60%),
+      var(--ink);
+  }
+  .thumb::before {
+    content:""; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(233,236,230,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233,236,230,.035) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+    opacity:.35;
+  }
+  .orbit { position:absolute; border:1px solid rgba(233,236,230,.12); border-radius:50%; }
+  .orbit-a { width:760px; height:760px; right:-260px; top:-300px; }
+  .orbit-b { width:1050px; height:1050px; right:-350px; top:-420px; border-style:dashed; opacity:.5; }
+  .dot { position:absolute; width:8px; height:8px; border-radius:50%; background:var(--mint); box-shadow:0 0 18px var(--mint); right:144px; top:116px; }
+  header { position:absolute; left:64px; top:52px; display:flex; align-items:center; gap:14px; }
+  .mark { position:relative; width:28px; height:28px; border-radius:50%; background:var(--cream); overflow:hidden; }
+  .mark::after { content:""; position:absolute; width:24px; height:24px; border-radius:50%; background:var(--ink); right:-7px; top:2px; }
+  .brand { font-family:"Fraunces",serif; font-size:30px; font-weight:500; letter-spacing:-.03em; }
+  .kicker { position:absolute; left:64px; top:152px; font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--mint); }
+  .headline { position:absolute; left:60px; top:186px; width:760px; font-family:"Fraunces",serif; font-weight:350; font-variation-settings:"opsz" 144; font-size:112px; line-height:.92; letter-spacing:-.05em; }
+  .headline .line { display:block; white-space:nowrap; }
+  .headline .cream { color:var(--cream); }
+  .headline .mint { color:var(--mint); }
+  .rule { position:absolute; left:64px; top:452px; width:120px; height:2px; background:var(--mint); }
+  .sub { position:absolute; left:64px; top:478px; width:620px; font-size:24px; line-height:1.4; color:rgba(233,236,230,.72); }
+  .card {
+    position:absolute; right:64px; top:168px; width:352px;
+    background:rgba(233,236,230,.06); border:1px solid rgba(233,236,230,.16);
+    border-top:2px solid rgba(159,216,194,.6); border-radius:18px; padding:24px 24px 20px;
+    box-shadow:0 30px 80px -40px rgba(0,0,0,.8); backdrop-filter:blur(6px);
+  }
+  .card-head { display:flex; align-items:center; justify-content:space-between; font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(233,236,230,.55); }
+  .pill { font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.1em; color:var(--alarm); background:rgba(240,131,127,.12); border:1px solid rgba(240,131,127,.35); padding:4px 8px; border-radius:999px; }
+  .row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:18px 0; border-bottom:1px solid rgba(233,236,230,.1); }
+  .row span { font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(233,236,230,.55); }
+  .row b { font-family:"JetBrains Mono",monospace; font-size:30px; font-weight:600; letter-spacing:-.03em; font-variant-numeric:tabular-nums; color:var(--cream); }
+  .row b.alarm { color:var(--alarm); }
+  .card-foot { padding-top:14px; font-family:"JetBrains Mono",monospace; font-size:9.5px; line-height:1.6; letter-spacing:.04em; color:rgba(233,236,230,.42); }
+  footer { position:absolute; left:64px; right:64px; bottom:42px; display:flex; align-items:center; justify-content:space-between; font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:rgba(233,236,230,.45); }
+  footer .right { color:var(--mint); }
+</style>
+</head>
+<body>
+<div class="thumb">
+  <div class="orbit orbit-a"></div>
+  <div class="orbit orbit-b"></div>
+  <div class="dot"></div>
+  <header><span class="mark"></span><span class="brand">{{BRAND}}</span></header>
+  <div class="kicker">{{KICKER}}</div>
+  <h1 class="headline">
+    <span class="line cream">{{LINE_1}}</span>
+    <span class="line mint">{{LINE_2}}</span>
+  </h1>
+  <div class="rule"></div>
+  <p class="sub">{{SUB_1}}<br>{{SUB_2}}</p>
+  <aside class="card">
+    <div class="card-head"><span>{{CARD_LABEL}}</span><span class="pill">{{CARD_PILL}}</span></div>
+    <div class="row"><span>{{ROW_1_LABEL}}</span><b>{{ROW_1_VALUE}}</b></div>
+    <div class="row"><span>{{ROW_2_LABEL}}</span><b class="alarm">{{ROW_2_VALUE}}</b></div>
+    <div class="card-foot">{{FOOT_1}}<br>{{FOOT_2}}</div>
+  </aside>
+  <footer><span>{{BRAND}}</span><span class="right">{{TAGLINE}}</span></footer>
+</div>
+</body>
+</html>

@@ -68,6 +68,10 @@ Run `design-loop` for variants, annotation rounds, and the anti-slop audit. Keep
 - Answer skepticism with the cut you chose: "We dropped X to ship Y in 24 hours."
 - Close on the working demo, not a slide.
 
+## 8. Submission Kit
+
+At freeze, run `product-film` for the cut, thumbnail, and YouTube copy. Audit claims against CI and the claim ledger. See [submission kit](../product-film/references/submission-kit.md).
+
 ## Invocation
 
 Output a Hackathon Audit before code:

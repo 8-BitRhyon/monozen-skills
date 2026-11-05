@@ -1,0 +1,14 @@
+{
+  "skill": "product-film",
+  "query": "Prepare the YouTube title, description, tags, category, thumbnail, and form copy for the film.",
+  "files": ["../references/submission-kit.md"],
+  "expected_behavior": [
+    "Puts the brand first in the title and the hook second.",
+    "Includes the 15-second proof, sample, repo, chapters, and measured/modeled labels in the description.",
+    "Uses Science & Technology and marks the video not made for kids.",
+    "Checks the file duration with ffprobe instead of trusting a 3:01 player label.",
+    "Audits every form count against CI and the claim ledger.",
+    "Creates an exact-text thumbnail with HTML/CSS and Playwright, not an image model."
+  ],
+  "baseline_failure": "Without the skill, the model writes a generic title, omits the 15-second proof, leaves stale test counts, and treats a modeled projection as a measured result."
+}

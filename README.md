@@ -73,6 +73,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `gtm-loop` | Six-week launch and weekly growth loop with metrics and stop rules |
 | `marketing-copy` | Voice-matched copy, claim ledger, de-AI pass, docs-as-marketing |
 | `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
+| `product-film` | Code-driven film: spoken script, real captures, voiceover alignment, thumbnail, submission kit |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 
@@ -106,6 +107,7 @@ MARKETING.md -> positioning -> POSITIONING.md -> gtm-loop -> LAUNCH.md -> GROWTH
 - `positioning` chooses the category, enemy, alternatives, and claims.
 - `gtm-loop` runs the six-week launch and the weekly growth loop.
 - `marketing-copy` writes with a voice sample, claim ledger, and de-AI pass.
+- `product-film` turns the proof into a timed film, thumbnail, and submission kit.
 
 See [marketing/README.md](marketing/README.md) for the cadence and skip list.
 
