@@ -25,6 +25,7 @@ export interface Cue {
   kind: "hero" | "line" | "money" | "card" | "image" | "receipt" | "end";
   text: string;
   sub?: string;
+  highlight?: string;
   label?: string;
   facts?: Fact[];
   image?: string;
