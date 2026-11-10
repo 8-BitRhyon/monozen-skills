@@ -1,0 +1,13 @@
+{
+  "skill": "web-design-guidelines",
+  "query": "Review evals/fixture.tsx against the Web Interface Guidelines. Report only, do not edit.",
+  "files": ["evals/fixture.tsx"],
+  "expected_behavior": [
+    "Reads the pinned reference before reviewing and does not fetch the guidelines from the network.",
+    "Groups findings by file with exact file:line references.",
+    "Flags the icon-only button without aria-label, the unlabeled input, the clickable div, the image without alt or dimensions, and transition: all.",
+    "Labels any Vercel or React house-style finding as advisory rather than blocking.",
+    "Does not edit the fixture and ends with a one-line review summary."
+  ],
+  "baseline_failure": "Without the skill, the model rewrites the component or gives generic accessibility advice without line references."
+}
