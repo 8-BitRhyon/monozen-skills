@@ -121,11 +121,11 @@
     "hackathon-project-optimizer": {
       "name": "hackathon-project-optimizer",
       "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
-      "tokenEstimate": 947,
+      "tokenEstimate": 999,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
-      "computedHash": "27e24cdb551121cfe7f145ad5915ae61b72762c2f8d1e5631e2461eaff955322"
+      "computedHash": "a33a43d40cdaf39ecda75c59fb92d1b3193d8aefb4e84cff0aa1fb2dacddd074"
     },
     "herdr": {
       "name": "herdr",
@@ -229,11 +229,11 @@
     "usefulness-gate": {
       "name": "usefulness-gate",
       "description": "Tests whether a product is worth building and whether users get value from it: problem evidence, technical spikes, task-based UX tests, and a build, pivot, or kill decision. Use before committing to a direction or after a design brief.",
-      "tokenEstimate": 918,
+      "tokenEstimate": 997,
       "source": "8-BitRhyon/monozen-skills",
       "sourceType": "github",
       "skillPath": "skills/usefulness-gate/SKILL.md",
-      "computedHash": "aea9659a664f16e8eb8c4d441f11198df9ee4711437bbaca356e58998a1e9fd4"
+      "computedHash": "87a4fcb240758c09cfde8a3c385e69c6ae8a3568c372881dc447957876beda4a"
     }
   }
 }

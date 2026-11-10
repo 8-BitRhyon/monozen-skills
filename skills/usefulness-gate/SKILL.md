@@ -49,9 +49,14 @@ Ask about past behavior, not hypothetical intent.
 
 ## 5. Instrument Before Build
 
-- Name the outcome metric, the event that proves it, the baseline, and the target.
-- Track repeat use and task success, not signups or demo clicks.
-- If the metric cannot be measured, the usefulness claim is not testable.
+- Name the outcome metric, the event, the baseline, and the target.
+- Name the ground truth and its labeler, independent of the system under test. Fixtures are a smoke test.
+- Lock the holdout before tuning and report it separately.
+- Write the threshold before the run and report misses.
+- If the evidence needs a partner, park the idea.
+- Track repeat use and task success, not signups.
+- If the metric cannot be measured, the claim is not testable.
+- Protocol: [evidence gate](../hackathon-project-optimizer/references/evidence-gate.md).
 
 ## Anti-Patterns
 
