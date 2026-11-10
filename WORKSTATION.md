@@ -101,6 +101,8 @@ tmux Catppuccin pills  -  bottom
 | `~/.gitignore_global` | Global gitignore  -  macOS, editor, build artifacts, secrets |
 | `~/.config/lazygit/config.yml` | LazyGit  -  dark theme, delta pager, nvim |
 | `~/.config/nvim/init.lua` | Neovim  -  Lazy.nvim, Catppuccin, Telescope, LSP |
+| `~/.config/hex/hex.config.ts` | Hex  -  deterministic transforms for code, prose, and chat |
+| `dotfiles/hex/dictation_processing.json` | Hex  -  portable mode policy and speed profile |
 | `~/.secrets.zsh` | API keys, `chmod 600`, sourced by `.zshrc` |
 | `dotfiles/` (this repo) | Reference configs |
 
@@ -237,6 +239,12 @@ cp dotfiles/gitignore_global ~/.gitignore_global
 mkdir -p ~/.config/lazygit ~/.config/nvim
 cp dotfiles/lazygit/config.yml ~/.config/lazygit/config.yml
 cp dotfiles/nvim/init.lua ~/.config/nvim/init.lua
+
+# Hex: copy transforms, then apply the portable mode policy
+mkdir -p ~/.config/hex
+cp dotfiles/hex/hex.config.ts ~/.config/hex/hex.config.ts
+hex commands check
+hex settings apply dotfiles/hex/dictation_processing.json
 
 # Initialize tmux, install plugins via TPM
 tmux new -s main
