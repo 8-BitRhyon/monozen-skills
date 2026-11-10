@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 53 skills
+### `~/.agents/skills/` - 61 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -42,6 +42,14 @@ git-workflow             # Commit signing and branch hygiene
 git-worktree             # Isolated worktrees for parallel agents
 grill-me                 # Relentless plan and design interview
 grilling                 # Design-tree interview rounds
+gsap-core                # GSAP core API, easing, stagger, matchMedia
+gsap-frameworks          # GSAP for Vue, Svelte, and non-React frameworks
+gsap-performance         # GSAP performance and jank prevention
+gsap-plugins             # GSAP plugins: Flip, Draggable, SplitText, SVG
+gsap-react               # GSAP in React with useGSAP and cleanup
+gsap-scrolltrigger       # GSAP ScrollTrigger, pinning, scrub, refresh
+gsap-timeline            # GSAP timelines, position parameter, labels
+gsap-utils               # GSAP utils: clamp, mapRange, snap, quickTo
 gtm-loop                 # Six-week launch and weekly growth loop
 hackathon-ideation       # Fast idea generation and kill before code
 hackathon-project-optimizer # Demo-first hackathon scope, spec lock, parallel worktrees, judging
