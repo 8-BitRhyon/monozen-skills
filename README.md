@@ -70,6 +70,8 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `usefulness-gate` | Problem evidence, technical spike, UX task test, build or kill |
 | `design-loop` | Cheap variants, blind critique, click-to-annotate feedback, targeted fixes |
 | `hackathon-project-optimizer` | Demo-first hackathon scope, spec lock, parallel worktrees, anti-slop UI, judging |
+| `hackathon-ideation` | Fast idea generation and kill: theme fit, 15-second demo, reachable ground truth |
+| `hackathon-recon` | Winner and rubric audit: evidence pattern, weighted gap map, three moves |
 
 Agents match a skill by its `name` and `description` frontmatter; the one-line role above is the catalog's summary, not an invocation command.
 

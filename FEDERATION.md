@@ -15,7 +15,7 @@ The federation is a **write-once, read-from-anywhere** model. Skills are authore
 
 ## Directory Map
 
-### `~/.agents/skills/` - 46 skills
+### `~/.agents/skills/` - 48 skills
 
 The primary skill directory. Installed by `npx skills add` and consumed by Pi, Claude Code, OpenCode, Codex, and Cursor.
 
@@ -42,7 +42,9 @@ git-workflow             # Commit signing and branch hygiene
 git-worktree             # Isolated worktrees for parallel agents
 grill-me                 # Relentless plan and design interview
 grilling                 # Design-tree interview rounds
+hackathon-ideation     # Fast idea generation and kill before code
 hackathon-project-optimizer # Demo-first hackathon scope, spec lock, parallel worktrees, judging
+hackathon-recon        # Winner and rubric audit, weighted gap map
 herdr                    # Herdr panes, states, recovery
 lavish                   # Reviewable HTML artifacts
 llm-as-verifier          # Probabilistic LLM verification

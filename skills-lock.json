@@ -118,6 +118,15 @@
       "skillPath": "skills/grilling/SKILL.md",
       "computedHash": "76f6263a514e268008f66d0d84eb0c64dbbdd61f49791ab6d5ecb570b6a5865c"
     },
+    "hackathon-ideation": {
+      "name": "hackathon-ideation",
+      "description": "Generates and kills hackathon ideas before code, scoring theme fit, 15-second demo legibility, reachable ground truth, and baseline beatability, then locks one pick with a proof plan. Use when choosing what to build for a hackathon or a short judged sprint.",
+      "tokenEstimate": 822,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hackathon-ideation/SKILL.md",
+      "computedHash": "41ce681c69ee51ef4322c49663680dce070fb8b283b80c37c9343f89f939ddd4"
+    },
     "hackathon-project-optimizer": {
       "name": "hackathon-project-optimizer",
       "description": "Maximizes hackathon judged score per engineering hour through demo-first ideation, feature pruning, spec lock, parallel worktree execution, anti-slop UI audit, and live-demo judging. Use when ideating, scoping, building, or pitching a hackathon project.",
@@ -126,6 +135,15 @@
       "sourceType": "github",
       "skillPath": "skills/hackathon-project-optimizer/SKILL.md",
       "computedHash": "a33a43d40cdaf39ecda75c59fb92d1b3193d8aefb4e84cff0aa1fb2dacddd074"
+    },
+    "hackathon-recon": {
+      "name": "hackathon-recon",
+      "description": "Audits prior hackathon winners and the judging rubric to extract the evidence pattern, then maps your idea against it with weighted gaps and three moves. Use before ideation, after a loss, or when a judged comparison matters.",
+      "tokenEstimate": 555,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hackathon-recon/SKILL.md",
+      "computedHash": "14c275ba7dafbb0b4f9efd842264e2fa82a5d9c670d5d5af1b13ae3c9013aefd"
     },
     "herdr": {
       "name": "herdr",
