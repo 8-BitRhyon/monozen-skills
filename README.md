@@ -60,6 +60,7 @@ All skills, federated via `npx skills add 8-BitRhyon/monozen-skills` (catalog + 
 | `herdr` | Herdr multiplexer: panes, agent states, hooks, husk recovery |
 | `git-worktree` | Isolated git worktrees (treehouse pool, pi-worktree), merge back, cleanup |
 | `git-workflow` | Commit signing (SSH), branch hygiene, history purge |
+| `web-design-guidelines` | UI review against Vercel's Web Interface Guidelines: accessibility, focus, forms, motion, and copy |
 | `production-web-audit` | Pre-deployment security, layout and pointer, CSP, performance, and runtime audit |
 | `monozen-portfolio` | Consolidated Monozen portfolio contracts (themes, WebGL, nav, audit) |
 | `asd-ste100` | Enforce ASD-STE100 Simplified Technical English rules with zero em dashes |
@@ -124,7 +125,8 @@ idea -> new-project -> task-decomposition -> test-driven-dev -> code-review
 Design work has its own gate:
 
 ```
-idea -> alpha-loop -> design-research -> usefulness-gate -> design-loop -> production-web-audit
+idea -> alpha-loop -> design-research -> usefulness-gate -> design-loop
+     -> web-design-guidelines -> production-web-audit
 ```
 
 Every stage is a runnable protocol (`skills/<name>/SKILL.md`), universal across languages and stacks.

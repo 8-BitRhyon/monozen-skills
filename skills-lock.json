@@ -288,6 +288,15 @@
       "sourceType": "github",
       "skillPath": "skills/usefulness-gate/SKILL.md",
       "computedHash": "87a4fcb240758c09cfde8a3c385e69c6ae8a3568c372881dc447957876beda4a"
+    },
+    "web-design-guidelines": {
+      "name": "web-design-guidelines",
+      "description": "Review UI code against Vercel's Web Interface Guidelines: accessibility, focus, forms, animation, typography, images, performance, navigation, dark mode, touch, locale, hydration, and copy. Use when asked to review my UI, audit accessibility or UX, check a page or component against best practices, or run a pre-merge design review.",
+      "tokenEstimate": 709,
+      "source": "8-BitRhyon/monozen-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "de786a85fdc4fa1e39dc30f5d1552f621a01347b09f6d0aa82b3e2304dfbc539"
     }
   }
 }
