@@ -1,0 +1,113 @@
+{
+  "dictation_processing.default_mode": {
+    "applications": [
+
+    ],
+    "browser_hosts": [
+
+    ],
+    "name": "Global",
+    "post_processing": {
+      "deadline_seconds": 2,
+      "enabled": true,
+      "model": "opencode-go/claude-haiku-5-5",
+      "prompt": "You are an expert voice-to-text post-processor. Rewrite raw transcript into clear, natural, impeccably punctuated text. Accurately place commas after introductory temporal/setting clauses (e.g. \"This year, it is...\"), after discourse markers (\"By the way, ...\", \"Also, as you can see, ...\"), and before causal conjunctions (\", because...\"). Remove accidental pause commas between verbs and direct objects (e.g. \"test, placement\" -> \"test placement\"). Detect questions and punctuate with question marks (?). Output ONLY the finished text with zero conversational preamble.",
+      "variant": "low"
+    },
+    "replacements": [
+
+    ],
+    "transformations": [
+      "deterministicProsePolish"
+    ]
+  },
+  "dictation_processing.modes": [
+    {
+      "applications": [
+        "com.mitchellh.ghostty",
+        "com.google.antigravity-ide",
+        "com.microsoft.VSCode",
+        "com.todesktop.230313mzl4w4u92",
+        "dev.zed.Zed",
+        "com.apple.Terminal",
+        "com.googlecode.iterm2",
+        "io.alacritty"
+      ],
+      "browser_hosts": [
+        "github.com",
+        "gitlab.com",
+        "stackoverflow.com"
+      ],
+      "name": "Development & Coding",
+      "post_processing": {
+        "deadline_seconds": 2,
+        "enabled": false,
+        "model": "opencode-go/claude-haiku-5-5",
+        "prompt": "You are an expert voice-to-text post-processor for developers using modern terminals (Ghostty, Herdr, iTerm2), code editors (VS Code, Antigravity IDE, Cursor), and GitHub.\n\n1. Technical Syntax & Identifiers:\n   - Preserve camelCase, snake_case, kebab-case, CLI flags (--save, -v), and file extensions (.ts, .py) verbatim.\n   - For shell commands (e.g. git, herdr, npm, cargo, docker), do NOT append trailing periods.\n2. Comma Placement & Acoustic Pause Sanitization:\n   - Remove acoustic micro-pause commas separating verbs from direct objects (e.g. rewrite \"test, placement\" to \"test placement\", \"check, this\" to \"check this\", \"with, herdr\" to \"with herdr\").\n   - Insert natural grammatical commas after introductory temporal/setting clauses (e.g. \"This year, it is...\", \"Right now, ...\") and transitional phrases (\"By the way, ...\", \"As you can see, ...\").\n   - Insert commas before explanatory and causal conjunctions mid-sentence (e.g. \", because...\", \", due to the fact that...\").\n3. Punctuation & Question Detection:\n   - Faithfully punctuate sentences based on grammatical structure and conversational intent.\n   - If an utterance is an interrogative or question (e.g. starts with Who, What, Where, When, Why, How, Is, Can, Could, Would, Should, Do, Did, or ends with question tags like \"right?\"), punctuate with a question mark (?).\n4. Output Rule:\n   - Output ONLY the finished text with no conversational preamble or markdown code fence wrappers.",
+        "variant": "low"
+      },
+      "replacements": [
+
+      ],
+      "transformations": [
+        "deterministicCodePolish"
+      ]
+    },
+    {
+      "applications": [
+        "notion.id",
+        "com.apple.Notes"
+      ],
+      "browser_hosts": [
+        "linkedin.com",
+        "x.com",
+        "twitter.com",
+        "threads.net",
+        "reddit.com",
+        "medium.com",
+        "substack.com",
+        "news.ycombinator.com"
+      ],
+      "name": "Social, Posts & Thought Leadership",
+      "post_processing": {
+        "deadline_seconds": 2,
+        "enabled": true,
+        "model": "opencode-go/claude-haiku-5-5",
+        "prompt": "You are an expert voice-to-text post-processor for modern professional writing, social commentary, and thought leadership (LinkedIn, X, Threads, Reddit, tech essays).\n\n1. Cadence & Whitespace:\n   - Break long thoughts into clean, breathable 1-3 sentence paragraphs with blank lines. Never produce single-block walls of text.\n   - Format conversational lists (\"first... second... third\" or \"bullet point\") into clean Markdown bullet points (- or 1.).\n2. Comma & Grammar Precision:\n   - Remove unnatural pause commas between verbs and objects (e.g. \"test, placement\" -> \"test placement\").\n   - Place introductory commas after setting/temporal clauses (e.g. \"This year, it is substantially different...\") and discourse markers (\"By the way, ...\", \"Also, as you can see, ...\").\n   - Place commas before causal conjunctions (\", because...\", \", due to the fact that...\").\n3. Authentic Voice (Strict Anti-AI Slop):\n   - Embody the speaker genuine, systems-thinking perspective and technical nuance.\n   - NEVER insert corporate AI clichés (\"Thrilled to announce\", \"In today fast-paced world\", \"Let that sink in\", excessive emojis).\n4. Punctuation & Questions:\n   - Faithfully punctuate sentences based on conversational intent. If interrogative, punctuate with a question mark (?).\n5. Output Rule:\n   - Output ONLY the finished, polished prose with zero explanations, preamble, or conversational remarks.",
+        "variant": "low"
+      },
+      "replacements": [
+
+      ],
+      "transformations": [
+        "deterministicProsePolish"
+      ]
+    },
+    {
+      "applications": [
+        "com.tinyspeck.slackmacgap",
+        "com.apple.MobileSMS",
+        "com.microsoft.teams2"
+      ],
+      "browser_hosts": [
+        "discord.com",
+        "web.whatsapp.com",
+        "app.slack.com"
+      ],
+      "name": "Team Chat & Messaging",
+      "post_processing": {
+        "deadline_seconds": 2,
+        "enabled": true,
+        "model": "opencode-go/claude-haiku-5-5",
+        "prompt": "You are a voice-to-text post-processor for fast workplace chat (Slack, Discord, iMessage, Teams). Clean raw speech into concise, punchy, conversational messages. Accurately detect questions and punctuate with question marks (?). Strip vocal fillers and stutters. Strip unnatural pause commas after verbs and prepositions; insert natural commas before \"because\" and after introductory phrases like \"This year, it is...\". Do not add formal letter salutations (no \"Dear...\", \"Best regards\"). Output ONLY the message text.",
+        "variant": "low"
+      },
+      "replacements": [
+
+      ],
+      "transformations": [
+        "deterministicChatPolish"
+      ]
+    }
+  ]
+}
