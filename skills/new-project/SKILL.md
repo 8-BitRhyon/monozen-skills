@@ -9,7 +9,7 @@ description: "Bootstrap any new software project from zero: repo creation, scaff
 
 ## Flow (in order)
 
-1. **Clarify intent** (prompt-engineering-loop): language/runtime, package manager, deploy target, test runner, CI host. 5 questions minimum.
+1. **Clarify intent** (`grilling`): language/runtime, package manager, deploy target, test runner, CI host. 5 questions minimum.
 2. **Scaffold the skeleton** for the chosen stack (framework CLI: `npm create`, `cargo new`, `uv init`, `flutter create`, etc.).
 3. **Add constitution files** from `templates/` in this skill:
    - `templates/AGENTS.md` -> repo root (agent contract)

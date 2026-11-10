@@ -1,0 +1,11 @@
+{
+  "skill": "replace-with-skill-name",
+  "query": "A realistic user request that should trigger the skill.",
+  "files": ["optional/path/to/fixture"],
+  "expected_behavior": [
+    "The first observable behavior the skill must produce.",
+    "The verification the skill must run.",
+    "The stop condition."
+  ],
+  "baseline_failure": "What the model did without the skill."
+}

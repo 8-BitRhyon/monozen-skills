@@ -7,6 +7,8 @@ description: "Configure and extend the Pi coding agent: extension API (terminal-
 
 > **Scope:** Pi is the interactive coding-agent harness (npm: `@earendil-works/pi-coding-agent`). Config lives under `~/.pi/agent/`. Extensions auto-load from `~/.pi/agent/extensions/*.ts` and hot-reload with `/reload`.
 
+Requires: `pi` 1.4.0+ (`@earendil-works/pi-coding-agent`).
+
 ## Directory Contract
 
 - `~/.pi/agent/auth.json` - credentials (0600). API key or OAuth tokens from `/login`.

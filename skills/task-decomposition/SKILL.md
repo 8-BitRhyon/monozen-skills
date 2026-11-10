@@ -1,110 +1,72 @@
 ---
 name: task-decomposition
-description: Breaks complex engineering requests into ordered, independent, testable sub-tasks with clear acceptance criteria.
+description: Breaks complex engineering requests into ordered, independent, testable tasks with a PLAN.md artifact, acceptance criteria, and a verification command per task. Use when a request spans more than three files or two concepts.
 ---
 
-# Task Decomposition Skill
+# Task Decomposition
 
-> **Scope:** Universal method to break any complex request into atomic, verifiable, parallelizable units. Prevents overwhelm, enables parallel execution, makes progress visible.
+> One task, one outcome, one verify command. If a task cannot fail, it is not a task.
 
----
+## Output: PLAN.md
 
-## Decomposition Principles
-
-### 1. Atomicity
-Each task = **one** verifiable outcome.
-- ❌ "Fix the portfolio"
-- ✅ "<unit>: add <behavior> to <module>"
-- ✅ "<unit>: move <dependency> before <phase>"
-
-### 2. Independence
-Tasks should not share mutable state.
-- <unit A> → `module-a.js` + `test/a.test.js`
-- <unit B> → `boot.js` + `test/boot.test.js`
-- **Can run in parallel** → use `Task` tool for parallel agents
-
-### 3. Verifiability
-Every task has a **done definition** (test, command, visual).
-```markdown
-- [ ] Globe ResizeObserver
-    - [ ] Write 5 failing tests in test/globe.test.js
-    - [ ] Implement _resizeObserver in globe-module.js
-    - [ ] Run npm test → 182 pass
-    - [ ] chrome-devtools-axi verify _resizeObserver exists
-```
-
-### 4. Ordering
-- **Sequential:** Task B needs Task A's output
-- **Parallel:** Tasks independent → run together
-- **Blocked:** External dependency → mark `blocked`, note unblocker
-
----
-
-## Decomposition Template
+- Goal and non-goals, one paragraph.
+- Tasks in dependency order, grouped as parallel or sequential.
+- Per task: files, interface, failing check, verify command, rollback.
+- Open questions with an owner.
 
 ```markdown
-## Request: <user's high-level ask>
-
-### Analysis
-- Affected files: `glob app/**/*.js`
-- Risk areas: theme lifecycle, WebGL cleanup
-- Unknowns: need to check current test coverage
-
-### Tasks (in dependency order)
-
-#### Phase 1: Foundation (parallel)
-- [ ] Task 1.1: Audit current <feature> flow → `grep <signal>`
-- [ ] Task 1.2: List all <init>/<destroy> pairs → `grep <pattern>`
-
-#### Phase 2: Implementation (sequential)
-- [ ] Task 2.1: Add guard to <feature> (needs 1.1)
-- [ ] Task 2.2: Write Prove-It test for guard (independent)
-
-#### Phase 3: Verification (parallel after 2.x)
-- [ ] Task 3.1: Full test suite
-- [ ] Task 3.2: Runtime verification (browser/CLI)
-- [ ] Task 3.3: Deploy preview + curl check
-
-### Risks
-- <feature> during boot: corrupts <transition>
-- Mitigation: guard + test + manual verify
+## Goal
+## Non-goals
+## Tasks
+- [ ] T1: <outcome>
+  - Files:
+  - Check:
+  - Verify:
+  - Depends on:
+## Open questions
 ```
 
----
+## Rules
 
-## Parallelization Rules
+- **Atomic:** one verifiable outcome.
+- **Independent:** no shared mutable state; parallel tasks own disjoint files.
+- **Ordered:** mark blocked tasks and the unblocker.
+- **Sized:** minutes, not hours. More than 3 files or 2 concepts means split again.
+- **Scale down:** a trivial change skips the plan and goes straight to build, test, land.
 
-| Pattern | Tool | Example |
-|---------|------|---------|
-| **Read-only searches** | Multiple `grep`/`glob`/`codebase_search` | Find all theme listeners, all WebGL canvases |
-| **Independent file edits** | Multiple `edit` in one message | Fix CSS in moon.css + sun.css simultaneously |
-| **Independent test files** | Multiple `Task` agents | Write globe.test.js + boot.test.js in parallel |
-| **Verification** | `bash` + `chrome-devtools-axi` | Run tests + snapshot in parallel |
+## Verification Ladder
 
-**Never parallelize:** Sequential dependencies, shared file writes, stateful operations.
+Pick the cheapest level that proves the claim:
 
----
+1. LLM self-check
+2. Lint or typecheck
+3. Unit test
+4. Integration test
+5. Browser or CLI observation
+6. Deploy preview plus smoke
+7. Production canary with rollback
 
-## Progress Tracking
+State the command and the observed result. Never claim a level you did not run.
 
-Use `todowrite` with this structure (one `in_progress` at a time, update in real-time):
-```json
-{"todos": [
-  {"content": "<unit A>: write failing tests", "status": "in_progress", "priority": "high"},
-  {"content": "<unit A>: implement fix", "status": "pending", "priority": "high"},
-  {"content": "<unit B>: write failing tests", "status": "pending", "priority": "high"},
-  {"content": "<unit B>: implement fix", "status": "pending", "priority": "high"},
-  {"content": "Full test suite verification", "status": "pending", "priority": "high"},
-  {"content": "Runtime verification (browser/CLI)", "status": "pending", "priority": "high"}
-]}
-```
+## Exit And Escalation
 
----
+- Max 3 plan -> act -> verify iterations per task.
+- Two failures with the same root cause: stop guessing, re-read the code, change the hypothesis.
+- Scope grows past 3 files or 2 concepts: stop and split.
+- Escalate with what was tried, the failing evidence, and the decision needed.
+
+## Parallelism
+
+- Read-only searches can run together.
+- Independent files or test suites can run in parallel worktrees.
+- Never parallelize shared file writes or sequential dependencies.
 
 ## Invocation
 
 Load when:
-- User request spans >3 files or >2 concepts
+
+- A request spans more than 3 files or 2 concepts.
 - You feel "where do I start?"
-- Previous work had missed steps or rework
-- Planning a multi-session effort
+- Previous work had missed steps or rework.
+- Planning a multi-session effort.
+- The scope is still ambiguous: run `alpha-loop` first.

@@ -7,6 +7,8 @@ description: "Verification framework from the Stanford + NVIDIA LLM-as-a-Verifie
 
 > **Scope:** Judge open-ended output with calibrated continuous scores instead of discrete pass/fail verdicts. Paper: arXiv:2607.05391. Official repo: https://github.com/llm-as-a-verifier/llm-as-verifier (pip install llm-verifier). Claude Code plugin: https://github.com/llm-as-a-verifier/TurboAgent (pip install turbo-agent). Reference CLI: `scripts/llm-verifier.mjs` (zero deps, OpenAI-compatible endpoint).
 
+Requires: `node` 18+ for the reference CLI.
+
 ## Core Mechanism
 
 Standard LLM judges emit one discrete score token, collapsing the scoring distribution and inflating ties. Instead, take the **expectation over the scoring-token distribution** (paper Eq. 3.1):

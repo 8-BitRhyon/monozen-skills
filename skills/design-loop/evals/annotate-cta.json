@@ -1,0 +1,12 @@
+{
+  "skill": "design-loop",
+  "query": "The hero CTA is low contrast at 390 px. Annotate it and fix only that component.",
+  "files": ["templates/fixture.html"],
+  "expected_behavior": [
+    "Starts the collector and injects the overlay on the fixture page.",
+    "Reads the pending annotation for [data-testid=\"hero-cta\"].",
+    "Changes only the CTA component and verifies the selector still resolves.",
+    "Marks the annotation resolved only after the visual check."
+  ],
+  "baseline_failure": "Without the skill, the model restyles the whole hero or edits CSS without confirming the element."
+}

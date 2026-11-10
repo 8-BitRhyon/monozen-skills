@@ -7,6 +7,8 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 
 > **Scope:** The complete path from feature branch to merged change in any GitHub repository.
 
+Requires: `git`; `gh-axi` or `gh`. Optional: `no-mistakes` gateway.
+
 ## Branch & Commit
 
 - One branch per logical change: `feat/<slug>`, `fix/<slug>`, `chore/<slug>`.
@@ -19,7 +21,7 @@ description: "Universal pull request lifecycle for any GitHub repo: branch strat
 ```bash
 git push no-mistakes feat/slug
 ```
-The `no-mistakes` proxy runs multi-pass AI validation in a disposable worktree, auto-fixes issues, forwards to origin, and opens the clean PR automatically. Headless agents drive this via `no-mistakes axi`.
+The proxy validates in a disposable worktree, auto-fixes mechanical issues, forwards to origin, and opens the PR. Setup, finding classes, and headless usage: [no-mistakes.md](references/no-mistakes.md).
 
 ### 2. Manual AXI CLI
 ```bash
@@ -31,7 +33,7 @@ npx -y gh-axi pr create --base main --head feat/slug \
 ## Checks & Review
 
 - Wait for CI: `npx -y gh-axi pr checks <n>` (or `gh pr checks <n> --watch`).
-- **Independent review gate (mandatory):** Review the diff in a separate session (clean worktree or pane). Load `code-review`, evaluate the five dimensions, tag blocker/should/nit. Fix blockers before merge.
+- **Independent review gate (mandatory):** Review the diff in a separate session (clean worktree or pane). Load `code-review`: spec compliance first, then correctness and security, style out of scope. Fix blockers before merge.
 
 ## Merge & Cleanup
 

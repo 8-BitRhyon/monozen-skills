@@ -366,6 +366,11 @@ exit(failures == 0 ? 0 : 1)
 RUBY
 
 # ---------------------------------------------------------------
+# 8. Behavioral eval files
+# ---------------------------------------------------------------
+bash "${REPO_DIR}/scripts/validate-evals.sh" || ERRORS=$((ERRORS + 1))
+
+# ---------------------------------------------------------------
 if [ "${ERRORS}" -eq 0 ]; then
   echo "✅ Validation passed. (VALIDATE_VERBOSE=1 for per-skill output)"
   exit 0

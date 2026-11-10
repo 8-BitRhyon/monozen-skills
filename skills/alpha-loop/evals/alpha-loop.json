@@ -1,0 +1,12 @@
+{
+  "skill": "alpha-loop",
+  "query": "We have four local-first tools: dictation, meetings, agent control, and a UI framework. Find the strongest wedge.",
+  "files": ["templates/ALPHA.md"],
+  "expected_behavior": [
+    "Frames one user, job, and measurable win before listing ideas.",
+    "Fans out distinct facets and returns evidence plus a bet per facet.",
+    "Forms structurally different theses and judges them blind.",
+    "Selects one wedge with an alpha hypothesis and a kill criterion."
+  ],
+  "baseline_failure": "Without the skill, the model merges all four products into one platform and lists features."
+}

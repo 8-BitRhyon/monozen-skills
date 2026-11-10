@@ -161,6 +161,11 @@ mutate_federation_comment_mask() {
   node -e 'const fs=require("fs");const p="FEDERATION.md";let t=fs.readFileSync(p,"utf8");t=t.split("\n").map(l=>/^code-review\s/.test(l)?"# code-review":l).join("\n");fs.writeFileSync(p,t)'
 }
 
+mutate_invalid_eval() {
+  mkdir -p skills/design-loop/evals
+  printf '{ "query": "", "expected_behavior": [] }\n' > skills/design-loop/evals/bad.json
+}
+
 # macOS APFS is case-insensitive and cannot represent case-variant folder names;
 # run the collision test only where it is representable (CI: ext4).
 case_sensitive_fs() {
@@ -200,6 +205,7 @@ run_test "load budget overflow is rejected" 1 "load budget" -- mutate_budget_ove
 run_test "em dash in generated SVG is rejected" 1 "em dash" -- mutate_em_dash_svg
 run_test "stale tokenEstimate is rejected" 1 "tokenEstimate is stale" -- mutate_token_estimate_drift
 run_test "FEDERATION comment-masked skill is rejected" 1 "missing canonical" -- mutate_federation_comment_mask
+run_test "invalid skill eval is rejected" 1 "expected_behavior" -- mutate_invalid_eval
 if case_sensitive_fs; then
   run_test "case-insensitive duplicate folders are rejected" 1 "duplicate" -- mutate_duplicate_folder_case
 else
