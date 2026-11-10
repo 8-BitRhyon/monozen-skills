@@ -69,10 +69,10 @@ Run `design-loop` for variants, annotation rounds, and the anti-slop audit. Keep
 
 ## 7. Judging
 
-- 2-minute track: problem in one sentence, live wow moment, one trade-off, one extension.
-- Hold the floor with substance; judges stay where they learn.
+- 2-minute track: problem, wow moment, one trade-off, one extension.
 - Answer skepticism with the cut you chose: "We dropped X to ship Y in 24 hours."
 - Close on the working demo, not a slide.
+- At freeze, run `product-film` for the cut and submission kit.
 
 ## Invocation
 

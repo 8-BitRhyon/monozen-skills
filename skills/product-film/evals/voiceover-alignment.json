@@ -1,0 +1,14 @@
+{
+  "skill": "product-film",
+  "query": "Mux this 175.7s voice memo into the 180s film. The beats drift ahead of the visuals.",
+  "files": ["../references/film-pipeline.md", "../scripts/align_voiceover.py"],
+  "expected_behavior": [
+    "Inspects the take with ffprobe and silencedetect before muxing.",
+    "Splits the take at the six beat gaps and places each segment at its scene start.",
+    "Tightens only the overrunning beat, at 1.2x or less, and states the change.",
+    "Applies stereo before loudnorm so the mono-to-stereo jump does not clip.",
+    "Targets about -16 LUFS and -2.0 dBFS true peak.",
+    "Checks AAC sample peaks and re-muxes if any beat hits 0.0 dB."
+  ],
+  "baseline_failure": "Without the skill, the model muxes the full take without alignment, so the audio drifts ahead of the visuals and the loudness jumps when mono is duplicated to stereo."
+}
