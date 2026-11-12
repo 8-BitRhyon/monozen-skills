@@ -61,12 +61,21 @@ Measured on this workstation:
 
 The deterministic engine is not the bottleneck. The multi-second delay comes from the OpenCode rewrite. The policy here removes it from coding and caps it elsewhere.
 
+## Email addresses
+
+- Literal addresses are preserved. They are not sentence-capitalized, and a lone address does not get a trailing period.
+- Spoken forms like `user at gmail dot com` and `user at gmail.com` become `user@gmail.com`.
+- Multi-part domains such as `gmail dot co dot uk` are supported.
+- The spoken conversion uses a conservative provider allowlist: Gmail, Googlemail, Outlook, Hotmail, Live, iCloud, Me, Mac, Yahoo, Proton, Protonmail, Hey, Fastmail, and Zoho. This avoids turning ordinary prose like `meet me at the dot com` into an address.
+- Custom domains are not converted from spoken form. Say the literal address, or extend `EMAIL_PROVIDERS` in `hex.config.ts`.
+- Add unusual names to the live vocabulary with `hex vocabulary add`. Vocabulary stays local and is not committed here.
+
 ## Tuning
 
 - If `opencode-go/claude-haiku-5-5` is not in your OpenCode catalog, use `opencode` with `"variant": "low"`, or another fast model.
 - Review the `applications` and `browser_hosts` arrays before applying. They are macOS bundle IDs and sites, not personal data, but they are tuned to this workstation.
 - If a mode feels too aggressive, raise `deadline_seconds` to 3. Do not return to 30. A 30 second deadline means a slow rewrite is allowed to become a 30 second dictation.
-- Keep the deterministic transforms first. They are cheap and catch fillers, casing, symbols, and punctuation before the model sees the text.
+- Keep the deterministic transforms first. They are cheap and catch fillers, casing, symbols, email addresses, and punctuation before the model sees the text.
 
 ## Verify
 
