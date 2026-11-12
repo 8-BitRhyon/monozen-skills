@@ -223,6 +223,40 @@ export function expandSymbolsAndOperators(text: string): string {
 }
 
 // ============================================================================
+// 3.5 EMAIL ADDRESS NORMALIZATION
+// ============================================================================
+
+const EMAIL_PROVIDERS =
+  "gmail|googlemail|outlook|hotmail|live|icloud|me|mac|yahoo|proton|protonmail|hey|fastmail|zoho";
+
+/**
+ * Converts conservative spoken email forms into real addresses.
+ * Only common providers are converted, so normal prose like "meet me at the dot" is left alone.
+ * Example: "rhyonfs at gmail dot com" -> "rhyonfs@gmail.com"
+ */
+export function normalizeEmailAddresses(text: string): string {
+  let s = text;
+
+  // local at provider dot tld, including multi-part domains like co.uk
+  s = s.replace(
+    new RegExp(
+      `\\b([a-z0-9._%+-]+)\\s+at\\s+(${EMAIL_PROVIDERS})((?:\\s+dot\\s+[a-z0-9-]+)+)\\b`,
+      "gi"
+    ),
+    (_, local, provider, suffix) =>
+      `${local}@${provider.toLowerCase()}${suffix.replace(/\s+dot\s+/gi, ".").toLowerCase()}`
+  );
+
+  // local at provider.tld
+  s = s.replace(
+    new RegExp(`\\b([a-z0-9._%+-]+)\\s+at\\s+(${EMAIL_PROVIDERS})\\.([a-z]{2,})\\b`, "gi"),
+    (_, local, provider, tld) => `${local}@${provider.toLowerCase()}.${tld.toLowerCase()}`
+  );
+
+  return s;
+}
+
+// ============================================================================
 // 4. SMART PUNCTUATION, CAPITALIZATION & MARKDOWN LISTS
 // ============================================================================
 
@@ -420,7 +454,7 @@ export function formatPunctuationAndStructure(text: string): string {
   // Sentence and paragraph auto-capitalization (protecting CLI verbs, nullish coalescing ??, member access dot notation, and URLs at start of lines)
   const cliVerbs = "git|herdr|npm|pnpm|yarn|bun|cargo|docker|kubectl|brew|cd|ls|cat|curl|python3?|node|grep|find|code|open|make|ps|kill|killall|mv|cp|rm|chmod|chown";
   s = s.replace(
-    new RegExp(`(^\\s*(?!(?:${cliVerbs}|[a-zA-Z0-9_]+(?:\\.[a-zA-Z]|\\:\\/\\/))\\b)|\\n+(?!(?:${cliVerbs}|[a-zA-Z0-9_]+(?:\\.[a-zA-Z]|\\:\\/\\/))\\b)|(?<!\\?)[.!?]\\s+|- |\\d+\\.\\s+)([a-z])`, "g"),
+    new RegExp(`(^\\s*(?!(?:${cliVerbs}|[a-zA-Z0-9_]+(?:\\.[a-zA-Z]|\\:\\/\\/|@))\\b)|\\n+(?!(?:${cliVerbs}|[a-zA-Z0-9_]+(?:\\.[a-zA-Z]|\\:\\/\\/|@))\\b)|(?<!\\?)[.!?]\\s+|- |\\d+\\.\\s+)([a-z])`, "g"),
     (_, pre, ch) => pre + ch.toUpperCase()
   );
 
@@ -498,15 +532,17 @@ function protectCodeKeywords(text: string): string {
  * Order of operations:
  * 1. stripLLMPreamble: cleans any model artifacts if running after LLM.
  * 2. stripDisfluencies: eliminates vocal fillers and backtracking.
- * 3. expandSymbolsAndOperators: expands mathematical and logic operators.
- * 4. formatPunctuationAndStructure: normalizes punctuation and structure.
- * 5. protectCodeKeywords: restores reserved keyword lowercase.
- * 6. formatCodeIdentifiers: formats casing (camelCase, snake_case, etc.) preserving exact casing over sentence capitalization.
+ * 3. normalizeEmailAddresses: restores spoken email addresses.
+ * 4. expandSymbolsAndOperators: expands mathematical and logic operators.
+ * 5. formatPunctuationAndStructure: normalizes punctuation and structure.
+ * 6. protectCodeKeywords: restores reserved keyword lowercase.
+ * 7. formatCodeIdentifiers: formats casing (camelCase, snake_case, etc.) preserving exact casing over sentence capitalization.
  */
 export function deterministicCodePolish(rawText: string, _context?: HandlerContext): string {
   const withoutPreamble = stripLLMPreamble(rawText);
   const withoutDisfluency = stripDisfluencies(withoutPreamble);
-  const withSymbols = expandSymbolsAndOperators(withoutDisfluency);
+  const withEmail = normalizeEmailAddresses(withoutDisfluency);
+  const withSymbols = expandSymbolsAndOperators(withEmail);
   const structured = formatPunctuationAndStructure(withSymbols);
   const withKeywords = protectCodeKeywords(structured);
   return formatCodeIdentifiers(withKeywords);
@@ -521,8 +557,10 @@ export function closeDeclarativeStatement(text: string): string {
   if (!s) return text;
   // If already ends in terminal punctuation or delimiter
   if (/[.!?:"'\`)}\]\n\-\;]$/.test(s)) return text;
-  // If ends in a URL
-  if (/https?:\/\/\S+$/i.test(s) || /[a-zA-Z0-9_-]+\.[a-zA-Z]{2,4}$/.test(s)) return text;
+  // If the whole text is an email address
+  if (/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(s)) return text;
+  // If ends in a URL or bare domain, unless the sentence contains an email
+  if (!s.includes("@") && (/https?:\/\/\S+$/i.test(s) || /[a-zA-Z0-9_-]+\.[a-zA-Z]{2,4}$/.test(s))) return text;
   // If last line is a markdown list item or code block
   const lastLine = s.split("\n").pop()?.trim() || "";
   if (lastLine.startsWith("- ") || /^\d+\.\s+/.test(lastLine) || lastLine.startsWith("```")) return text;
@@ -540,7 +578,8 @@ export function closeDeclarativeStatement(text: string): string {
 export function deterministicProsePolish(rawText: string, _context?: HandlerContext): string {
   const withoutPreamble = stripLLMPreamble(rawText);
   const withoutDisfluency = stripDisfluencies(withoutPreamble);
-  const withSymbols = expandSymbolsAndOperators(withoutDisfluency);
+  const withEmail = normalizeEmailAddresses(withoutDisfluency);
+  const withSymbols = expandSymbolsAndOperators(withEmail);
   const structured = formatPunctuationAndStructure(withSymbols);
   const cleaned = structured.replace(/\n{3,}/g, "\n\n").trim();
   return closeDeclarativeStatement(cleaned);
@@ -553,7 +592,8 @@ export function deterministicProsePolish(rawText: string, _context?: HandlerCont
 export function deterministicChatPolish(rawText: string, _context?: HandlerContext): string {
   const withoutPreamble = stripLLMPreamble(rawText);
   const withoutDisfluency = stripDisfluencies(withoutPreamble);
-  const withSymbols = expandSymbolsAndOperators(withoutDisfluency);
+  const withEmail = normalizeEmailAddresses(withoutDisfluency);
+  const withSymbols = expandSymbolsAndOperators(withEmail);
   return formatPunctuationAndStructure(withSymbols);
 }
 
